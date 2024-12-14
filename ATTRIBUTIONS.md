@@ -12,6 +12,7 @@
 
 - [SCP-001 - The Prototype](https://scp-wiki.wikidot.com/dr-gears-s-proposal) by Dr. Gears
 - [SCP-096 - The "Shy Guy"](https://scp-wiki.wikidot.com/scp-096) by Dr Dan
+- [SCP-5167 - When The Imposter Is Sus](https://scp-wiki.wikidot.com/scp-5167) by Tanhony
 
 ## Technologies
 
