@@ -2,9 +2,9 @@
     "format_version": 2,
     "header": {
       "description": "Resource pack of SCP: Dystopia.",
-      "name": "SCP: Dystopia §b2.0.0 §cAlpha 1 §7[RES]§r",
+      "name": "SCP: Dystopia §b2.0.0 §cAlpha 2 §7[RES]§r",
       "uuid": "807f0464-6ecc-42c5-8bc3-9ad7fd5dfb57",
-      "version": [2, 0, 2001],
+      "version": [2, 0, 2002],
       "min_engine_version": [1, 21, 50]
     },
     "modules": [

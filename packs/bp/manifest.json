@@ -2,9 +2,9 @@
     "format_version": 2,
     "header": {
       "description": "Required Experiments: §lBeta APIs§r \n§eIt's not guaranteed that this add-on works on versions other than 1.21.50.",
-      "name": "SCP: Dystopia §b2.0.0 §cAlpha 1 §7[1.21.50]§r",
+      "name": "SCP: Dystopia §b2.0.0 §cAlpha 2 §7[1.21.50]§r",
       "uuid": "5368765d-325d-42c7-92ac-195e5ea02966",
-      "version": [2, 0, 2001],
+      "version": [2, 0, 2002],
       "min_engine_version": [1, 21, 50]
     },
     "modules": [
@@ -27,7 +27,7 @@
       {
         // Resource pack
         "uuid": "807f0464-6ecc-42c5-8bc3-9ad7fd5dfb57",
-        "version": [2, 0, 2001]
+        "version": [2, 0, 2002]
       },
       {
         "module_name": "@minecraft/server",
