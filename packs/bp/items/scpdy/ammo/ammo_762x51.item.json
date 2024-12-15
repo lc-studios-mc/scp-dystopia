@@ -4,7 +4,7 @@
     "description": {
       "identifier": "lc:scpdy_ammo_762x51",
       "menu_category": {
-        "category": "none",
+        "category": "items",
         "group": "itemGroup.name.items",
         "is_hidden_in_commands": false
       }
