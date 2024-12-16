@@ -28,7 +28,7 @@
       },
       "minecraft:glint": false,
       "minecraft:tags": {
-        "tags": ["gun"]
+        "tags": ["gun", "scpdy:gun"]
       }
     }
   }
