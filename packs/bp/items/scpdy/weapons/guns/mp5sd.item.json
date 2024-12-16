@@ -4,7 +4,7 @@
     "description": {
       "identifier": "lc:scpdy_gun_mp5sd",
       "menu_category": {
-        "category": "none",
+        "category": "equipment",
         "group": "itemGroup.name.equipment",
         "is_hidden_in_commands": false
       }
