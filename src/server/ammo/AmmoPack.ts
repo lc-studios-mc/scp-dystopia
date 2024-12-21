@@ -1,31 +1,23 @@
 import * as mc from "@minecraft/server";
 import { AdvancedItem, AdvancedItemBaseConstructorArgs } from "@server/advancedItem/AdvancedItem";
 import { registerAdvancedItemProfile } from "@server/advancedItem/profileRegistry";
-import {
-  AmmoType,
-  AmmoTypeInfo,
-  getAmmoItemType,
-  getAmmoType,
-  getAmmoTypeInfo,
-  removeAmmo,
-} from "./ammo";
+import { AmmoType, getAmmoItemType, getAmmoType, removeAmmo } from "./ammo";
+
+const USE_DURATION = 10;
 
 class AmmoPack extends AdvancedItem {
-  private static readonly neededUseTick = 10;
-  private playerContainer: mc.Container;
-  private ammoType: AmmoType;
-  private ammoTypeInfo: AmmoTypeInfo;
+  private readonly playerInventoryContainer: mc.Container;
+  private readonly ammoType: AmmoType;
   private useTick = -1;
 
   constructor(args: AdvancedItemBaseConstructorArgs) {
     super(args);
 
-    this.playerContainer = args.player.getComponent("inventory")!.container!;
+    this.playerInventoryContainer = args.player.getComponent("inventory")!.container!;
 
-    const item = args.playerMainhand.getItem()!;
+    const mainhandItemStack = args.playerMainhand.getItem()!;
 
-    this.ammoType = getAmmoType(item)!;
-    this.ammoTypeInfo = getAmmoTypeInfo(this.ammoType);
+    this.ammoType = getAmmoType(mainhandItemStack)!;
   }
 
   onTick(mainhandItemStack: mc.ItemStack): void {
@@ -33,19 +25,20 @@ class AmmoPack extends AdvancedItem {
 
     if (this.player.getItemCooldown("scpdy_ammo_pack_usage") > 0) return;
 
-    if (this.useTick <= AmmoPack.neededUseTick) {
+    if (this.useTick <= USE_DURATION) {
+      // Create string to display on actionbar
       const actionbarStringHyphenArray: string[] = [];
-      const loopCount = AmmoPack.neededUseTick - this.useTick;
-
+      const loopCount = USE_DURATION - this.useTick;
       for (let i = 0; i < loopCount; i++) {
         actionbarStringHyphenArray.push("-");
       }
-
       const actionbarStringHyphens = actionbarStringHyphenArray.join("");
       const actionbarString = actionbarStringHyphens + "+" + actionbarStringHyphens;
 
       this.player.onScreenDisplay.setActionBar(`§7${actionbarString}`);
+
       this.useTick++;
+
       return;
     }
 
@@ -70,7 +63,12 @@ class AmmoPack extends AdvancedItem {
 
       const maxPutAmount = Math.min(64, durabilityComponent.damage);
 
-      const putAmount = removeAmmo(this.playerContainer, this.ammoType, maxPutAmount, true);
+      const putAmount = removeAmmo(
+        this.playerInventoryContainer,
+        this.ammoType,
+        maxPutAmount,
+        true,
+      );
 
       if (putAmount <= 0) {
         this.player.onScreenDisplay.setActionBar({
@@ -110,6 +108,7 @@ class AmmoPack extends AdvancedItem {
 
       const dropAmmoItemStack = new mc.ItemStack(getAmmoItemType(this.ammoType), extractAmount);
 
+      // Run after a delay because inventory UI breaks when not delayed
       mc.system.runTimeout(() => {
         this.player.dimension.spawnItem(dropAmmoItemStack, this.player.getHeadLocation());
       }, 1);
@@ -137,16 +136,14 @@ class AmmoPack extends AdvancedItem {
   onHitBlock(event: mc.EntityHitBlockAfterEvent): void {}
 }
 
-const AMMO_PACK_ITEM_TYPES: string[] = [
+for (const ammoPackItemType of [
   "lc:scpdy_ammo_pack_9mm",
   "lc:scpdy_ammo_pack_12shell",
   "lc:scpdy_ammo_pack_50bmg",
   "lc:scpdy_ammo_pack_338magnum",
   "lc:scpdy_ammo_pack_556mm",
   "lc:scpdy_ammo_pack_762x51",
-];
-
-for (const ammoPackItemType of AMMO_PACK_ITEM_TYPES) {
+]) {
   registerAdvancedItemProfile({
     itemTypeId: ammoPackItemType,
     createInstance: (args) => new AmmoPack(args),
