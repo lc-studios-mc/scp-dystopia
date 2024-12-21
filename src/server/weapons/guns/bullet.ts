@@ -186,6 +186,7 @@ mc.world.afterEvents.projectileHitEntity.subscribe((hitEvent) => {
     const hitEntity = hitEvent.getEntityHit().entity;
 
     if (!hitEntity) return;
+    if (hitEntity === flyingBulletInfo.shootOptions.sourceEntity) return;
 
     flyingBulletInfo.sharedState.hitEntityCount++;
 

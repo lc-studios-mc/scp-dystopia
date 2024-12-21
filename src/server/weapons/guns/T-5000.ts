@@ -139,7 +139,6 @@ class T5000 extends AdvancedItem {
           condition(event, hitEntity, sharedState) {
             sharedState.stopCurrentEventSequence = true;
 
-            if (event.source === hitEntity) return false;
             if (!mc.world.gameRules.pvp && hitEntity instanceof mc.Player) return false;
 
             sharedState.stopCurrentEventSequence = false;
@@ -172,12 +171,12 @@ class T5000 extends AdvancedItem {
       if (dist < 40) {
         listener.playSound("scpdy.gun.t5000.shoot_nearby", {
           location: soundOrigin,
-          volume: 2.0,
+          volume: 3.0,
         });
       } else {
         listener.playSound("scpdy.gun.t5000.shoot_distant", {
           location: soundOrigin,
-          volume: 2.0,
+          volume: 5.0,
         });
       }
     }
