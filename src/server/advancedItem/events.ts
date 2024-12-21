@@ -11,7 +11,7 @@ type AdvancedItemWrapper = {
   advancedItem: AdvancedItem;
 };
 
-const ADVANCED_ITEMS = new Map<mc.Player, AdvancedItemWrapper>();
+const ADVANCED_ITEM_MAP = new Map<mc.Player, AdvancedItemWrapper>();
 
 function createAdvancedItemWrapper(
   player: mc.Player,
@@ -70,8 +70,7 @@ function removeAdvancedItemWrapper(
   advancedItemWrapper?: AdvancedItemWrapper,
 ): boolean {
   if (!advancedItemWrapper) {
-    advancedItemWrapper = ADVANCED_ITEMS.get(player);
-
+    advancedItemWrapper = ADVANCED_ITEM_MAP.get(player);
     if (!advancedItemWrapper) return false;
   }
 
@@ -79,19 +78,17 @@ function removeAdvancedItemWrapper(
     advancedItemWrapper.advancedItem.onRemove();
     return true;
   } finally {
-    ADVANCED_ITEMS.delete(player);
+    ADVANCED_ITEM_MAP.delete(player);
   }
 }
 
 playerLoop.subscribe((player) => {
-  let advancedItemWrapper = ADVANCED_ITEMS.get(player);
+  let advancedItemWrapper = ADVANCED_ITEM_MAP.get(player);
 
   const playerHealth =
     advancedItemWrapper?.advancedItem.playerHealth ?? player.getComponent("health")!;
 
-  if (playerHealth.currentValue <= 0) {
-    return;
-  }
+  if (playerHealth.currentValue <= 0) return;
 
   const playerEquippable =
     advancedItemWrapper?.advancedItem.playerEquippable ?? player.getComponent("equippable")!;
@@ -120,7 +117,7 @@ playerLoop.subscribe((player) => {
       equippable: playerEquippable,
     });
 
-    ADVANCED_ITEMS.set(player, advancedItemWrapper);
+    ADVANCED_ITEM_MAP.set(player, advancedItemWrapper);
   }
 
   if (advancedItemWrapper.advancedItem.playerHealth.currentValue <= 0) {
@@ -137,12 +134,12 @@ mc.world.afterEvents.itemStartUse.subscribe((event) => {
 
   if (!advancedItemProfile) return;
 
-  let advancedItemWrapper = ADVANCED_ITEMS.get(event.source);
+  let advancedItemWrapper = ADVANCED_ITEM_MAP.get(event.source);
 
   if (!advancedItemWrapper || !advancedItemWrapper.advancedItem.isValid(event.itemStack)) {
     removeAdvancedItemWrapper(event.source, advancedItemWrapper);
     advancedItemWrapper = createAdvancedItemWrapper(event.source, advancedItemProfile);
-    ADVANCED_ITEMS.set(event.source, advancedItemWrapper);
+    ADVANCED_ITEM_MAP.set(event.source, advancedItemWrapper);
   }
 
   if (!advancedItemWrapper.advancedItem.canBeUsed()) return;
@@ -154,7 +151,7 @@ mc.world.afterEvents.itemStartUse.subscribe((event) => {
 mc.world.afterEvents.itemStopUse.subscribe((event) => {
   if (!event.itemStack) return;
 
-  const advancedItemWrapper = ADVANCED_ITEMS.get(event.source);
+  const advancedItemWrapper = ADVANCED_ITEM_MAP.get(event.source);
 
   if (!advancedItemWrapper) return;
   if (!advancedItemWrapper.fields.isBeingUsed) return;
@@ -166,7 +163,7 @@ mc.world.afterEvents.itemStopUse.subscribe((event) => {
 mc.world.afterEvents.dataDrivenEntityTrigger.subscribe(
   (event) => {
     const player = event.entity as mc.Player;
-    const advancedItemWrapper = ADVANCED_ITEMS.get(player);
+    const advancedItemWrapper = ADVANCED_ITEM_MAP.get(player);
 
     if (!advancedItemWrapper) return;
 
@@ -181,7 +178,7 @@ mc.world.afterEvents.dataDrivenEntityTrigger.subscribe(
 mc.world.afterEvents.entityHitEntity.subscribe(
   (event) => {
     const player = event.damagingEntity as mc.Player;
-    const advancedItemWrapper = ADVANCED_ITEMS.get(player);
+    const advancedItemWrapper = ADVANCED_ITEM_MAP.get(player);
 
     if (!advancedItemWrapper) return;
 
@@ -195,7 +192,7 @@ mc.world.afterEvents.entityHitEntity.subscribe(
 mc.world.afterEvents.entityHitBlock.subscribe(
   (event) => {
     const player = event.damagingEntity as mc.Player;
-    const advancedItemWrapper = ADVANCED_ITEMS.get(player);
+    const advancedItemWrapper = ADVANCED_ITEM_MAP.get(player);
 
     if (!advancedItemWrapper) return;
 
