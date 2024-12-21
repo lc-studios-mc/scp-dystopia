@@ -32,11 +32,12 @@ scpdy.actionHint.controlDevice.changeMode3=Mode set to 3 §7-§f Place a redston
 
 scpdy.actionHint.furniture.chair.tooFar=Too far from chair
 
-scpdy.actionHint.ammo.noMagInOffhand=§eNo loadable magazine in offhand...
-scpdy.actionHint.ammo.incorrectAmmo=§cIncorrect ammo type!
-scpdy.actionHint.ammo.magFullyLoaded=§aThe magazine is fully loaded
-scpdy.actionHint.ammoPack.noAmmoInInventory=§eNo ammo in inventory...
-scpdy.actionHint.ammoPack.full=§aThis ammo pack is full!
+scpdy.actionHint.ammo.noLoadableInOffhand=§eNo loadable item in offhand
+scpdy.actionHint.ammo.wrongAmmoType=§cWrong ammo type
+scpdy.actionHint.ammo.fullyLoaded=§aFully loaded
+scpdy.actionHint.ammoPack.noAmmoInInventory=§eNo ammo in inventory
+scpdy.actionHint.ammoPack.full=§aAmmo pack is full
+scpdy.actionHint.ammoPack.empty=§cAmmo pack is empty
 
 scpdy.actionHint.gun.noMagInInventory=§cNo magazine
 scpdy.actionHint.gun.reloading=§e[RELOADING] %s
