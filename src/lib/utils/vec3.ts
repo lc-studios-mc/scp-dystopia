@@ -172,6 +172,14 @@ export function div(vec1: Vector3, ...divisors: (Vector3 | number)[]): Vector3 {
   return result;
 }
 
+export function scale(vec: Vector3, scaler: number): Vector3 {
+  return {
+    x: vec.x * scaler,
+    y: vec.y * scaler,
+    z: vec.z * scaler,
+  };
+}
+
 export function distance(vec1: Vector3, vec2: Vector3): number {
   return Math.sqrt((vec1.x - vec2.x) ** 2 + (vec1.y - vec2.y) ** 2 + (vec1.z - vec2.z) ** 2);
 }
@@ -257,6 +265,34 @@ export function changeDir(vec: Vector3, dir: Vector3): Vector3 {
   vec.z = (dir.z / dirMagnitude) * magnitude;
 
   return vec;
+}
+
+export function getRelativeToHead(
+  headLocation: Vector3,
+  viewDirection: Vector3,
+  move?: Partial<Vector3>,
+): Vector3 {
+  const forward = viewDirection;
+  const up = { x: 0, y: 1, z: 0 };
+  const right = normalize(cross(forward, up));
+
+  // Set the amount of movement in each direction
+  const rightMove = move?.x ?? 0;
+  const upMove = move?.y ?? 0;
+  const forwardMove = move?.z ?? 0;
+
+  // Calculate the scaled vectors
+  const rightVec = scale(right, rightMove);
+  const upVec = scale(up, upMove);
+  const forwardVec = scale(forward, forwardMove);
+
+  // Combine all the vectors
+  const moveVec = add(add(rightVec, upVec), forwardVec);
+
+  // Add the movement vector to the player's position
+  const newPosition = add(headLocation, moveVec);
+
+  return newPosition;
 }
 
 export function lerp(vec1: Vector3, vec2: Vector3, t: number): Vector3 {
@@ -493,6 +529,11 @@ class Chain {
 
   div(vec2: Vector3): Chain {
     this._vec = div(this._vec, vec2);
+    return this;
+  }
+
+  scale(scaler: number): Chain {
+    this._vec = scale(this._vec, scaler);
     return this;
   }
 

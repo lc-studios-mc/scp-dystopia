@@ -65,10 +65,10 @@
       "textures": "textures/scpdy/items/weapons/guns/spas12_mag_icon"
     },
     "scpdy_gun_t5000_icon": {
-      "textures": "textures/scpdy/items/weapons/guns/t5000_icon"
+      "textures": "textures/scpdy/items/weapons/guns/t5000/icon"
     },
     "scpdy_gun_t5000_mag_icon": {
-      "textures": "textures/scpdy/items/weapons/guns/t5000_mag_icon"
+      "textures": "textures/scpdy/items/weapons/guns/t5000/mag"
     },
     // #endregion
     // #region items -> weapons -> melee

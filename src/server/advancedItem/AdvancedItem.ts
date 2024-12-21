@@ -1,6 +1,9 @@
 import * as mc from "@minecraft/server";
 import { AdvancedItemProfile } from "./profileRegistry";
 
+/**
+ * Set of read-only properties required for an {@link AdvancedItem} instance to initialize
+ */
 export type AdvancedItemBaseConstructorArgs = {
   readonly getCurrentTick: () => number;
   readonly isBeingUsed: () => boolean;
@@ -13,9 +16,17 @@ export type AdvancedItemBaseConstructorArgs = {
   readonly hotbarSlotIndex: number;
 };
 
+/**
+ * Base class for all advanced items
+ */
 export abstract class AdvancedItem {
   constructor(private readonly baseConstructorArgs: AdvancedItemBaseConstructorArgs) {}
 
+  /**
+   * Total elapsed ticks since the AdvancedItem instance is initialized.
+   *
+   * (The amount of ticks the player has held this item in their mainhand)
+   */
   get currentTick(): number {
     return this.baseConstructorArgs.getCurrentTick();
   }
@@ -32,18 +43,30 @@ export abstract class AdvancedItem {
     return this.baseConstructorArgs.player;
   }
 
+  /**
+   * {@link mc.EntityHealthComponent} of the player
+   */
   get playerHealth(): mc.EntityHealthComponent {
     return this.baseConstructorArgs.playerHealth;
   }
 
+  /**
+   * {@link mc.EntityEquippableComponent } of the player
+   */
   get playerEquippable(): mc.EntityEquippableComponent {
     return this.baseConstructorArgs.playerEquippable;
   }
 
+  /**
+   * {@link mc.ContainerSlot} of mainhand of the player
+   */
   get playerMainhand(): mc.ContainerSlot {
     return this.baseConstructorArgs.playerMainhand;
   }
 
+  /**
+   * {@link mc.ContainerSlot} of offhand of the player
+   */
   get playerOffhand(): mc.ContainerSlot {
     return this.baseConstructorArgs.playerOffhand;
   }

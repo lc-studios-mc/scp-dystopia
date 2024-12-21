@@ -10,7 +10,7 @@
       }
     },
     "components": {
-      "minecraft:custom_components": ["scpdy:ammo_pack"],
+      "minecraft:custom_components": ["scpdy:dont_get_durability_damage_on_hit"],
       "minecraft:icon": {
         "textures": {
           "default": "scpdy_ammo_pack_762x51_icon"

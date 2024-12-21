@@ -10,7 +10,7 @@
       }
     },
     "components": {
-      "minecraft:custom_components": ["scpdy:mag"],
+      "minecraft:custom_components": ["scpdy:mag", "scpdy:dont_get_durability_damage_on_hit"],
       "minecraft:max_stack_size": 1,
       "minecraft:icon": {
         "textures": {
@@ -34,6 +34,7 @@
         "tags": [
           "mag",
           "scpdy:mag",
+          "scpdy:ammo_loadable",
           "ammo_type:9mm"
         ]
       }

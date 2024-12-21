@@ -2,6 +2,7 @@ import { Player, system, world } from "@minecraft/server";
 import { isPlayerModificationAvailable } from "@lib/utils/scpdyUtils";
 import "@augumentations/index";
 import "./advancedItem";
+import "./ammo";
 import "./blastDoor";
 import "./cctv";
 import "./commonComponents";
