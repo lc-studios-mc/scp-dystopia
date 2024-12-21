@@ -205,8 +205,11 @@ class T5000 extends AdvancedItem {
     const isADS = this.aimTick >= AIM_DURATION;
 
     if (isADS) {
+      const movementVector = this.player.inputInfo.getMovementVector();
+      const length = Math.sqrt(movementVector.x ** 2 + movementVector.y ** 2);
+
       this.player.addEffect("slowness", 3, {
-        amplifier: 8,
+        amplifier: length > 0.3 ? 3 : 8,
         showParticles: false,
       });
     }
