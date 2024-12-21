@@ -7,14 +7,17 @@ const AMMO_TYPE_OBJ = {
   "762x51": "lc:scpdy_ammo_762x51",
   "12shell": "lc:scpdy_ammo_12shell",
   "338magnum": "lc:scpdy_ammo_338magnum",
-};
+} as const;
 
 export type AmmoType = keyof typeof AMMO_TYPE_OBJ;
 
 export type AmmoTypeInfo = {
-  maxBatchLoad: number;
-  loadCooldown: number;
-  loadSoundId: string;
+  /** Amount of ammo put into mag at once */
+  readonly maxBatchLoad: number;
+  /** Cooldown before being able to put ammo into mag again */
+  readonly loadCooldown: number;
+  /** ID of the sound played when putting ammo into mag */
+  readonly loadSoundId: string;
 };
 
 const AMMO_TYPE_INFO_MAP = new Map<AmmoType, AmmoTypeInfo>([
@@ -92,6 +95,9 @@ export function getAmmoTypeInfo(ammoType: AmmoType): AmmoTypeInfo {
   return value;
 }
 
+/**
+ * @returns Total amount of ammo inside container
+ */
 export function getTotalAmmoCount(container: mc.Container, ammoType: AmmoType): number {
   let ammoCount = 0;
 
@@ -105,14 +111,18 @@ export function getTotalAmmoCount(container: mc.Container, ammoType: AmmoType): 
     if (itemStack.hasTag("scpdy:ammo")) {
       ammoCount += itemStack.amount;
     } else if (itemStack.hasTag("scpdy:ammo_pack")) {
-      const durability = itemStack.getComponent("durability")!;
-      ammoCount += durability.maxDurability - durability.damage;
+      const durabilityComp = itemStack.getComponent("durability")!;
+      ammoCount += durabilityComp.maxDurability - durabilityComp.damage;
     }
   }
 
   return ammoCount;
 }
 
+/**
+ * Removes specific ammo type from container.
+ * @returns Amount of removed ammo
+ */
 export function removeAmmo(
   container: mc.Container,
   ammoType: AmmoType,
@@ -154,15 +164,15 @@ export function removeAmmo(
     if (excludePacks) continue;
 
     if (itemStack.hasTag("scpdy:ammo_pack")) {
-      const durability = itemStack.getComponent("durability")!;
+      const durabilityComp = itemStack.getComponent("durability")!;
 
-      let increaseDamage = Math.min(
+      const damageIncrease = Math.min(
         Math.max(maxAmount - totalRemoved, 0),
-        durability.maxDurability - durability.damage,
+        durabilityComp.maxDurability - durabilityComp.damage,
       );
 
-      durability.damage += increaseDamage;
-      totalRemoved += increaseDamage;
+      durabilityComp.damage += damageIncrease;
+      totalRemoved += damageIncrease;
 
       slot.setItem(itemStack);
     }
