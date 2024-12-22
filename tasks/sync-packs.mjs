@@ -18,7 +18,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const bpDir = path.join(mcDir, "development_behavior_packs", "SCPDY_BP");
   const rpDir = path.join(mcDir, "development_resource_packs", "SCPDY_RP");
 
-  const watch = process.argv[2] === "watch" ? "-w" : "";
+  const watch = (useMcPreview ? process.argv[3] : process.argv[2]) === "watch" ? "-w" : "";
 
   const command1 = `npx syncdir ./packs/bp ${bpDir} ${watch} -exclude ".*\\.(gitignore|gitkeep)$"`;
   const command2 = `npx syncdir ./packs/rp ${rpDir} ${watch} -exclude ".*\\.(gitignore|gitkeep|psd|gif|bbmodel)$"`;
