@@ -2,6 +2,8 @@ import * as mc from "@minecraft/server";
 import * as vec3 from "@lib/utils/vec3";
 import { getEntitiesInAllDimensions, getModifiedDamageNumber } from "@lib/utils/entityUtils";
 import { spawnBulletRicochetParticle } from "@lib/utils/scpdyUtils";
+import { clamp } from "@lib/utils/mathUtils";
+import { CONFIG } from "@server/config/configData";
 
 const BULLET_TYPE_OBJ = {
   default: "lc:scpdy_scriptable_bullet",
@@ -213,7 +215,7 @@ mc.world.afterEvents.projectileHitEntity.subscribe((hitEvent) => {
         const oldVelocity = hitEntity.getVelocity();
         const damage =
           event.canDamageBeModified === true
-            ? getModifiedDamageNumber(event.damage, hitEntity)
+            ? Math.max(1, getModifiedDamageNumber(event.damage, hitEntity))
             : event.damage;
 
         hitEntity.applyDamage(damage, {
@@ -221,18 +223,27 @@ mc.world.afterEvents.projectileHitEntity.subscribe((hitEvent) => {
           damagingEntity: flyingBulletInfo.shootOptions.sourceEntity,
         });
 
-        hitEntity.clearVelocity();
-        hitEntity.applyImpulse(oldVelocity);
+        if (CONFIG.bulletManipulatesTargetVelocity) {
+          hitEntity.clearVelocity();
 
-        if (event.knockbackPower === undefined) continue;
+          const revelo: mc.Vector3 = {
+            x: clamp(oldVelocity.x / 3, -0.5, 0.5),
+            y: 0,
+            z: clamp(oldVelocity.z / 3, -0.5, 0.5),
+          };
 
-        const impulse = vec3
-          .chain(vec3.FORWARD)
-          .scale(event.knockbackPower)
-          .changeDir(hitEvent.hitVector)
-          .done();
+          hitEntity.applyImpulse(revelo);
 
-        hitEntity.applyImpulse(impulse);
+          if (event.knockbackPower === undefined) continue;
+
+          const impulse = vec3
+            .chain(vec3.FORWARD)
+            .scale(event.knockbackPower)
+            .changeDir(hitEvent.hitVector)
+            .done();
+
+          hitEntity.applyImpulse(impulse);
+        }
       } else if (event.type === "spawnRicochet") {
         spawnBulletRicochetParticle(hitEvent.dimension, hitEvent.location, hitEvent.hitVector);
       }

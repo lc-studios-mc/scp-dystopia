@@ -5,7 +5,7 @@ import { Player as UiPlayer } from "@minecraft/server-ui/node_modules/@minecraft
 export type ConfigData = {
   disableGore: boolean;
   advanced096Movement: boolean;
-  playerBulletStopsEntity: boolean;
+  bulletManipulatesTargetVelocity: boolean;
   gunTacReloadOption: number;
 };
 
@@ -13,7 +13,7 @@ class _ConfigData implements ConfigData {
   reset(): void {
     this.disableGore = false;
     this.advanced096Movement = true;
-    this.playerBulletStopsEntity = false;
+    this.bulletManipulatesTargetVelocity = true;
     this.gunTacReloadOption = 2;
   }
 
@@ -33,12 +33,12 @@ class _ConfigData implements ConfigData {
     world.setDynamicProperty("scpdyConfig_advanced096Movement", value);
   }
 
-  get playerBulletStopsEntity(): boolean {
-    return world.getDynamicProperty("scpdyConfig_playerBulletStopsEntity") === true;
+  get bulletManipulatesTargetVelocity(): boolean {
+    return world.getDynamicProperty("scpdyConfig_bulletManipulatesTargetVelocity") === true;
   }
 
-  set playerBulletStopsEntity(value: boolean | undefined) {
-    world.setDynamicProperty("scpdyConfig_playerBulletStopsEntity", value);
+  set bulletManipulatesTargetVelocity(value: boolean | undefined) {
+    world.setDynamicProperty("scpdyConfig_bulletManipulatesTargetVelocity", value);
   }
 
   get gunTacReloadOption(): number {
@@ -72,8 +72,8 @@ export async function showConfigEditorForm(player: Player): Promise<void> {
       _CONFIG.advanced096Movement,
     )
     .toggle(
-      { translate: "scpdy.form.config.prop.playerBulletStopsEntity" },
-      _CONFIG.playerBulletStopsEntity,
+      { translate: "scpdy.form.config.prop.bulletManipulatesTargetVelocity" },
+      _CONFIG.bulletManipulatesTargetVelocity,
     )
     .dropdown(
       { translate: "scpdy.form.config.prop.gunTacReloadTrigger" },
@@ -94,7 +94,7 @@ export async function showConfigEditorForm(player: Player): Promise<void> {
 
   _CONFIG.disableGore = response.formValues[0] === true;
   _CONFIG.advanced096Movement = response.formValues[1] === true;
-  _CONFIG.playerBulletStopsEntity = response.formValues[2] === true;
+  _CONFIG.bulletManipulatesTargetVelocity = response.formValues[2] === true;
   _CONFIG.gunTacReloadOption = response.formValues[3] as number;
 
   player.sendMessage({ translate: "scpdy.msg.config.saved" });
