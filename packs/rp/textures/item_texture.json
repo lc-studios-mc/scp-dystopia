@@ -53,10 +53,10 @@
       "textures": "textures/scpdy/items/weapons/guns/m4a1_icon"
     },
     "scpdy_gun_mp5sd_icon": {
-      "textures": "textures/scpdy/items/weapons/guns/mp5sd_icon"
+      "textures": "textures/scpdy/items/weapons/guns/mp5sd/icon"
     },
     "scpdy_gun_mp5_mag_icon": {
-      "textures": "textures/scpdy/items/weapons/guns/mp5_mag_icon"
+      "textures": "textures/scpdy/items/weapons/guns/mp5/mag"
     },
     "scpdy_gun_spas12_icon": {
       "textures": "textures/scpdy/items/weapons/guns/spas12_icon"

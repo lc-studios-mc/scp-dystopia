@@ -1,6 +1,20 @@
 {
   "format_version": "1.20.20",
   "sound_definitions": {
+    // #region Vanilla sound definition overrides
+    "copper.wax.off": { // Changed to bullet casing drop sounds
+      "category": "neutral",
+      "max_distance": null,
+      "min_distance": null,
+      "sounds": [
+        "sounds/scpdy/misc/bullet_casing_drop_1",
+        "sounds/scpdy/misc/bullet_casing_drop_2",
+        "sounds/scpdy/misc/bullet_casing_drop_3",
+        "sounds/scpdy/misc/bullet_casing_drop_4",
+        "sounds/scpdy/misc/bullet_casing_drop_5"
+      ]
+    },
+    // #endregion
     // #region Music
     "scpdy.music.the_unknown_battle_1": {
       "category": "music",
@@ -301,6 +315,12 @@
         "sounds/scpdy/weapons/guns/dry"
       ]
     },
+    "scpdy.gun.trigger_click": {
+      "category": "music",
+      "sounds": [
+        "sounds/scpdy/weapons/guns/trigger_click"
+      ]
+    },
     "scpdy.gun.glock17.shoot": {
       "__use_legacy_max_distance": "true",
       "category": "hostile",
@@ -379,25 +399,45 @@
     },
     "scpdy.gun.mp5sd.shoot": {
       "category": "hostile",
-      "max_distance": 18.0,
+      "max_distance": 20.0,
       "min_distance": null,
       "sounds": [
         {
           "name": "sounds/scpdy/weapons/guns/mp5sd/shoot",
-          "volume": 0.9
+          "volume": 0.95
         }
       ]
     },
-    "scpdy.gun.mp5sd.reload": {
-      "category": "music",
+    "scpdy.gun.mp5sd.ch_pull": {
+      "category": "hostile",
+      "max_distance": 6.0,
+      "min_distance": null,
       "sounds": [
-        "sounds/scpdy/weapons/guns/mp5sd/reload"
+        "sounds/scpdy/weapons/guns/mp5sd/ch_pull"
       ]
     },
-    "scpdy.gun.mp5sd.reload_tac": {
-      "category": "music",
+    "scpdy.gun.mp5sd.ch_slap": {
+      "category": "hostile",
+      "max_distance": 8.0,
+      "min_distance": null,
       "sounds": [
-        "sounds/scpdy/weapons/guns/mp5sd/reload_tac"
+        "sounds/scpdy/weapons/guns/mp5sd/ch_slap"
+      ]
+    },
+    "scpdy.gun.mp5sd.mag_attach": {
+      "category": "hostile",
+      "max_distance": 5.0,
+      "min_distance": null,
+      "sounds": [
+        "sounds/scpdy/weapons/guns/mp5sd/mag_attach"
+      ]
+    },
+    "scpdy.gun.mp5sd.mag_remove": {
+      "category": "hostile",
+      "max_distance": 6.0,
+      "min_distance": null,
+      "sounds": [
+        "sounds/scpdy/weapons/guns/mp5sd/mag_remove"
       ]
     },
     "scpdy.gun.spas12.shoot": {

@@ -24,7 +24,7 @@
           "min": 0,
           "max": 0
         },
-        "max_durability": 45
+        "max_durability": 40
       },
       "minecraft:display_name": {
         "value": "item.lc:scpdy_gun_mp5_mag.name"
