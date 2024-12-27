@@ -372,6 +372,9 @@
     "scpdy_landmine": {
       "textures": "textures/scpdy/blocks/furniture/landmine"
     },
+    "scpdy_laptop": {
+      "textures": "textures/scpdy/blocks/furniture/laptop"
+    },
     "scpdy_warehouse_light_1": {
       "textures": "textures/scpdy/blocks/furniture/warehouse_light_1"
     },

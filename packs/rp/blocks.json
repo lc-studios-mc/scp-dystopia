@@ -18,6 +18,9 @@
   "lc:scpdy_landmine": {
     "sound": "copper"
   },
+  "lc:scpdy_laptop": {
+    "sound": "metal"
+  },
   "lc:scpdy_razor_wire": {
     "sound": "metal"
   },
