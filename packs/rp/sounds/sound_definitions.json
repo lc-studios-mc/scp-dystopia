@@ -86,6 +86,22 @@
         }
       ]
     },
+    "scpdy.interact.laptop.close": {
+      "category": "neutral",
+      "max_distance": null,
+      "min_distance": null,
+      "sounds": [
+        "sounds/scpdy/interact/laptop_close"
+      ]
+    },
+    "scpdy.interact.laptop.open": {
+      "category": "neutral",
+      "max_distance": null,
+      "min_distance": null,
+      "sounds": [
+        "sounds/scpdy/interact/laptop_open"
+      ]
+    },
     "scpdy.interact.lever.flip": {
       "category": "neutral",
       "max_distance": 7.0,

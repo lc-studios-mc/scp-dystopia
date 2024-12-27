@@ -334,6 +334,7 @@ tile.lc:scpdy_blast_door_dummy.name=Blast Door Barrier
 tile.lc:scpdy_floor_grate.name=Metal Floor Grate
 tile.lc:scpdy_floor_grate_trap.name=Metal Floor Grate (Trap)
 tile.lc:scpdy_landmine.name=Landmine
+tile.lc:scpdy_laptop.name=Laptop
 tile.lc:scpdy_razor_wire.name=Razor Wire
 tile.lc:scpdy_rb_placeholder.name=Redstone Block Placeholder
 tile.lc:scpdy_steel_beam.name=Steel Beam
