@@ -372,6 +372,9 @@
       "textures": "textures/scpdy/blocks/furniture/shelves/shelf_2_toys"
     },
     // #endregion
+    "scpdy_hanging_lamp": {
+      "textures": "textures/scpdy/blocks/furniture/hanging_lamp"
+    },
     "scpdy_landmine": {
       "textures": "textures/scpdy/blocks/furniture/landmine"
     },

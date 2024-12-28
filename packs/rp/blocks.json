@@ -449,6 +449,9 @@
     "sound": "stone"
   },
   // #endregion
+  "lc:scpdy_hanging_lamp": {
+    "sound": "metal"
+  },
   "lc:scpdy_landmine": {
     "sound": "copper"
   },
