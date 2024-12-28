@@ -1,58 +1,6 @@
 {
   "format_version": "1.1.0",
-  // #region Uncategorized
-  "lc:scpdy_blast_door_dummy": {
-    "sound": "netherite"
-  },
-  "lc:scpdy_door_activator": {
-    "sound": "metal"
-  },
-  "lc:scpdy_floor_grate": {
-    "sound": "metal",
-    "textures": "scpdy_floor_grate"
-  },
-  "lc:scpdy_floor_grate_trap": {
-    "sound": "metal",
-    "textures": "scpdy_floor_grate_trap"
-  },
-  "lc:scpdy_landmine": {
-    "sound": "copper"
-  },
-  "lc:scpdy_laptop": {
-    "sound": "metal"
-  },
-  "lc:scpdy_razor_wire": {
-    "sound": "metal"
-  },
-  "lc:scpdy_rb_placeholder": {
-    "sound": "stone",
-    "textures": "scpdy_rb_placeholder"
-  },
-  "lc:scpdy_steel_beam": {
-    "sound": "metal"
-  },
-  "lc:scpdy_steel_beam_end": {
-    "sound": "metal"
-  },
-  "lc:scpdy_steel_truss": {
-    "sound": "metal"
-  },
-  "lc:scpdy_warehouse_light_1": {
-    "sound": "glass"
-  },
-  "lc:scpdy_warehouse_light_1_hanging": {
-    "sound": "metal"
-  },
-  // #endregion
-  // #region Decor
-  "lc:scpdy_decor_vent_1": {
-    "sound": "metal"
-  },
-  "lc:scpdy_decor_vent_2": {
-    "sound": "metal"
-  },
-  // #endregion
-  // #region Construction
+  // #region construction
   "lc:scpdy_cst_black_checker_tiles": {
     "sound": "stone",
     "textures": "scpdy_cst_black_checker_tiles"
@@ -333,7 +281,31 @@
     "textures": "scpdy_cst_reinforced_panel_3"
   },
   // #endregion
-  // #region Control devices
+
+  // #region construction_3d
+  "lc:scpdy_floor_grate": {
+    "sound": "metal",
+    "textures": "scpdy_floor_grate"
+  },
+  "lc:scpdy_floor_grate_trap": {
+    "sound": "metal",
+    "textures": "scpdy_floor_grate_trap"
+  },
+  "lc:scpdy_razor_wire": {
+    "sound": "metal"
+  },
+  "lc:scpdy_steel_beam": {
+    "sound": "metal"
+  },
+  "lc:scpdy_steel_beam_end": {
+    "sound": "metal"
+  },
+  "lc:scpdy_steel_truss": {
+    "sound": "metal"
+  },
+  // #endregion
+
+  // #region control_devices
   "lc:scpdy_door_button": {
     "sound": "copper"
   },
@@ -359,13 +331,20 @@
     "sound": "copper"
   },
   // #endregion
-  // #region Doors
-  // #region Command doors
-  "lc:scpdy_command_door": {
+
+  // #region decor
+  // #region decor -> vent
+  "lc:scpdy_decor_vent_1": {
+    "sound": "metal"
+  },
+  "lc:scpdy_decor_vent_2": {
     "sound": "metal"
   },
   // #endregion
-  // #region Boolean doors
+  // #endregion
+  
+  // #region door
+  // #region door -> boolean
   "lc:scpdy_boolean_door_1": {
     "sound": "metal"
   },
@@ -376,7 +355,33 @@
     "sound": "metal"
   },
   // #endregion
-  // #region Mechanical doors
+  // #region door -> command
+  "lc:scpdy_command_door": {
+    "sound": "metal"
+  },
+  // #endregion
+  // #region door -> lockdown
+  "lc:scpdy_lockdown_door_n1": {
+    "sound": "netherite"
+  },
+  "lc:scpdy_lockdown_door_n2": {
+    "sound": "netherite"
+  },
+  "lc:scpdy_lockdown_door_n3": {
+    "sound": "netherite"
+  },
+  "lc:scpdy_lockdown_door_n4": {
+    "sound": "netherite"
+  },
+  "lc:scpdy_lockdown_door_n5": {
+    "sound": "netherite"
+  },
+  // #endregion
+  // #region door -> mechanical
+  "lc:scpdy_door_activator": {
+    "sound": "metal"
+  },
+  // #region door -> mechanical -> doors
   "lc:scpdy_mechanical_door_1": {
     "sound": "metal"
   },
@@ -399,7 +404,7 @@
     "sound": "netherite"
   },
   // #endregion
-  // #region Standard Doors
+  // #region door -> standard
   "lc:scpdy_standard_door_1": {
     "sound": "wood"
   },
@@ -407,31 +412,19 @@
     "sound": "metal"
   },
   // #endregion
-  // #region Lockdown Doors
-  "lc:scpdy_lockdown_door_n1": {
-    "sound": "netherite"
-  },
-  "lc:scpdy_lockdown_door_n2": {
-    "sound": "netherite"
-  },
-  "lc:scpdy_lockdown_door_n3": {
-    "sound": "netherite"
-  },
-  "lc:scpdy_lockdown_door_n4": {
-    "sound": "netherite"
-  },
-  "lc:scpdy_lockdown_door_n5": {
-    "sound": "netherite"
-  },
   // #endregion
   // #endregion
-  // #region Furniture
+  
+  // #region furniture
+  // #region furniture -> connec_tables
   "lc:scpdy_connec_table_1": {
     "sound": "stone"
   },
   "lc:scpdy_connec_table_2": {
     "sound": "stone"
   },
+  // #endregion
+  // #region furniture -> office_chairs
   "lc:scpdy_office_chair_1": {
     "sound": "stone"
   },
@@ -441,6 +434,8 @@
   "lc:scpdy_office_chair_3": {
     "sound": "stone"
   },
+  // #endregion
+  // #region furniture -> shelves
   "lc:scpdy_shelf_1": {
     "sound": "stone"
   },
@@ -448,7 +443,22 @@
     "sound": "stone"
   },
   // #endregion
-  // #region Lockdown alarm
+  "lc:scpdy_landmine": {
+    "sound": "copper"
+  },
+  "lc:scpdy_laptop": {
+    "sound": "metal"
+  },
+  "lc:scpdy_warehouse_light_1": {
+    "sound": "glass"
+  },
+  "lc:scpdy_warehouse_light_1_hanging": {
+    "sound": "metal"
+  },
+  // #endregion
+  
+  // #region lockdown_devices
+  // #region lockdown_devices -> alarm
   "lc:scpdy_lockdown_alarm_n1": {
     "sound": "glass"
   },
@@ -465,7 +475,7 @@
     "sound": "glass"
   },
   // #endregion
-  // #region Lockdown panel
+  // #region lockdown_devices -> panel
   "lc:scpdy_lockdown_panel_n1": {
     "sound": "copper"
   },
@@ -482,9 +492,21 @@
     "sound": "copper"
   },
   // #endregion
-  // #region Minigame Blocks
+  // #endregion
+
+  // #region minigame
   "lc:scpdy_dash_block": {
     "sound": "metal"
+  },
+  // #endregion
+
+  // #region misc
+  "lc:scpdy_blast_door_dummy": {
+    "sound": "netherite"
+  },
+  "lc:scpdy_rb_placeholder": {
+    "sound": "stone",
+    "textures": "scpdy_rb_placeholder"
   }
   // #endregion
 }
