@@ -1,14 +1,34 @@
 # Credits 🤝
 
-- Blazik
-  - Model of Blast Door 1
-  - Texture of SCP-096
-  - Texture of keycards
-  
-- LLAMA BLA BLO
-  - Model of Glock-17
-  - Model of GM6 LYNX
-  - Model of HK21
-  - Model of MP5-SD
-  - Model of SPAS-12
-  - Model of T-5000
+### Blazik
+- Full 3D models
+  - Blast Door 1
+- Textures
+  - SCP-096
+  - Keycards
+
+### Hexablare Union
+- Full 3D models
+  - Laptop block
+  - Office Chair blocks
+  - Shelf blocks
+- Textures
+  - Blue Wall blocks
+  - Brown Facility Wall blocks
+  - Cyan Facility Wall blocks
+  - Exterior Brick blocks
+  - Facility Wall blocks
+  - Facility Wall blocks (including colored ones)
+  - Lamp (2D) blocks
+  - Office Ceiling blocks
+  - Reinforced Panel blocks
+  - Treadplate block
+
+### LLAMA BLA BLO
+- Full 3D models
+  - Glock-17
+  - GM6 LYNX
+  - HK21
+  - MP5-SD
+  - SPAS-12
+  - T-5000
