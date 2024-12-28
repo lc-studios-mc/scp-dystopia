@@ -48,9 +48,24 @@
         "seconds_to_destroy": 0.4
       },
       "minecraft:light_dampening": 1,
-      "minecraft:collision_box": true,
-      "minecraft:selection_box": true,
-      "tag:connec_table": {}
-    }
+      "minecraft:collision_box": {
+        "origin": [-8, 13, -8],
+        "size": [16, 3, 16]
+      },
+      "minecraft:selection_box": {
+        "origin": [-8, 8, -8],
+        "size": [16, 8, 16]
+      },
+      "tag:scpdy:connec_table": {}
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('lc:leg_nw') && q.block_state('lc:leg_ne') && q.block_state('lc:leg_sw') && q.block_state('lc:leg_se')",
+        "components": {
+          "minecraft:collision_box": true,
+          "minecraft:selection_box": true
+        }
+      }
+    ]
   }
 }
