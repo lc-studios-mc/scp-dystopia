@@ -152,6 +152,9 @@
     "scpdy_razor_wire": {
       "textures": "textures/scpdy/blocks/construction_3d/razor_wire"
     },
+    "scpdy_small_light": {
+      "textures": "textures/scpdy/blocks/construction_3d/small_light"
+    },
     "scpdy_steel_beam": {
       "textures": "textures/scpdy/blocks/construction_3d/steel_beam"
     },
