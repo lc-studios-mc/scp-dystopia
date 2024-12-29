@@ -5,7 +5,8 @@
 <hr/>
 
 [![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/lc-studios-mc/scp-dystopia/total?style=for-the-badge)](https://github.com/lc-studios-mc/scp-dystopia/releases)
-[![GitHub last commit](https://img.shields.io/github/last-commit/lc-studios-mc/scp-dystopia?style=for-the-badge)](https://github.com/lc-studios-mc/scp-dystopia/commits/)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/lc-studios-mc/scp-dystopia/develop?style=for-the-badge&label=Last%20Dev%20Commit&link=https%3A%2F%2Fgithub.com%2Flc-studios-mc%2Fscp-dystopia%2Fcommits%2Fdevelop)
+
 [![Static Badge](https://img.shields.io/badge/Discord-%235865F2?style=for-the-badge&logo=discord&logoColor=%23ffffff)](https://discord.gg/K2mxsJ2trE)
 [![Static Badge](https://img.shields.io/badge/MCPEDL-%2300a52e?style=for-the-badge)](https://mcpedl.com/scp-dystopia-addon/)
 
