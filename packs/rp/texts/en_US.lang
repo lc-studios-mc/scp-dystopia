@@ -342,6 +342,8 @@ tile.lc:scpdy_rb_placeholder.name=Redstone Block Placeholder
 tile.lc:scpdy_steel_beam.name=Steel Beam
 tile.lc:scpdy_steel_beam_end.name=Steel Beam (End)
 tile.lc:scpdy_steel_truss.name=Steel Truss
+tile.lc:scpdy_vent.name=Vent
+tile.lc:scpdy_vent_openable.name=Vent (Openable)
 tile.lc:scpdy_warehouse_light_1.name=Warehouse Light 1
 tile.lc:scpdy_warehouse_light_1_hanging.name=Warehouse Light 1 (Hanging)
 

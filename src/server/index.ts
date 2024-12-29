@@ -7,6 +7,7 @@ import "./blastDoor";
 import "./cctv";
 import "./commonComponents";
 import "./config";
+import "./construction3DBlocks";
 import "./controlDevices";
 import "./doorSystem";
 import "./facilityNetwork";

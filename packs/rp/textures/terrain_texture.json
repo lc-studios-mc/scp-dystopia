@@ -161,6 +161,9 @@
     "scpdy_steel_truss": {
       "textures": "textures/scpdy/blocks/construction_3d/steel_truss"
     },
+    "scpdy_vent": {
+      "textures": "textures/scpdy/blocks/construction_3d/vent"
+    },
     // #endregion
     // #region blocks -> control_devices
     "scpdy_button": {

@@ -309,6 +309,12 @@
   "lc:scpdy_steel_truss": {
     "sound": "metal"
   },
+  "lc:scpdy_vent": {
+    "sound": "metal"
+  },
+  "lc:scpdy_vent_openable": {
+    "sound": "metal"
+  },
   // #endregion
 
   // #region control_devices
