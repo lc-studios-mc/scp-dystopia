@@ -455,6 +455,9 @@
     "sound": "stone"
   },
   // #endregion
+  "lc:scpdy_file_cabinet": {
+    "sound": "metal"
+  },
   "lc:scpdy_hanging_lamp": {
     "sound": "metal"
   },

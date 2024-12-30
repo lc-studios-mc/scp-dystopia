@@ -375,6 +375,9 @@
       "textures": "textures/scpdy/blocks/furniture/shelves/shelf_2_toys"
     },
     // #endregion
+    "scpdy_file_cabinet": {
+      "textures": "textures/scpdy/blocks/furniture/file_cabinet"
+    },
     "scpdy_hanging_lamp": {
       "textures": "textures/scpdy/blocks/furniture/hanging_lamp"
     },

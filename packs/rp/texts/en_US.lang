@@ -346,6 +346,7 @@ tile.lc:scpdy_vent.name=Vent
 tile.lc:scpdy_vent_openable.name=Vent (Openable)
 tile.lc:scpdy_warehouse_light_1.name=Warehouse Light 1
 tile.lc:scpdy_warehouse_light_1_hanging.name=Warehouse Light 1 (Hanging)
+tile.lc:scpdy_file_cabinet.name=File Cabinet
 
 tile.lc:scpdy_decor_vent_1.name=Decorative Vent 1
 tile.lc:scpdy_decor_vent_2.name=Decorative Vent 2
