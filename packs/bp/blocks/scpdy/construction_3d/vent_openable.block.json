@@ -51,7 +51,7 @@
           },
           "minecraft:selection_box": {
             "origin": [-8, 0, -8],
-            "size": [16, 16, 1]
+            "size": [16, 16, 3]
           }
         }
       },
@@ -64,8 +64,8 @@
             "size": [16, 1, 16]
           },
           "minecraft:selection_box": {
-            "origin": [-8, 15, -8],
-            "size": [16, 1, 16]
+            "origin": [-8, 13, -8],
+            "size": [16, 3, 16]
           }
         }
       },
