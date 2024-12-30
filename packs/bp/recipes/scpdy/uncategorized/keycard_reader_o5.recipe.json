@@ -4,7 +4,7 @@
     "description": {
       "identifier": "lc:scpdy_recipe_keycard_reader_o5"
     },
-    "tags": ["crafting_table"],
+    "tags": ["crafting_table", "dystopia_craftbench", "scpdy_workbench"],
     "pattern": [
       "BR",
       "IK"
