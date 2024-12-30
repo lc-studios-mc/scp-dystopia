@@ -583,9 +583,14 @@
     // #endregion
     // #region Slasher
     "scpdy.slasher.idle": {
-      "category": "music",
+      "category": "hostile",
+      "max_distance": 7.0,
+      "min_distance": 3.0,
       "sounds": [
-        "sounds/scpdy/weapons/slasher/idle"
+        {
+          "name": "sounds/scpdy/weapons/slasher/idle",
+          "volume": 0.8
+        }
       ]
     },
     "scpdy.slasher.chainsaw.start": {
