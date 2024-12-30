@@ -32,6 +32,9 @@
           ],
           "transitions": [
             {
+              "pick": "v.pick_cd"
+            },
+            {
               "swing_1": "v.swing_cd_1"
             },
             {
@@ -51,7 +54,7 @@
           ],
           "transitions": [
             {
-              "pick": "!v.swing_cd_1"
+              "pick": "!v.swing_cd_1 || v.pick_cd"
             },
             {
               "swing_2": "v.swing_cd_2"
@@ -67,7 +70,7 @@
           ],
           "transitions": [
             {
-              "pick": "!v.swing_cd_2"
+              "pick": "!v.swing_cd_2 || v.pick_cd"
             },
             {
               "swing_3": "v.swing_cd_3"
@@ -83,7 +86,7 @@
           ],
           "transitions": [
             {
-              "pick": "!v.swing_cd_3"
+              "pick": "!v.swing_cd_3 || v.pick_cd"
             },
             {
               "swing_2": "v.swing_cd_2"
@@ -99,7 +102,7 @@
           ],
           "transitions": [
             {
-              "pick": "v.charge_cancel_cd"
+              "pick": "v.charge_cancel_cd || v.pick_cd"
             },
             {
               "charge_hold": "q.all_animations_finished"
@@ -115,7 +118,7 @@
           ],
           "transitions": [
             {
-              "pick": "v.charge_cancel_cd"
+              "pick": "v.charge_cancel_cd || v.pick_cd"
             },
             {
               "slash_start": "v.slash_start_cd"
@@ -127,6 +130,9 @@
             "anim.fp.slash_start"
           ],
           "transitions": [
+            {
+              "pick": "v.pick_cd"
+            },
             {
               "charge_start": "v.charge_start_cd"
             },
@@ -145,6 +151,9 @@
           ],
           "transitions": [
             {
+              "pick": "v.pick_cd"
+            },
+            {
               "charge_start": "v.charge_start_cd"
             },
             {
@@ -161,76 +170,10 @@
               "charge_start": "v.charge_start_cd"
             },
             {
-              "pick": "q.all_animations_finished"
+              "pick": "q.all_animations_finished || v.pick_cd"
             }
           ],
           "blend_transition": 0.15
-        }
-      }
-    },
-    "controller.animation.scpdy.weapon.slasher.saw": {
-      "initial_state": "speed_0",
-      "states": {
-        "speed_0": {
-          "transitions": [
-            {
-              "speed_1": "v.saw_cycle_speed == 1"
-            },
-            {
-              "speed_2": "v.saw_cycle_speed == 2"
-            },
-            {
-              "speed_3": "v.saw_cycle_speed == 3"
-            }
-          ]
-        },
-        "speed_1": {
-          "animations": [
-            "anim.fp.saw_cycle_1"
-          ],
-          "transitions": [
-            {
-              "speed_0": "v.saw_cycle_speed == 0"
-            },
-            {
-              "speed_2": "v.saw_cycle_speed == 2"
-            },
-            {
-              "speed_3": "v.saw_cycle_speed == 3"
-            }
-          ]
-        },
-        "speed_2": {
-          "animations": [
-            "anim.fp.saw_cycle_2"
-          ],
-          "transitions": [
-            {
-              "speed_0": "v.saw_cycle_speed == 0"
-            },
-            {
-              "speed_1": "v.saw_cycle_speed == 1"
-            },
-            {
-              "speed_3": "v.saw_cycle_speed == 3"
-            }
-          ]
-        },
-        "speed_3": {
-          "animations": [
-            "anim.fp.saw_cycle_3"
-          ],
-          "transitions": [
-            {
-              "speed_1": "v.saw_cycle_speed == 1"
-            },
-            {
-              "speed_2": "v.saw_cycle_speed == 2"
-            },
-            {
-              "speed_0": "v.saw_cycle_speed == 0"
-            }
-          ]
         }
       }
     }

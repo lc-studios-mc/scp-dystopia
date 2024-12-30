@@ -4,7 +4,7 @@ import { canEntitySplashBlood, getEntityName } from "@lib/utils/entityUtils";
 import { clamp, randomFloat, randomInt } from "@lib/utils/mathUtils";
 import { isEntityDead } from "@lib/utils/entityUtils";
 import { getModifiedDamageNumber } from "@lib/utils/entityUtils";
-import { AdvancedItem } from "@server/advancedItem/AdvancedItem";
+import { AdvancedItem, AdvancedItemBaseConstructorArgs } from "@server/advancedItem/AdvancedItem";
 import { registerAdvancedItemProfile } from "@server/advancedItem/profileRegistry";
 
 const SLASH_TARGET_EXCLUDED_FAMILIES: string[] = ["projectile", "inanimate", "wind_charge"];
@@ -93,12 +93,55 @@ class Slasher extends AdvancedItem {
   private _chargeData?: ChargeData;
   private _slashData?: SlashData;
 
+  constructor(ars: AdvancedItemBaseConstructorArgs) {
+    super(ars);
+
+    ars.player.startItemCooldown("scpdy_slasher_pick", 2);
+  }
+
   onTick(mainhandItemStack: mc.ItemStack): void {
+    const durabilityComp = mainhandItemStack.getComponent("durability")!;
+    if (durabilityComp.damage >= durabilityComp.maxDurability - 1) {
+      this.player.onScreenDisplay.setActionBar({
+        translate: "scpdy.actionHint.slasher.needsRepair",
+      });
+      return;
+    }
+
     if (this._slashData) {
       this.onTickSlash();
     } else if (this._chargeData) {
       this.onTickCharge();
+    } else {
+      // Apply durability damage
+
+      const durabilityDamageToApply = this.nextSlasherDurabilityDamage;
+
+      if (durabilityDamageToApply > 0) {
+        this.nextSlasherDurabilityDamage = 0;
+
+        if (this.player.getGameMode() === mc.GameMode.creative) return;
+
+        durabilityComp.damage = Math.min(
+          durabilityComp.damage + durabilityDamageToApply,
+          durabilityComp.maxDurability - 1,
+        );
+
+        this.playerMainhand.setItem(mainhandItemStack);
+      }
     }
+  }
+
+  get nextSlasherDurabilityDamage(): number {
+    const value = this.player.getDynamicProperty("nextSlasherDurabilityDamage");
+    if (typeof value !== "number") return 0;
+    return value;
+  }
+
+  set nextSlasherDurabilityDamage(value: number) {
+    value = Math.floor(value);
+    const value2 = value <= 0 ? undefined : value;
+    this.player.setDynamicProperty("nextSlasherDurabilityDamage", value2);
   }
 
   onRemove(): void {
@@ -107,6 +150,10 @@ class Slasher extends AdvancedItem {
   }
 
   canBeUsed(): boolean {
+    const slasherItem = this.playerMainhand.getItem();
+    if (!slasherItem || slasherItem.typeId !== this.profile.itemTypeId) return false;
+    const durabilityComp = slasherItem.getComponent("durability")!;
+    if (durabilityComp.damage >= durabilityComp.maxDurability - 1) return false;
     return true;
   }
 
@@ -131,6 +178,11 @@ class Slasher extends AdvancedItem {
   }
 
   onSwingArm(): void {
+    const slasherItem = this.playerMainhand.getItem();
+    if (!slasherItem || slasherItem.typeId !== this.profile.itemTypeId) return;
+    const durabilityComp = slasherItem.getComponent("durability")!;
+    if (durabilityComp.damage >= durabilityComp.maxDurability - 1) return;
+
     if (this._chargeData) return;
     if (this._slashData) return;
     if (this.player.getItemCooldown("scpdy_slasher_prevent_swing_cd") > 0) return;
@@ -140,15 +192,25 @@ class Slasher extends AdvancedItem {
   }
 
   onHitEntity(event: mc.EntityHitEntityAfterEvent): void {
+    const slasherItem = this.playerMainhand.getItem();
+    if (!slasherItem || slasherItem.typeId !== this.profile.itemTypeId) return;
+    const durabilityComp = slasherItem.getComponent("durability")!;
+    if (durabilityComp.damage >= durabilityComp.maxDurability - 1) return;
+
     if (this._chargeData) return;
     if (this._slashData) return;
     if (this.player.getItemCooldown("scpdy_slasher_prevent_swing_cd") > 0) return;
 
     this.player.startItemCooldown("scpdy_slasher_swing_cd_hit", 6);
-    this.onAttack();
+    this.onAttack(event.hitEntity);
   }
 
   onHitBlock(event: mc.EntityHitBlockAfterEvent): void {
+    const slasherItem = this.playerMainhand.getItem();
+    if (!slasherItem || slasherItem.typeId !== this.profile.itemTypeId) return;
+    const durabilityComp = slasherItem.getComponent("durability")!;
+    if (durabilityComp.damage >= durabilityComp.maxDurability - 1) return;
+
     if (this._chargeData) return;
     if (this._slashData) return;
     if (this.player.getItemCooldown("scpdy_slasher_prevent_swing_cd") > 0) return;
@@ -157,7 +219,7 @@ class Slasher extends AdvancedItem {
     this.onAttack();
   }
 
-  private onAttack(): void {
+  private onAttack(hitEntity?: mc.Entity): void {
     this.player.dimension.playSound("scpdy.slasher.swing", this.player.getHeadLocation(), {
       volume: 1.4,
       pitch: randomFloat(0.97, 1.03),
@@ -170,29 +232,35 @@ class Slasher extends AdvancedItem {
     if (this.player.getItemCooldown("scpdy_slasher_swing_cd_2") > 0) {
       this.player.startItemCooldown("scpdy_slasher_swing_cd_3", 15);
       this.player.startItemCooldown("scpdy_slasher_swing_cd_2", 0);
-      this.swingAttackDamage(1);
+      this.swingAttackDamage(1, hitEntity);
       return;
     }
 
     if (this.player.getItemCooldown("scpdy_slasher_swing_cd_3") > 0) {
       this.player.startItemCooldown("scpdy_slasher_swing_cd_2", 15);
       this.player.startItemCooldown("scpdy_slasher_swing_cd_3", 0);
-      this.swingAttackDamage(1);
+      this.swingAttackDamage(1, hitEntity);
       return;
     }
 
     if (this.player.getItemCooldown("scpdy_slasher_swing_cd_1") > 0) {
       this.player.startItemCooldown("scpdy_slasher_swing_cd_2", 15);
       this.player.startItemCooldown("scpdy_slasher_swing_cd_1", 0);
-      this.swingAttackDamage(1);
+      this.swingAttackDamage(1, hitEntity);
       return;
     }
 
     this.player.startItemCooldown("scpdy_slasher_swing_cd_1", 15);
-    this.swingAttackDamage(0);
+    this.swingAttackDamage(0, hitEntity);
   }
 
-  private swingAttackDamage(type: number): void {
+  private swingAttackDamage(type: number, hitEntity?: mc.Entity): void {
+    const slasherItem = this.playerMainhand.getItem();
+
+    if (!slasherItem || slasherItem.typeId !== this.profile.itemTypeId) return;
+
+    const durabilityComp = slasherItem.getComponent("durability")!;
+
     let entities: mc.Entity[];
 
     if (type === 0) {
@@ -216,13 +284,24 @@ class Slasher extends AdvancedItem {
         if (entity === this.player) continue;
         if (entity instanceof mc.Player && !mc.world.gameRules.pvp) continue;
 
-        entity.applyDamage(getModifiedDamageNumber(4, entity), {
-          cause: mc.EntityDamageCause.override,
-          damagingEntity: this.player,
+        const isFirstHitEntity = entity === hitEntity;
+
+        const damaged = entity.applyDamage(getModifiedDamageNumber(6, entity), {
+          cause: isFirstHitEntity
+            ? mc.EntityDamageCause.override
+            : mc.EntityDamageCause.entityAttack,
+          damagingEntity: isFirstHitEntity ? undefined : this.player,
         });
 
-        entity.clearVelocity();
+        if (damaged && this.player.getGameMode() !== mc.GameMode.creative) {
+          durabilityComp.damage = Math.min(
+            durabilityComp.damage + 2,
+            durabilityComp.maxDurability - 1,
+          );
+        }
       }
+
+      this.playerMainhand.setItem(slasherItem);
     } catch {}
   }
 
@@ -392,7 +471,7 @@ class Slasher extends AdvancedItem {
       for (let i = 0; i < hitEntities.length; i++) {
         try {
           const entity = hitEntities[i]!;
-          const damaged = entity.applyDamage(13, {
+          const damaged = entity.applyDamage(16, {
             cause: mc.EntityDamageCause.entityAttack,
             damagingEntity: this.player,
           });
@@ -412,9 +491,9 @@ class Slasher extends AdvancedItem {
             entity.dimension.playSound("scpdy.slasher.critical", entity.location, {
               volume: 1.2,
             });
-          }
 
-          entity.clearVelocity();
+            this.nextSlasherDurabilityDamage += 3;
+          }
 
           if (this.isBeingUsed) {
             if (mc.system.currentTick % 8 !== 0) playChainsawLoopSound(this.player);
@@ -534,6 +613,8 @@ class Slasher extends AdvancedItem {
               slashData.lockonTarget.getHeadLocation(),
             );
           }
+
+          this.nextSlasherDurabilityDamage += 1;
         }
       } catch {}
 
@@ -654,4 +735,12 @@ type SlashData = {
 registerAdvancedItemProfile({
   itemTypeId: "lc:scpdy_slasher",
   createInstance: (args) => new Slasher(args),
+});
+
+mc.world.beforeEvents.worldInitialize.subscribe((event) => {
+  event.itemComponentRegistry.registerCustomComponent("scpdy:slasher", {
+    onBeforeDurabilityDamage(arg) {
+      arg.durabilityDamage = 0;
+    },
+  });
 });

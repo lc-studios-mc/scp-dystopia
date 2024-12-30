@@ -26,6 +26,11 @@
       "textures": "textures/scpdy/items/keycards/keycard_o5"
     },
     // #endregion
+    // #region items -> materials
+    "scpdy_slasher_blade": {
+      "textures": "textures/scpdy/items/materials/slasher_blade"
+    },
+    // #endregion
     // #region items -> weapons
     // #region items -> weapons -> guns
     "scpdy_gun_ar15_mag_icon": {
