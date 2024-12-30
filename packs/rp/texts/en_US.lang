@@ -1,9 +1,9 @@
-## Item Groups
+## --- Item Groups
 
 itemGroup.name.stoneBrick=Decorative Stone §b+ SCP:DY Construction Blocks
 itemGroup.name.sandstone=Sandstone §b+ SCP:DY 3D Blocks
 
-## Action hints
+## --- Action hints
 
 action.hint.exit.lc:scpdy_sittable_anchor=Sneak or jump to exit
 
@@ -46,7 +46,7 @@ scpdy.actionHint.scp096_1_wand.noValidEntity=§cNo valid entity in line of sight
 scpdy.actionHint.scp096_1_wand.taggedEntity=§aTagged %s as SCP-096-1!
 scpdy.actionHint.scp096_1_wand.entityAlreadyTagged=§cThis entity is already tagged as SCP-096-1...
 
-## Messages
+## --- Messages
 
 scpdy.msg.misc.scriptInit=§7[SCP: Dystopia] Script Initialized
 scpdy.msg.misc.error=§cERROR: %s
@@ -123,7 +123,7 @@ scpdy.msg.theUnknownWaveSpawner.playerScore=§aYour score was %s
 
 scpdy.msg.scp096.destroyer.invulnerableToKillCommands=§o§eSCP-096 in destroyer mode is §linvulnerable to kill commands
 
-## Forms
+## --- Forms
 
 scpdy.form.misc.cancel=Cancel
 scpdy.form.misc.close=Close
@@ -266,19 +266,9 @@ scpdy.form.fnm.editZoneName.nameField.label=New name
 scpdy.form.fnm.editZoneName.nameField.placeholder=Enter new name
 scpdy.form.fnm.editZoneName.submitButton=Save
 
-## Items
+## --- Items
 
-item.lc:scpdy_config.name=Config (SCP: Dystopia 2.0+)
-item.lc:scpdy_config.interact=Edit Config
-item.lc:scpdy_facility_network_manager.name=Facility Network Manager
-item.lc:scpdy_wrench.name=Wrench (SCP: Dystopia 2.0+)
-
-item.lc:scpdy_ammo_9mm.name=9x19mm Bullet
-item.lc:scpdy_ammo_12shell.name=12 Gauge Shell
-item.lc:scpdy_ammo_50bmg.name=.50 BMG Bullet
-item.lc:scpdy_ammo_338magnum.name=.338 Magnum Bullet
-item.lc:scpdy_ammo_556mm.name=5.56x45mm Bullet
-item.lc:scpdy_ammo_762x51.name=7.62x51mm Bullet
+## items -> ammo -> packs -> ...
 item.lc:scpdy_ammo_pack_9mm.name=Ammo Pack (9x19mm)
 item.lc:scpdy_ammo_pack_12shell.name=Ammo Pack (12 Gauge)
 item.lc:scpdy_ammo_pack_50bmg.name=Ammo Pack (.50 BMG)
@@ -286,15 +276,26 @@ item.lc:scpdy_ammo_pack_338magnum.name=Ammo Pack (.338 Magnum)
 item.lc:scpdy_ammo_pack_556mm.name=Ammo Pack (5.56x45mm)
 item.lc:scpdy_ammo_pack_762x51.name=Ammo Pack (7.62x51mm)
 
+## items -> ammo -> ...
+item.lc:scpdy_ammo_9mm.name=9x19mm Bullet
+item.lc:scpdy_ammo_12shell.name=12 Gauge Shell
+item.lc:scpdy_ammo_50bmg.name=.50 BMG Bullet
+item.lc:scpdy_ammo_338magnum.name=.338 Magnum Bullet
+item.lc:scpdy_ammo_556mm.name=5.56x45mm Bullet
+item.lc:scpdy_ammo_762x51.name=7.62x51mm Bullet
+
+## items -> blast_door -> ...
 item.lc:scpdy_blast_door_1_preview_placer.name=Blast Door 1 (5x3)
 item.lc:scpdy_blast_door_2_preview_placer.name=Blast Door 2 (5x3)
 
+## items -> cctv -> ...
 item.lc:scpdy_cctv_camera_placer.name=CCTV Camera
 item.lc:scpdy_cctv_linker.name=CCTV Linker
 item.lc:scpdy_cctv_monitor_placer.name=CCTV Monitor
 item.lc:scpdy_cctv_server_placer.name=CCTV Server
 item.lc:scpdy_cctv_tablet.name=CCTV Tablet
 
+## items -> keycards -> ...
 item.lc:scpdy_keycard_lvl_0.name=SCP Keycard (Level 0)
 item.lc:scpdy_keycard_lvl_1.name=SCP Keycard (Level 1)
 item.lc:scpdy_keycard_lvl_2.name=SCP Keycard (Level 2)
@@ -303,16 +304,17 @@ item.lc:scpdy_keycard_lvl_4.name=SCP Keycard (Level 4)
 item.lc:scpdy_keycard_lvl_5.name=SCP Keycard (Level 5)
 item.lc:scpdy_keycard_o5.name=SCP Keycard (O5)
 
+## items -> scp -> ...
 item.lc:scpdy_scp096_1_wand.name=§dSCP-096-1 Wand
 item.lc:scpdy_scp096_paper_bag.name=SCP-096 Face Hider
 
-item.lc:scpdy_frag_grenade.name=Frag Grenade
-item.lc:scpdy_killer_sword.name=Killer Sword
-item.lc:scpdy_knife.name=Survival Knife
-item.lc:scpdy_pain_sword.name=Pain Sword
-item.lc:scpdy_slasher.name=Slasher
-item.lc:scpdy_void_sword.name=Void Sword
+## items -> utility -> ...
+item.lc:scpdy_config.name=Config (SCP: Dystopia 2.0+)
+item.lc:scpdy_config.interact=Edit Config
+item.lc:scpdy_facility_network_manager.name=Facility Network Manager
+item.lc:scpdy_wrench.name=Wrench (SCP: Dystopia 2.0+)
 
+## items -> weapons -> guns -> ...
 item.lc:scpdy_gun_ar15_mag.name=AR-15 Magazine
 item.lc:scpdy_gun_glock17.name=Glock-17
 item.lc:scpdy_gun_glock17_mag.name=Glock-17 Magazine
@@ -328,52 +330,34 @@ item.lc:scpdy_gun_spas12_mag.name=SPAS-12 Tubular Magazine
 item.lc:scpdy_gun_t5000.name=T-5000
 item.lc:scpdy_gun_t5000_mag.name=T-5000 Magazine
 
-## Blocks
+## items -> weapons -> melee -> ...
+item.lc:scpdy_killer_sword.name=Killer Sword
+item.lc:scpdy_knife.name=Survival Knife
+item.lc:scpdy_pain_sword.name=Pain Sword
+item.lc:scpdy_slasher.name=Slasher
+item.lc:scpdy_void_sword.name=Void Sword
 
-tile.lc:scpdy_blast_door_dummy.name=Blast Door Barrier
-tile.lc:scpdy_floor_grate.name=Metal Floor Grate
-tile.lc:scpdy_floor_grate_trap.name=Metal Floor Grate (Trap)
-tile.lc:scpdy_landmine.name=Landmine
-tile.lc:scpdy_laptop.name=Laptop
-tile.lc:scpdy_razor_wire.name=Razor Wire
-tile.lc:scpdy_small_light.name=Small Light
-tile.lc:scpdy_small_light_blinking.name=Small Light (Blinking)
-tile.lc:scpdy_rb_placeholder.name=Redstone Block Placeholder
-tile.lc:scpdy_steel_beam.name=Steel Beam
-tile.lc:scpdy_steel_beam_end.name=Steel Beam (End)
-tile.lc:scpdy_steel_truss.name=Steel Truss
-tile.lc:scpdy_vent.name=Vent
-tile.lc:scpdy_vent_openable.name=Vent (Openable)
-tile.lc:scpdy_warehouse_light_1.name=Warehouse Light 1
-tile.lc:scpdy_warehouse_light_1_hanging.name=Warehouse Light 1 (Hanging)
-tile.lc:scpdy_file_cabinet.name=File Cabinet
-tile.lc:scpdy_workbench.name=Workbench (SCP: Dystopia)
-tile.lc:scpdy_workbench.table_name=Workbench
+## items -> weapons -> throwables -> ...
+item.lc:scpdy_frag_grenade.name=Frag Grenade
 
-tile.lc:scpdy_decor_vent_1.name=Decorative Vent 1
-tile.lc:scpdy_decor_vent_2.name=Decorative Vent 2
+## --- Blocks
 
-tile.lc:scpdy_cst_black_checker_tiles.name=Black Checker Tiles
-tile.lc:scpdy_cst_cushion.name=Cushion
-tile.lc:scpdy_cst_floor_tiles.name=Floor Tiles
-tile.lc:scpdy_cst_generic_floor.name=Generic Floor
-tile.lc:scpdy_cst_steel_Block.name=Steel Block
-tile.lc:scpdy_cst_treadplate.name=Treadplate
+## blocks -> construction -> concrete -> ...
 tile.lc:scpdy_cst_concrete_black.name=Black Facility Concrete
 tile.lc:scpdy_cst_concrete_gray.name=Gray Facility Concrete
-tile.lc:scpdy_cst_exterior_bricks_middle.name=Generic Exterior Bricks
+
+## blocks -> construction -> exterior_bricks -> ...
 tile.lc:scpdy_cst_exterior_bricks_bottom.name=Exterior Bricks (Bottom)
+tile.lc:scpdy_cst_exterior_bricks_middle.name=Generic Exterior Bricks
 tile.lc:scpdy_cst_exterior_bricks_top.name=Exterior Bricks (Top)
-tile.lc:scpdy_cst_facility_wall_middle.name=Generic Facility Wall
-tile.lc:scpdy_cst_facility_wall_middle_2.name=Facility Wall (Middle)
-tile.lc:scpdy_cst_facility_wall_bottom.name=Facility Wall (Bottom)
-tile.lc:scpdy_cst_facility_wall_top.name=Facility Wall (Top)
-tile.lc:scpdy_cst_blue_wall.name=Generic Blue Wall
-tile.lc:scpdy_cst_blue_wall_middle.name=Blue Wall (Middle)
+
+## blocks -> construction -> facility_wall -> ...
 tile.lc:scpdy_cst_blue_wall_bottom_1.name=Blue Wall (Bottom 1)
 tile.lc:scpdy_cst_blue_wall_bottom_2.name=Blue Wall (Bottom 2)
 tile.lc:scpdy_cst_blue_wall_bottom_3.name=Blue Wall (Bottom 3)
+tile.lc:scpdy_cst_blue_wall_middle.name=Blue Wall (Middle)
 tile.lc:scpdy_cst_blue_wall_top.name=Blue Wall (Top)
+tile.lc:scpdy_cst_blue_wall.name=Generic Blue Wall
 tile.lc:scpdy_cst_brown_wall_bottom.name=Brown Facility Wall (Bottom)
 tile.lc:scpdy_cst_brown_wall_top.name=Brown Facility Wall (Top)
 tile.lc:scpdy_cst_cyan_wall_bottom.name=Cyan Facility Wall (Bottom)
@@ -384,21 +368,53 @@ tile.lc:scpdy_cst_mint_wall_bottom.name=Mint Facility Wall (Bottom)
 tile.lc:scpdy_cst_mint_wall_top.name=Mint Facility Wall (Top)
 tile.lc:scpdy_cst_orange_wall_bottom.name=Orange Facility Wall (Bottom)
 tile.lc:scpdy_cst_orange_wall_top.name=Orange Facility Wall (Top)
-tile.lc:scpdy_cst_heavy_wall_1.name=Generic Heavy Wall 1
+tile.lc:scpdy_cst_facility_wall_bottom.name=Facility Wall (Bottom)
+tile.lc:scpdy_cst_facility_wall_middle_2.name=Facility Wall (Middle)
+tile.lc:scpdy_cst_facility_wall_middle.name=Generic Facility Wall
+tile.lc:scpdy_cst_facility_wall_top.name=Facility Wall (Top)
+
+## blocks -> construction -> heavy_walls -> ...
 tile.lc:scpdy_cst_heavy_wall_1_bottom.name=Heavy Wall 1 (Bottom)
 tile.lc:scpdy_cst_heavy_wall_1_top.name=Heavy Wall 1 (Top)
-tile.lc:scpdy_cst_heavy_wall_2.name=Generic Heavy Wall 2
+tile.lc:scpdy_cst_heavy_wall_1.name=Generic Heavy Wall 1
 tile.lc:scpdy_cst_heavy_wall_2_bottom.name=Heavy Wall 2 (Bottom)
 tile.lc:scpdy_cst_heavy_wall_2_top.name=Heavy Wall 2 (Top)
+tile.lc:scpdy_cst_heavy_wall_2.name=Generic Heavy Wall 2
+
+## blocks -> construction -> lamps -> ...
 tile.lc:scpdy_cst_lamp_1.name=Lamp 1
 tile.lc:scpdy_cst_lamp_2.name=Lamp 2
+
+## blocks -> construction -> office_ceilings -> ...
 tile.lc:scpdy_cst_office_ceiling_1.name=Office Ceiling 1
 tile.lc:scpdy_cst_office_ceiling_2.name=Office Ceiling 2
+
+## blocks -> construction -> reinforced_panels -> ...
 tile.lc:scpdy_cst_reinforced_panel_1.name=Reinforced Panel 1
 tile.lc:scpdy_cst_reinforced_panel_2.name=Reinforced Panel 2
 tile.lc:scpdy_cst_reinforced_panel_3.name=Reinforced Panel 3
 
-tile.lc:scpdy_door_button.name=Button
+## blocks -> construction -> ...
+tile.lc:scpdy_cst_black_checker_tiles.name=Black Checker Tiles
+tile.lc:scpdy_cst_cushion.name=Cushion
+tile.lc:scpdy_cst_floor_tiles.name=Floor Tiles
+tile.lc:scpdy_cst_generic_floor.name=Generic Floor
+tile.lc:scpdy_cst_steel_Block.name=Steel Block
+tile.lc:scpdy_cst_treadplate.name=Treadplate
+
+## blocks -> construction_3d -> ...
+tile.lc:scpdy_floor_grate_trap.name=Metal Floor Grate (Trap)
+tile.lc:scpdy_floor_grate.name=Metal Floor Grate
+tile.lc:scpdy_razor_wire.name=Razor Wire
+tile.lc:scpdy_small_light_blinking.name=Small Light (Blinking)
+tile.lc:scpdy_small_light.name=Small Light
+tile.lc:scpdy_steel_beam_end.name=Steel Beam (End)
+tile.lc:scpdy_steel_beam.name=Steel Beam
+tile.lc:scpdy_steel_truss.name=Steel Truss
+tile.lc:scpdy_vent_openable.name=Vent (Openable)
+tile.lc:scpdy_vent.name=Vent
+
+## blocks -> control_devices -> keycard_reader -> ...
 tile.lc:scpdy_keycard_reader_lvl_0.name=SCP Keycard Reader (Level 0)
 tile.lc:scpdy_keycard_reader_lvl_1.name=SCP Keycard Reader (Level 1)
 tile.lc:scpdy_keycard_reader_lvl_2.name=SCP Keycard Reader (Level 2)
@@ -407,16 +423,29 @@ tile.lc:scpdy_keycard_reader_lvl_4.name=SCP Keycard Reader (Level 4)
 tile.lc:scpdy_keycard_reader_lvl_5.name=SCP Keycard Reader (Level 5)
 tile.lc:scpdy_keycard_reader_o5.name=SCP Keycard Reader (O5)
 
+## blocks -> control_devices -> ...
+tile.lc:scpdy_door_button.name=Button
+
+## blocks -> decor -> vent -> ...
+tile.lc:scpdy_decor_vent_1.name=Decorative Vent 1
+tile.lc:scpdy_decor_vent_2.name=Decorative Vent 2
+
+## blocks -> door -> boolean -> ...
 tile.lc:scpdy_boolean_door_1.name=Boolean Door 1
 tile.lc:scpdy_boolean_door_2.name=Boolean Door 2
 tile.lc:scpdy_boolean_door_3.name=Boolean Door 3
+
+## blocks -> door -> command -> ...
 tile.lc:scpdy_command_door.name=§dCommand Door
+
+## blocks -> door -> lockdown -> ...
 tile.lc:scpdy_lockdown_door_n1.name=§dLockdown Door (Network 1)
 tile.lc:scpdy_lockdown_door_n2.name=§dLockdown Door (Network 2)
 tile.lc:scpdy_lockdown_door_n3.name=§dLockdown Door (Network 3)
 tile.lc:scpdy_lockdown_door_n4.name=§dLockdown Door (Network 4)
 tile.lc:scpdy_lockdown_door_n5.name=§dLockdown Door (Network 5)
-tile.lc:scpdy_door_activator.name=Mech Door Activator
+
+## blocks -> door -> mechanical -> doors -> ...
 tile.lc:scpdy_mechanical_door_1.name=Mechanical Door 1
 tile.lc:scpdy_mechanical_door_2.name=Mechanical Door 2
 tile.lc:scpdy_mechanical_door_3.name=Mechanical Door 3
@@ -424,69 +453,103 @@ tile.lc:scpdy_mechanical_door_4.name=Mechanical Door 4
 tile.lc:scpdy_mechanical_door_5.name=Mechanical Door 5
 tile.lc:scpdy_mechanical_door_6.name=Mechanical Door 6
 tile.lc:scpdy_mechanical_door_7.name=O5 Mechanical Door
+
+## blocks -> door -> mechanical -> ...
+tile.lc:scpdy_door_activator.name=Mech Door Activator
+
+## blocks -> door -> standard -> ...
 tile.lc:scpdy_standard_door_1.name=Standard Door 1
 tile.lc:scpdy_standard_door_2.name=Standard Door 2
 
+## blocks -> furniture -> connec_tables -> ...
 tile.lc:scpdy_connec_table_1.name=Connec™ Table 1
 tile.lc:scpdy_connec_table_2.name=Connec™ Table 2
 
+## blocks -> furniture -> office_chair -> ...
 tile.lc:scpdy_office_chair_1.name=Office Chair 1
 tile.lc:scpdy_office_chair_2.name=Office Chair 2
 tile.lc:scpdy_office_chair_3.name=Office Chair 3
 
+## blocks -> furniture -> shelves -> ...
 tile.lc:scpdy_shelf_1.name=Shelf 1 §e(+Variants)
 tile.lc:scpdy_shelf_2.name=Shelf 2 §e(+Variants)
 
+## blocks -> furniture -> ...
+tile.lc:scpdy_file_cabinet.name=File Cabinet
 tile.lc:scpdy_hanging_lamp.name=Hanging Lamp
+tile.lc:scpdy_landmine.name=Landmine
+tile.lc:scpdy_laptop.name=Laptop
+tile.lc:scpdy_warehouse_light_1_hanging.name=Warehouse Light 1 (Hanging)
+tile.lc:scpdy_warehouse_light_1.name=Warehouse Light 1
 
+## blocks -> lockdown_devices -> alarm -> ...
 tile.lc:scpdy_lockdown_alarm_n1.name=§dLockdown Alarm (Network 1)
 tile.lc:scpdy_lockdown_alarm_n2.name=§dLockdown Alarm (Network 2)
 tile.lc:scpdy_lockdown_alarm_n3.name=§dLockdown Alarm (Network 3)
 tile.lc:scpdy_lockdown_alarm_n4.name=§dLockdown Alarm (Network 4)
 tile.lc:scpdy_lockdown_alarm_n5.name=§dLockdown Alarm (Network 5)
 
+## blocks -> lockdown_devices -> panel -> ...
 tile.lc:scpdy_lockdown_panel_n1.name=§dLockdown Panel (Network 1)
 tile.lc:scpdy_lockdown_panel_n2.name=§dLockdown Panel (Network 2)
 tile.lc:scpdy_lockdown_panel_n3.name=§dLockdown Panel (Network 3)
 tile.lc:scpdy_lockdown_panel_n4.name=§dLockdown Panel (Network 4)
 tile.lc:scpdy_lockdown_panel_n5.name=§dLockdown Panel (Network 5)
 
+## blocks -> minigame_blocks -> ...
 tile.lc:scpdy_dash_block.name=Dash Block
 
-## Entities
+## blocks -> misc -> ...
+tile.lc:scpdy_blast_door_dummy.name=Blast Door Barrier
+tile.lc:scpdy_rb_placeholder.name=Redstone Block Placeholder
+tile.lc:scpdy_workbench.name=Workbench (SCP: Dystopia)
+tile.lc:scpdy_workbench.table_name=Workbench
 
+## --- Entities
+
+## entities -> blast_door -> ...
 entity.lc:scpdy_blast_door_1.name=Blast Door
 entity.lc:scpdy_blast_door_1_preview.name=Blast Door Preview
 entity.lc:scpdy_blast_door_2.name=Blast Door
 entity.lc:scpdy_blast_door_2_preview.name=Blast Door Preview
 
+## entities -> blood -> ...
 entity.lc:scpdy_blood.name=Blood
 
+## entities -> cctv -> ...
 entity.lc:scpdy_cctv_camera.name=CCTV Camera
 entity.lc:scpdy_cctv_monitor.name=CCTV Monitor
 entity.lc:scpdy_cctv_server.name=CCTV Server
 
+## entities -> explosion -> ...
 entity.lc:scpdy_landmine_explosion.name=Landmine
 entity.lc:scpdy_50bmg_explosion.name=50 Cal
 
+## entities -> gibs -> ...
 entity.lc:scpdy_gib_small.name=Gib
 entity.lc:scpdy_gib_medium.name=Gib
 
-entity.lc:scpdy_f_tro.name=TRO
-item.spawn_egg.entity.lc:scpdy_f_tro.name=§7SCP:DY §8| §fFoundation TRO
-entity.lc:scpdy_f_tro_dead.name=Corpse
+## entities -> human -> f -> mtf
 entity.lc:scpdy_f_mtf_epsilon11.name=MTF Epsilon-11 Operator
 item.spawn_egg.entity.lc:scpdy_f_mtf_epsilon11.name=§7SCP:DY §8| §fMTF Epsilon-11 Operator
 entity.lc:scpdy_f_mtf_epsilon11_dead.name=Corpse
 
+## entities -> human -> f -> ...
+entity.lc:scpdy_f_tro.name=TRO
+item.spawn_egg.entity.lc:scpdy_f_tro.name=§7SCP:DY §8| §fFoundation TRO
+entity.lc:scpdy_f_tro_dead.name=Corpse
+
+## entities -> misc -> ...
 entity.lc:scpdy_rb_placeholder_anchor.name=RB Placeholder Anchor
 entity.lc:scpdy_sittable_anchor.name=Sittable
 
+## entities -> projectiles -> ...
 entity.lc:scpdy_bullet_m4a1.name=Bullet
 entity.lc:scpdy_bullet_mp5.name=Bullet
 entity.lc:scpdy_scriptable_bullet_large.name=Bullet
 entity.lc:scpdy_scriptable_bullet.name=Bullet
 
+## entities -> scp -> ...
 entity.lc:scpdy_scp001_proto.name=SCP-001 Prototype
 item.spawn_egg.entity.lc:scpdy_scp001_proto.name=§7SCP:DY §8| §fSCP-001 "Prototype"
 entity.lc:scpdy_scp001_proto_weakened.name=SCP-001 Prototype
@@ -496,24 +559,28 @@ item.spawn_egg.entity.lc:scpdy_scp096.name=§7SCP:DY §8| §fSCP-096
 entity.lc:scpdy_scp5167.name=SCP-5167
 item.spawn_egg.entity.lc:scpdy_scp5167.name=§7SCP:DY §8| §fSCP-5167
 
-item.spawn_egg.entity.lc:scpdy_unknown_zombie.name=Spawn Unknown Zombie
-entity.lc:scpdy_unknown_zombie.name=Unknown Zombie
+## entities -> the_unknown -> unknown_core -> ...
+entity.lc:scpdy_unknown_core_fireball.name=Fireball
+entity.lc:scpdy_unknown_core_meteorite.name=Meteorite
+entity.lc:scpdy_unknown_core_plasma_large.name=Plasma
+entity.lc:scpdy_unknown_core_plasma_small.name=Plasma
+entity.lc:scpdy_unknown_core_plasma_ultra.name=Plasma
+entity.lc:scpdy_unknown_core_sword_magic.name=Magic
+item.spawn_egg.entity.lc:scpdy_unknown_core.name=Spawn Unknown Core
+entity.lc:scpdy_unknown_core.name=Unknown Core
+
+## entities -> the_unknown -> ...
+item.spawn_egg.entity.lc:scpdy_unknown_breeze.name=Spawn Unknown Breeze
+entity.lc:scpdy_unknown_breeze.name=Unknown Breeze
 item.spawn_egg.entity.lc:scpdy_unknown_golem.name=Spawn Unknown Golem
 entity.lc:scpdy_unknown_golem.name=Unknown Golem
 item.spawn_egg.entity.lc:scpdy_unknown_spider.name=Spawn Unknown Spider
 entity.lc:scpdy_unknown_spider.name=Unknown Spider
-item.spawn_egg.entity.lc:scpdy_unknown_breeze.name=Spawn Unknown Breeze
-entity.lc:scpdy_unknown_breeze.name=Unknown Breeze
-item.spawn_egg.entity.lc:scpdy_unknown_core.name=Spawn Unknown Core
-entity.lc:scpdy_unknown_core.name=Unknown Core
-entity.lc:scpdy_unknown_core_fireball.name=Fireball
-entity.lc:scpdy_unknown_core_meteorite.name=Meteorite
-entity.lc:scpdy_unknown_core_plasma_small.name=Plasma
-entity.lc:scpdy_unknown_core_plasma_large.name=Plasma
-entity.lc:scpdy_unknown_core_plasma_ultra.name=Plasma
-entity.lc:scpdy_unknown_core_sword_magic.name=Magic
+item.spawn_egg.entity.lc:scpdy_unknown_zombie.name=Spawn Unknown Zombie
+entity.lc:scpdy_unknown_zombie.name=Unknown Zombie
 entity.lc:scpdy_the_unknown_wave_spawner.name=The Unknown Wave Spawner
 
+## entities -> throwables -> ...
 entity.lc:scpdy_player_frag_grenade_thrown.name=Frag Grenade
 entity.lc:scpdy_player_frag_grenade_dropped.name=Frag Grenade
 entity.lc:scpdy_mtf_frag_grenade.name=Frag Grenade
