@@ -525,6 +525,9 @@
   "lc:scpdy_rb_placeholder": {
     "sound": "stone",
     "textures": "scpdy_rb_placeholder"
+  },
+  "lc:scpdy_workbench": {
+    "sound": "metal"
   }
   // #endregion
 }

@@ -456,6 +456,9 @@
     "scpdy_rb_placeholder": {
       "textures": "textures/scpdy/blocks/misc/rb_placeholder"
     },
+    "scpdy_workbench": {
+      "textures": "textures/scpdy/blocks/misc/workbench"
+    },
     // #endregion
     // #endregion
     "scpdy_empty": {
