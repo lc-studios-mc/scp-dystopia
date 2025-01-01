@@ -16,7 +16,7 @@
     },
     "components": {
       "minecraft:crafting_table": {
-        "crafting_tags": ["dystopia_craftbench", "scpdy_workbench"],
+        "crafting_tags": ["crafting_table", "dystopia_craftbench", "scpdy_workbench"],
         "table_name": "tile.lc:scpdy_workbench.table_name"
       },
       "minecraft:material_instances": {
