@@ -19,6 +19,9 @@
     },
     "unlock": [
       {
+        "item": "minecraft:white_concrete"
+      },
+      {
         "item": "minecraft:black_concrete"
       },
       {
