@@ -507,7 +507,7 @@ tile.lc:scpdy_dash_block.name=Dash Block
 ## blocks -> misc -> ...
 tile.lc:scpdy_blast_door_dummy.name=Blast Door Barrier
 tile.lc:scpdy_rb_placeholder.name=Redstone Block Placeholder
-tile.lc:scpdy_workbench.name=Workbench (SCP: Dystopia)
+tile.lc:scpdy_workbench.name=Workbench
 tile.lc:scpdy_workbench.table_name=Workbench
 
 ## --- Entities
