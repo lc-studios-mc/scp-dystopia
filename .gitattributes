@@ -10,3 +10,5 @@
 *.mp3 -text
 
 *.mcstructure -text
+*.geo.json -text
+*.animation.json -text
