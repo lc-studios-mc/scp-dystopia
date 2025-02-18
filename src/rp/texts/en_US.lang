@@ -614,6 +614,9 @@ entity.lc:scpdy_bullet_mp5.name=Bullet
 entity.lc:scpdy_scriptable_bullet_large.name=Bullet
 entity.lc:scpdy_scriptable_bullet.name=Bullet
 
+## entities -> pwrgrid -> ...
+entity.lc:scpdy_pwr_src.name=Power Source
+
 ## entities -> scp -> ...
 entity.lc:scpdy_scp001_proto.name=SCP-001 Prototype
 item.spawn_egg.entity.lc:scpdy_scp001_proto.name=§7SCP:DY §8| §fSCP-001 "Prototype"
