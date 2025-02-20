@@ -17,11 +17,22 @@
 				"family": ["inanimate", "pwrgrid", "pwr_src", "pwr_sender"]
 			},
 			"minecraft:health": {
-				"value": 20,
-				"max": 20
+				"value": 1,
+				"max": 1
 			},
 			"minecraft:damage_sensor": {
 				"triggers": [
+					{
+						"on_damage": {
+							"filters": {
+								"test": "is_family",
+								"subject": "other",
+								"value": "player"
+							}
+						},
+						"cause": "entity_attack",
+						"deals_damage": "yes"
+					},
 					{
 						"cause": "all",
 						"deals_damage": "no"
@@ -32,6 +43,31 @@
 				"breathes_solids": true,
 				"breathes_water": true,
 				"generates_bubbles": false
+			},
+			"minecraft:interact": {
+				"interactions": [
+					{
+						"on_interact": {
+							"filters": {
+								"all_of": [
+									{
+										"test": "is_family",
+										"subject": "other",
+										"operator": "==",
+										"value": "player"
+									},
+									{
+										"test": "is_sneaking",
+										"subject": "other",
+										"operator": "!="
+									}
+								]
+							}
+						},
+						"cooldown": 0.1,
+						"swing": true
+					}
+				]
 			},
 			"minecraft:body_rotation_blocked": {},
 			"minecraft:physics": {
