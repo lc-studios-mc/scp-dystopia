@@ -93,6 +93,14 @@
 			"textures": "textures/scpdy/items/materials/slasher_blade"
 		},
 		// #endregion
+		// #region pwrgrid
+		"scpdy_pwr_node_icon": {
+			"textures": "textures/scpdy/pwrgrid/pwr_node_icon"
+		},
+		"scpdy_pwr_src_icon": {
+			"textures": "textures/scpdy/pwrgrid/pwr_src_icon"
+		},
+		// #endregion
 		// #region scp
 		"scpdy_scp096_1_wand_icon": {
 			"textures": "textures/scpdy/scp/scp096_1_wand_icon"
