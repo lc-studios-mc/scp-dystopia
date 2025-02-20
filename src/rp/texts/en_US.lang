@@ -362,6 +362,10 @@ item.lc:scpdy_keycard_o5.name=SCP Keycard (O5)
 ## items -> materials -> ...
 item.lc:scpdy_slasher_blade.name=Slasher Blade
 
+## items -> pwrgrid -> ...
+item.lc:scpdy_pwr_node_placer.name=Power Node
+item.lc:scpdy_pwr_src_placer.name=Power Source
+
 ## items -> scp -> ...
 item.lc:scpdy_scp096_1_wand.name=§dSCP-096-1 Wand
 item.lc:scpdy_scp096_paper_bag.name=SCP-096 Face Hider
@@ -615,6 +619,7 @@ entity.lc:scpdy_scriptable_bullet_large.name=Bullet
 entity.lc:scpdy_scriptable_bullet.name=Bullet
 
 ## entities -> pwrgrid -> ...
+entity.lc:scpdy_pwr_node.name=Power Node
 entity.lc:scpdy_pwr_src.name=Power Source
 
 ## entities -> scp -> ...
