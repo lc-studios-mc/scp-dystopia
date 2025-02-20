@@ -1,0 +1,25 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "lc:scpdy_pwr_src",
+			"materials": {
+				"default": "entity"
+			},
+			"textures": {
+				"default": "textures/scpdy/pwrgrid/pwr_src_icon"
+			},
+			"geometry": {
+				"default": "geometry.scpdy_billboard"
+			},
+			"animations": {
+				"anim.billboard": "animation.scpdy_billboard.rotation"
+			},
+			"scripts": {
+				"scale": "1.0",
+				"animate": ["anim.billboard"]
+			},
+			"render_controllers": ["controller.render.scpdy.billboard"]
+		}
+	}
+}
