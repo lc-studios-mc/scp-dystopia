@@ -10,6 +10,7 @@ import "./config";
 import "./facilityNetwork";
 import "./gore";
 import "./humanMobs";
+import "./pwrgrid";
 import "./scps";
 import "./theUnknown";
 import "./uncategorized";
