@@ -1,6 +1,7 @@
 import * as mc from "@minecraft/server";
 import { onActivateControlDevice, onInteractControlDeviceWithWrench } from "./shared";
 import { getClearanceLevel, isHoldingWrench } from "@lib/utils/scpdyUtils";
+import { isPowerAvailableAt } from "@server/pwrgrid/shared";
 
 function beforeOnPlayerPlace(arg: mc.BlockComponentPlayerPlaceBeforeEvent): void {
 	if (!arg.player) return;
@@ -25,6 +26,8 @@ function onPlayerInteract(arg: mc.BlockComponentPlayerInteractEvent): void {
 		onInteractControlDeviceWithWrench(block, player);
 		return;
 	}
+
+	if (!isPowerAvailableAt(dimension, block.center(), player)) return;
 
 	const ticksUntilPowerOff = block.permutation.getState("lc:ticks_until_power_off") as number;
 

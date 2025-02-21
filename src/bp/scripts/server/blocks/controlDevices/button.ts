@@ -1,6 +1,7 @@
 import * as mc from "@minecraft/server";
 import { onActivateControlDevice, onInteractControlDeviceWithWrench } from "./shared";
 import { isHoldingWrench } from "@lib/utils/scpdyUtils";
+import { isPowerAvailableAt } from "@server/pwrgrid/shared";
 
 function beforeOnPlayerPlace(arg: mc.BlockComponentPlayerPlaceBeforeEvent): void {
 	if (!arg.player) return;
@@ -33,6 +34,8 @@ function onPlayerInteract(arg: mc.BlockComponentPlayerInteractEvent): void {
 	block.setPermutation(block.permutation.withState("lc:ticks_until_power_off", 5));
 
 	dimension.playSound("scpdy.interact.button.click", block.center());
+
+	if (!isPowerAvailableAt(dimension, block.center(), player)) return;
 
 	if (!onActivateControlDevice(block, player)) {
 		player.onScreenDisplay.setActionBar({

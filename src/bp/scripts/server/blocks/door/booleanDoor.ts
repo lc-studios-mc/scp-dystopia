@@ -5,6 +5,7 @@ import { isWrench } from "@lib/utils/scpdyUtils";
 import { ActionFormData } from "@minecraft/server-ui";
 import { getClearanceLevel } from "@lib/utils/scpdyUtils";
 import { getDoorSoundInfo } from "./doorSounds";
+import { isPowerAvailableAt } from "@server/pwrgrid/shared";
 
 const STATE_NAMES = {
 	isLowerPart: "lc:is_lower_part",
@@ -77,6 +78,8 @@ function onTick(arg: mc.BlockComponentTickEvent): void {
 
 	if (openOnNextMove) {
 		if (doorOpenProgress < 15) {
+			if (!isPowerAvailableAt(dimension, block.center())) return;
+
 			const progressVal = doorOpenProgress + 1;
 
 			block.setPermutation(block.permutation.withState(STATE_NAMES.doorOpenProgress, progressVal));
@@ -102,6 +105,8 @@ function onTick(arg: mc.BlockComponentTickEvent): void {
 
 	if (!openOnNextMove) {
 		if (doorOpenProgress > 0) {
+			if (!isPowerAvailableAt(dimension, block.center())) return;
+
 			const progressVal = doorOpenProgress - 1;
 
 			block.setPermutation(block.permutation.withState(STATE_NAMES.doorOpenProgress, progressVal));
@@ -168,6 +173,8 @@ function onPlayerInteract(arg: mc.BlockComponentPlayerInteractEvent): void {
 	const isClearanceSet = lowerPartBlock.permutation.getState(STATE_NAMES.isClearanceSet) === true;
 
 	if (!isWrench(mainhandItem)) {
+		isPowerAvailableAt(dimension, block.center(), player); // Only for messaging purpose
+
 		const openOnNextMove = lowerPartBlock.permutation.getState(STATE_NAMES.openOnNextMove) === true;
 
 		if (!isClearanceSet) {
