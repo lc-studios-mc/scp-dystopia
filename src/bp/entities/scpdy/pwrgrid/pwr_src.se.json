@@ -44,31 +44,6 @@
 				"breathes_water": true,
 				"generates_bubbles": false
 			},
-			"minecraft:interact": {
-				"interactions": [
-					{
-						"on_interact": {
-							"filters": {
-								"all_of": [
-									{
-										"test": "is_family",
-										"subject": "other",
-										"operator": "==",
-										"value": "player"
-									},
-									{
-										"test": "is_sneaking",
-										"subject": "other",
-										"operator": "!="
-									}
-								]
-							}
-						},
-						"cooldown": 0.1,
-						"swing": true
-					}
-				]
-			},
 			"minecraft:body_rotation_blocked": {},
 			"minecraft:physics": {
 				"has_collision": false,
