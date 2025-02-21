@@ -12,14 +12,32 @@ const PWR_SENDER_QUERY_OPTS: mc.EntityQueryOptions = {
 	families: ["pwr_sender"],
 };
 
-export function isPowerAvailableAt(dimension: mc.Dimension, location: mc.Vector3): boolean {
+export function isPwrSrc(entity: mc.Entity): boolean {
+	return entity.typeId === "lc:scpdy_pwr_src";
+}
+
+export function isPwrNode(entity: mc.Entity): boolean {
+	return entity.typeId === "lc:scpdy_pwr_node";
+}
+
+export function isPowerAvailableAt(
+	dimension: mc.Dimension,
+	location: mc.Vector3,
+	interactingPlayer?: mc.Player,
+): boolean {
 	PWR_SENDER_QUERY_OPTS.location = location;
 
 	const entity = dimension.getEntities(PWR_SENDER_QUERY_OPTS)[0];
 
-	// TODO Power validation
+	const isPowered = entity !== undefined;
 
-	return entity !== undefined;
+	if (!isPowered && interactingPlayer) {
+		interactingPlayer.onScreenDisplay.setActionBar({
+			translate: "scpdy.actionHint.pwrgrid.noElectricalPower",
+		});
+	}
+
+	return isPowered;
 }
 
 mc.system.afterEvents.scriptEventReceive.subscribe(
