@@ -73,6 +73,8 @@ scpdy.actionHint.scp096_1_wand.noValidEntity=§cNo valid entity in line of sight
 scpdy.actionHint.scp096_1_wand.taggedEntity=§aTagged %s as SCP-096-1!
 scpdy.actionHint.scp096_1_wand.entityAlreadyTagged=§cThis entity is already tagged as SCP-096-1...
 
+scpdy.actionHint.pwrgrid.noElectricalPower=§7§oNo electrical power...
+
 ## --- Messages
 
 scpdy.msg.misc.scriptInit=§7[SCP: Dystopia] Script Initialized
