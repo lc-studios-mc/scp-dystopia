@@ -6,23 +6,56 @@
 			"spawn_category": "misc",
 			"is_spawnable": false,
 			"is_summonable": true,
-			"is_experimental": false
+			"is_experimental": false,
+			"properties": {
+				"lc:is_powered": {
+					"type": "bool",
+					"default": false,
+					"client_sync": true
+				}
+			}
 		},
 		"component_groups": {
-			"inactive": {
-				"minecraft:type_family": {
-					"family": ["inanimate", "pwrgrid", "pwr_node"]
+			"script_update_timer:slow": {
+				"minecraft:timer": {
+					"looping": true,
+					"randomInterval": true,
+					"time": [2.25, 5.0],
+					"time_down_event": {
+						"event": "pwr_node:script_update",
+						"target": "self"
+					}
 				}
 			},
-			"active": {
-				"minecraft:type_family": {
-					"family": ["inanimate", "pwrgrid", "pwr_node", "pwr_sender"]
+			"script_update_timer:moderate": {
+				"minecraft:timer": {
+					"looping": true,
+					"randomInterval": true,
+					"time": [1.5, 4.0],
+					"time_down_event": {
+						"event": "pwr_node:script_update",
+						"target": "self"
+					}
+				}
+			},
+			"script_update_timer:normal": {
+				"minecraft:timer": {
+					"looping": true,
+					"randomInterval": true,
+					"time": [0.75, 2.5],
+					"time_down_event": {
+						"event": "pwr_node:script_update",
+						"target": "self"
+					}
 				}
 			}
 		},
 		"components": {
 			"minecraft:knockback_resistance": {
 				"value": 1.0
+			},
+			"minecraft:type_family": {
+				"family": ["inanimate", "pwrgrid", "pwr_src_or_node", "pwr_node"]
 			},
 			"minecraft:health": {
 				"value": 1,
@@ -84,24 +117,42 @@
 		},
 		"events": {
 			"minecraft:entity_spawned": {
-				"add": {
-					"component_groups": ["inactive"]
-				}
+				"trigger": "pwr_node:set_script_update_timer:auto"
 			},
-			"pwr_node:become_active": {
+			"pwr_node:script_update": {},
+			"pwr_node:set_script_update_timer:auto": {},
+			"pwr_node:set_script_update_timer:slow": {
 				"remove": {
-					"component_groups": ["inactive"]
+					"component_groups": ["script_update_timer:moderate", "script_update_timer:normal"]
 				},
 				"add": {
-					"component_groups": ["active"]
+					"component_groups": ["script_update_timer:slow"]
 				}
 			},
-			"pwr_node:become_inactive": {
+			"pwr_node:set_script_update_timer:moderate": {
 				"remove": {
-					"component_groups": ["active"]
+					"component_groups": ["script_update_timer:slow", "script_update_timer:normal"]
 				},
 				"add": {
-					"component_groups": ["inactive"]
+					"component_groups": ["script_update_timer:moderate"]
+				}
+			},
+			"pwr_node:set_script_update_timer:normal": {
+				"remove": {
+					"component_groups": ["script_update_timer:slow", "script_update_timer:moderate"]
+				},
+				"add": {
+					"component_groups": ["script_update_timer:normal"]
+				}
+			},
+			"pwr_node:power_on": {
+				"set_property": {
+					"lc:is_powered": true
+				}
+			},
+			"pwr_node:power_off": {
+				"set_property": {
+					"lc:is_powered": false
 				}
 			}
 		}
