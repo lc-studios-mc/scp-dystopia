@@ -60,18 +60,9 @@
 				"is_pushable": false,
 				"is_pushable_by_piston": false
 			},
-			"minecraft:custom_hit_test": {
-				"hitboxes": [
-					{
-						"pivot": [0, 0.05, 0],
-						"width": 0.8,
-						"height": 0.8
-					}
-				]
-			},
 			"minecraft:collision_box": {
-				"width": 0.1,
-				"height": 0.1
+				"width": 0.7,
+				"height": 0.9
 			},
 			"minecraft:conditional_bandwidth_optimization": {
 				"default_values": {
