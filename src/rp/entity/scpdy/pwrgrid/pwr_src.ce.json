@@ -7,7 +7,8 @@
 				"default": "entity"
 			},
 			"textures": {
-				"default": "textures/scpdy/pwrgrid/pwr_src_icon"
+				"power_on": "textures/scpdy/pwrgrid/pwr_src_powered",
+				"power_off": "textures/scpdy/pwrgrid/pwr_src_off"
 			},
 			"geometry": {
 				"default": "geometry.scpdy_billboard"
@@ -17,9 +18,11 @@
 			},
 			"scripts": {
 				"scale": "1.0",
-				"animate": ["anim.billboard"]
+				"animate": ["anim.billboard"],
+				"initialize": ["v.is_powered = false;"],
+				"pre_animation": ["v.is_powered = q.property('lc:is_powered');"]
 			},
-			"render_controllers": ["controller.render.scpdy.billboard"]
+			"render_controllers": ["controller.render.scpdy.pwrgrid_entity_billboard"]
 		}
 	}
 }
