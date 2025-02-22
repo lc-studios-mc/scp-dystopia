@@ -365,7 +365,6 @@ item.lc:scpdy_keycard_o5.name=SCP Keycard (O5)
 item.lc:scpdy_slasher_blade.name=Slasher Blade
 
 ## items -> pwrgrid -> ...
-item.lc:scpdy_pwr_node_placer.name=Power Node
 item.lc:scpdy_pwr_src_placer.name=Power Source
 
 ## items -> scp -> ...
