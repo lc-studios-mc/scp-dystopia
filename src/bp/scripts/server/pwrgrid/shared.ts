@@ -1,5 +1,6 @@
 import * as mc from "@minecraft/server";
 import * as vec3 from "@lib/utils/vec3";
+import { CONFIG } from "@server/config/configData";
 
 export const MAX_PWR_AVAILABLE_RADIUS = 10;
 
@@ -130,6 +131,8 @@ export function isPowerAvailableAt(
 	location: mc.Vector3,
 	interactingPlayer?: mc.Player,
 ): boolean {
+	if (!CONFIG.enablePwrgridSystem) return true;
+
 	PWR_SENDER_QUERY_OPTS.location = location;
 
 	const entity = dimension.getEntities(PWR_SENDER_QUERY_OPTS)[0];
