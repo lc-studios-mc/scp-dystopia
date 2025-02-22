@@ -1,2 +1,3 @@
-import "./pwrNodePlacer";
+import "./pwrNode";
+import "./pwrSrc";
 import "./pwrSrcPlacer";
