@@ -5,7 +5,7 @@ import { getRelativeBlock } from "@lib/utils/blockUtils";
 mc.world.beforeEvents.worldInitialize.subscribe((event) => {
 	event.itemComponentRegistry.registerCustomComponent("scpdy:pwr_src_placer", {
 		onUseOn(arg) {
-			const spawnLoc = getRelativeBlock(arg.block, arg.blockFace, 1)!.center();
+			const spawnLoc = getRelativeBlock(arg.block, arg.blockFace, 1)!.bottomCenter();
 			arg.block.dimension.spawnEntity(PWR_SRC_ENTITY_TYPE, spawnLoc);
 		},
 	});
