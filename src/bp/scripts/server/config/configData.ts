@@ -3,6 +3,7 @@ import { ModalFormData } from "@minecraft/server-ui";
 
 export type ConfigData = {
 	disableGore: boolean;
+	enablePwrgridSystem: boolean;
 	advanced096Movement: boolean;
 	blinkingCameraFade: boolean;
 	bulletManipulatesTargetVelocity: boolean;
@@ -12,6 +13,7 @@ export type ConfigData = {
 class _ConfigData implements ConfigData {
 	reset(): void {
 		this.disableGore = false;
+		this.enablePwrgridSystem = false;
 		this.advanced096Movement = true;
 		this.blinkingCameraFade = true;
 		this.bulletManipulatesTargetVelocity = true;
@@ -24,6 +26,14 @@ class _ConfigData implements ConfigData {
 
 	set disableGore(value: boolean | undefined) {
 		world.setDynamicProperty("scpdyConfig_disableGore", value);
+	}
+
+	get enablePwrgridSystem(): boolean {
+		return world.getDynamicProperty("scpdyConfig_enablePwrgridSystem") === true;
+	}
+
+	set enablePwrgridSystem(value: boolean | undefined) {
+		world.setDynamicProperty("scpdyConfig_enablePwrgridSystem", value);
 	}
 
 	get advanced096Movement(): boolean {
@@ -77,6 +87,10 @@ export async function showConfigEditorForm(player: Player): Promise<void> {
 
 		.toggle({ translate: "scpdy.form.config.prop.disableGore" }, _CONFIG.disableGore)
 		.toggle(
+			{ translate: "scpdy.form.config.prop.enablePwrgridSystem" },
+			_CONFIG.enablePwrgridSystem,
+		)
+		.toggle(
 			{ translate: "scpdy.form.config.prop.advanced096Movement" },
 			_CONFIG.advanced096Movement,
 		)
@@ -104,10 +118,11 @@ export async function showConfigEditorForm(player: Player): Promise<void> {
 	if (!response.formValues) return;
 
 	_CONFIG.disableGore = response.formValues[0] === true;
-	_CONFIG.advanced096Movement = response.formValues[1] === true;
-	_CONFIG.blinkingCameraFade = response.formValues[2] === true;
-	_CONFIG.bulletManipulatesTargetVelocity = response.formValues[3] === true;
-	_CONFIG.gunTacReloadOption = response.formValues[4] as number;
+	_CONFIG.enablePwrgridSystem = response.formValues[1] === true;
+	_CONFIG.advanced096Movement = response.formValues[2] === true;
+	_CONFIG.blinkingCameraFade = response.formValues[3] === true;
+	_CONFIG.bulletManipulatesTargetVelocity = response.formValues[4] === true;
+	_CONFIG.gunTacReloadOption = response.formValues[5] as number;
 
 	player.sendMessage({ translate: "scpdy.msg.config.saved" });
 }
