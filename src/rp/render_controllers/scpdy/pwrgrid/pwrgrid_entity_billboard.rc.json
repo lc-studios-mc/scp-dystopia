@@ -1,0 +1,23 @@
+{
+	"format_version": "1.8.0",
+	"render_controllers": {
+		"controller.render.scpdy.pwrgrid_entity_billboard": {
+			"geometry": "Geometry.default",
+			"materials": [{ "*": "Material.default" }],
+			"textures": ["v.is_powered ? Texture.power_on : Texture.power_off"],
+			"ignore_lighting": true,
+			"on_fire_color": {
+				"r": 0.0,
+				"g": 0.0,
+				"b": 0.0,
+				"a": 0.0
+			},
+			"is_hurt_color": {
+				"r": 0.0,
+				"g": 0.0,
+				"b": 0.0,
+				"a": 0.0
+			}
+		}
+	}
+}
