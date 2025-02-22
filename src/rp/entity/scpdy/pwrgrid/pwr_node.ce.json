@@ -11,7 +11,7 @@
 				"power_off": "textures/scpdy/pwrgrid/pwr_node_off"
 			},
 			"geometry": {
-				"default": "geometry.scpdy_billboard"
+				"default": "geometry.scpdy_pwrgrid_entity_billboard"
 			},
 			"animations": {
 				"anim.billboard": "animation.scpdy_billboard.rotation"
