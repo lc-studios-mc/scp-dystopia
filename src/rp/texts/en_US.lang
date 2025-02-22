@@ -366,6 +366,7 @@ item.lc:scpdy_slasher_blade.name=Slasher Blade
 
 ## items -> pwrgrid -> ...
 item.lc:scpdy_pwr_src_placer.name=Power Source
+item.lc:scpdy_pwrline_tool.name=Powerline Tool
 
 ## items -> scp -> ...
 item.lc:scpdy_scp096_1_wand.name=§dSCP-096-1 Wand

@@ -97,6 +97,9 @@
 		"scpdy_pwr_src_icon": {
 			"textures": "textures/scpdy/pwrgrid/pwr_src_powered"
 		},
+		"scpdy_pwrline_tool_icon": {
+			"textures": "textures/scpdy/pwrgrid/pwrline_tool_icon"
+		},
 		// #endregion
 		// #region scp
 		"scpdy_scp096_1_wand_icon": {
