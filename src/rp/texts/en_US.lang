@@ -78,12 +78,14 @@ scpdy.actionHint.pwrgrid.noElectricalPower=§7§oNo electrical power...
 scpdy.actionHint.pwrgrid.pwrlineTool.lookAtTransmitter=§eLook at a Power Source/Node to use as the transmitter
 scpdy.actionHint.pwrgrid.pwrlineTool.useToSelectTransmitter=§eUse item to select the transmitter
 scpdy.actionHint.pwrgrid.pwrlineTool.selectedTransmitter=§6Selected transmitter!
+scpdy.actionHint.pwrgrid.pwrlineTool.cannotAddReceivers=§cCannot add any more receivers!
 scpdy.actionHint.pwrgrid.pwrlineTool.tooFarFromTransmitter=§cToo far from the transmitter!
 scpdy.actionHint.pwrgrid.pwrlineTool.willConnectToExisting=§6Will connect to: §l%s
 scpdy.actionHint.pwrgrid.pwrlineTool.willConnectToNewNode=§6Will connect to: §lNew Power Node§r§6 at %s
-scpdy.actionHint.pwrgrid.pwrlineTool.cannotConnectToItself=§cCannot connect to itself!
+scpdy.actionHint.pwrgrid.pwrlineTool.useItemToCancel=§6Cancel this operation
 scpdy.actionHint.pwrgrid.pwrlineTool.cannotConnectToPwrSrc=§cCannot connect to Power Source!
 scpdy.actionHint.pwrgrid.pwrlineTool.connected=§bConnected!
+scpdy.actionHint.pwrgrid.pwrlineTool.canceled=§eCanceled!
 scpdy.actionHint.pwrgrid.pwrlineTool.theNodeAlreadyHasTransmitter=§cThe Node already has a transmitter!
 
 ## --- Messages
