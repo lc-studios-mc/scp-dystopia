@@ -1,0 +1,31 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "lc:scpdy_pwr_radius_sphere",
+			"materials": {
+				"default": "entity_beam_additive"
+			},
+			"textures": {
+				"default": "textures/scpdy/pwrgrid/pwr_radius_sphere"
+			},
+			"geometry": {
+				"default": "geometry.scpdy_pwr_radius_sphere"
+			},
+			"scripts": {
+				"scale": "v.scale",
+				"initialize": [
+					//
+					"v.scale = 0.0;",
+					"v.final_scale = 22.0;"
+				],
+				"pre_animation": [
+					//
+					"v.scale = math.lerp(v.scale, v.final_scale, q.life_time / 2.0);"
+				],
+				"should_update_effects_offscreen": "1.0"
+			},
+			"render_controllers": ["controller.render.scpdy.pwr_radius_sphere"]
+		}
+	}
+}

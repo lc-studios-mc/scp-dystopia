@@ -1,0 +1,17 @@
+{
+	"format_version": "1.8.0",
+	"render_controllers": {
+		"controller.render.scpdy.pwr_radius_sphere": {
+			"geometry": "Geometry.default",
+			"materials": [{ "*": "Material.default" }],
+			"textures": ["Texture.default"],
+			"ignore_lighting": true,
+			"color": {
+				"r": "1.0",
+				"g": "0.0",
+				"b": "0.0",
+				"a": "0.0"
+			}
+		}
+	}
+}
