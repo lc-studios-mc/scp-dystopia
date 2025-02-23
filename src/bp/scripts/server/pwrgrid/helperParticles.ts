@@ -2,12 +2,17 @@ import * as mc from "@minecraft/server";
 import * as vec3 from "@lib/utils/vec3";
 import { getReceiverNodes, getTransmitter, isPowered } from "./shared";
 
-export async function visualizePwrline(player: mc.Player, pwrSrcOrNode: mc.Entity): Promise<void> {
+export async function visualizePwrline(
+	player: mc.Player,
+	pwrSrcOrNode: mc.Entity,
+	dontShowTransmission = false,
+	recursive = 0,
+): Promise<void> {
 	const srcLoc = vec3.add(pwrSrcOrNode.location, { x: 0, y: 0.5, z: 0 });
 
 	const transmitter = getTransmitter(pwrSrcOrNode);
 
-	if (transmitter) {
+	if (!dontShowTransmission && transmitter) {
 		// From transmitter src/node
 
 		const particleId = isPowered(transmitter)
@@ -28,7 +33,7 @@ export async function visualizePwrline(player: mc.Player, pwrSrcOrNode: mc.Entit
 		}
 	}
 
-	const receivers = getReceiverNodes(pwrSrcOrNode);
+	const receivers = getReceiverNodes(pwrSrcOrNode, false);
 
 	const particleId = isPowered(pwrSrcOrNode)
 		? "lc:scpdy_pwrline_indicator_particle"
@@ -49,6 +54,10 @@ export async function visualizePwrline(player: mc.Player, pwrSrcOrNode: mc.Entit
 
 			if (i % waitHappenIter === 0) await mc.system.waitTicks(1);
 		}
+	}
+
+	if (recursive > 0) {
+		visualizePwrline(player, pwrSrcOrNode, true, recursive - 1);
 	}
 }
 

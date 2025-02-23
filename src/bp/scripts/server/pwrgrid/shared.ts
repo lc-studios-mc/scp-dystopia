@@ -2,7 +2,7 @@ import * as mc from "@minecraft/server";
 import * as vec3 from "@lib/utils/vec3";
 import { CONFIG } from "@server/config/configData";
 
-export const MAX_PWR_AVAILABLE_RADIUS = 10;
+export const MAX_PWR_AVAILABLE_RADIUS = 12;
 
 export const PWR_NODE_ENTITY_TYPE = "lc:scpdy_pwr_node";
 export const PWR_SRC_ENTITY_TYPE = "lc:scpdy_pwr_src";

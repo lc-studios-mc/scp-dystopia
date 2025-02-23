@@ -43,7 +43,7 @@ mc.world.afterEvents.dataDrivenEntityTrigger.subscribe(
 
 function onUpdate(pwrNode: mc.Entity): void {
 	const isNodePowered = isPowered(pwrNode);
-	const transmitter = getTransmitter(pwrNode);
+	const transmitter = getTransmitter(pwrNode, false);
 
 	if (!transmitter || !isPowered(transmitter)) {
 		if (!isNodePowered) return;

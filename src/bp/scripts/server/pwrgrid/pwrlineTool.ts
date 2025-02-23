@@ -7,6 +7,7 @@ import { getRelativeBlock } from "@lib/utils/blockUtils";
 import {
 	getReceiverNodes,
 	getTransmitter,
+	isPowered,
 	isPwrNode,
 	isPwrSrc,
 	PWR_NODE_ENTITY_TYPE,
@@ -36,6 +37,7 @@ class PowerlineTool extends AdvancedItem {
 	private _pwrSrcOrNodeInView?: mc.Entity;
 	private _actionbarUpdateCooldown = 0;
 	private _pwrlineParticleCooldown = 0;
+	private _pwrRadiusSphereCooldown = 0;
 	private _connectTo?: ConnectTo;
 
 	override onTick(mainhandItemStack: mc.ItemStack): void {
@@ -43,6 +45,7 @@ class PowerlineTool extends AdvancedItem {
 
 		if (this._actionbarUpdateCooldown > 0) this._actionbarUpdateCooldown--;
 		if (this._pwrlineParticleCooldown > 0) this._pwrlineParticleCooldown--;
+		if (this._pwrRadiusSphereCooldown > 0) this._pwrRadiusSphereCooldown--;
 	}
 
 	private onTick_1(): void {
@@ -66,9 +69,16 @@ class PowerlineTool extends AdvancedItem {
 				try {
 					const entity = this._pwrSrcOrNodeInView;
 					mc.system.run(() => {
-						if (this._pwrlineParticleCooldown > 0) return;
-						visualizePwrline(this.player, entity);
-						this._pwrlineParticleCooldown = 20;
+						if (this._pwrlineParticleCooldown <= 0) {
+							visualizePwrline(this.player, entity);
+							this._pwrlineParticleCooldown = 20;
+						}
+
+						if (this._pwrRadiusSphereCooldown <= 0 && isPowered(entity)) {
+							const loc = vec3.add(entity.location, { x: 0, y: 0.5, z: 0 });
+							entity.dimension.spawnEntity("lc:scpdy_pwr_radius_sphere", loc);
+							this._pwrRadiusSphereCooldown = 20;
+						}
 					});
 				} catch {}
 			} else {
@@ -84,13 +94,6 @@ class PowerlineTool extends AdvancedItem {
 		this._connectTo = undefined;
 
 		if (this._pwrSrcOrNodeInView) {
-			if (this._pwrSrcOrNodeInView === transmitter) {
-				this.updateActionbar({
-					translate: "scpdy.actionHint.pwrgrid.pwrlineTool.cannotConnectToItself",
-				});
-				return;
-			}
-
 			if (!isPwrNode(this._pwrSrcOrNodeInView)) {
 				this.updateActionbar({
 					translate: "scpdy.actionHint.pwrgrid.pwrlineTool.cannotConnectToPwrSrc",
@@ -108,12 +111,20 @@ class PowerlineTool extends AdvancedItem {
 				return;
 			}
 
-			this.updateActionbar({
-				translate: "scpdy.actionHint.pwrgrid.pwrlineTool.willConnectToExisting",
-				with: {
-					rawtext: [getEntityName(this._pwrSrcOrNodeInView)],
-				},
-			});
+			if (this._pwrSrcOrNodeInView === transmitter) {
+				this.updateActionbar({
+					translate: "scpdy.actionHint.pwrgrid.pwrlineTool.useItemToCancel",
+				});
+
+				// Don't return!
+			} else {
+				this.updateActionbar({
+					translate: "scpdy.actionHint.pwrgrid.pwrlineTool.willConnectToExisting",
+					with: {
+						rawtext: [getEntityName(this._pwrSrcOrNodeInView)],
+					},
+				});
+			}
 
 			this._connectTo = {
 				to: "existing",
@@ -121,11 +132,17 @@ class PowerlineTool extends AdvancedItem {
 			};
 
 			try {
-				const loc = this._connectTo.entity.location;
+				const loc = vec3.add(this._connectTo.entity.location, { x: 0, y: 0.5, z: 0 });
 				mc.system.run(() => {
-					if (this._pwrlineParticleCooldown > 0) return;
-					visualizeNewPwrline(this.player, transmitter, vec3.add(loc, { x: 0, y: 0.5, z: 0 }));
-					this._pwrlineParticleCooldown = 6;
+					if (this._pwrlineParticleCooldown <= 0) {
+						visualizeNewPwrline(this.player, transmitter, loc);
+						this._pwrlineParticleCooldown = 6;
+					}
+
+					if (this._pwrRadiusSphereCooldown <= 0 && isPowered(transmitter)) {
+						transmitter.dimension.spawnEntity("lc:scpdy_pwr_radius_sphere", loc);
+						this._pwrRadiusSphereCooldown = 20;
+					}
 				});
 			} catch {}
 
@@ -182,11 +199,18 @@ class PowerlineTool extends AdvancedItem {
 		};
 
 		try {
-			const loc = this._connectTo.at;
+			const loc = vec3.add(this._connectTo.at, { x: 0, y: 0.5, z: 0 });
 			mc.system.run(() => {
-				if (this._pwrlineParticleCooldown > 0) return;
-				visualizeNewPwrline(this.player, transmitter, vec3.add(loc, { x: 0, y: 0.5, z: 0 }));
-				this._pwrlineParticleCooldown = 6;
+				if (this._pwrlineParticleCooldown <= 0) {
+					visualizeNewPwrline(this.player, transmitter, loc);
+					this._pwrlineParticleCooldown = 6;
+				}
+
+				if (this._pwrRadiusSphereCooldown <= 0 && isPowered(transmitter)) {
+					const loc = vec3.add(transmitter.location, { x: 0, y: 0.5, z: 0 });
+					transmitter.dimension.spawnEntity("lc:scpdy_pwr_radius_sphere", loc);
+					this._pwrRadiusSphereCooldown = 20;
+				}
 			});
 		} catch {}
 	}
@@ -201,37 +225,69 @@ class PowerlineTool extends AdvancedItem {
 		const transmitter = this.getSelectedTransmitter();
 
 		if (!transmitter) {
-			if (this._pwrSrcOrNodeInView) {
-				this.setSelectedTransmitter(this._pwrSrcOrNodeInView);
+			if (!this._pwrSrcOrNodeInView) return;
+
+			if (getReceiverNodes(this._pwrSrcOrNodeInView).length >= 5) {
 				this.updateActionbar(
 					{
-						translate: "scpdy.actionHint.pwrgrid.pwrlineTool.selectedTransmitter",
+						translate: "scpdy.actionHint.pwrgrid.pwrlineTool.cannotAddReceivers",
 					},
 					true,
 				);
 				this._actionbarUpdateCooldown = 15;
-				this._pwrlineParticleCooldown = 0;
-
-				this.player.playSound("note.hat");
+				this.player.playSound("note.bass");
+				return;
 			}
+
+			this.setSelectedTransmitter(this._pwrSrcOrNodeInView);
+			this.updateActionbar(
+				{
+					translate: "scpdy.actionHint.pwrgrid.pwrlineTool.selectedTransmitter",
+				},
+				true,
+			);
+			this._actionbarUpdateCooldown = 15;
+			this._pwrlineParticleCooldown = 0;
+
+			this.player.playSound("note.hat");
+
+			return;
+		}
+
+		if (this.player.inputInfo.getButtonState(mc.InputButton.Sneak) === mc.ButtonState.Pressed) {
+			this.setSelectedTransmitter(undefined);
+			this.player.playSound("random.hurt");
+
+			this.updateActionbar(
+				{
+					translate: "scpdy.actionHint.pwrgrid.pwrlineTool.canceled",
+				},
+				true,
+			);
+			this._actionbarUpdateCooldown = 15;
+
 			return;
 		}
 
 		if (!this._connectTo) return;
 
-		this.updateActionbar(
-			{
-				translate: "scpdy.actionHint.pwrgrid.pwrlineTool.connected",
-			},
-			true,
-		);
-		this._actionbarUpdateCooldown = 30;
-
-		this.player.playSound("random.orb");
-
 		if (this._connectTo.to === "existing") {
-			const nodeAlreadyHasTransmitter = getTransmitter(this._connectTo.entity);
-			if (nodeAlreadyHasTransmitter) {
+			if (this._connectTo.entity === transmitter) {
+				this.setSelectedTransmitter(undefined);
+				this.player.playSound("random.hurt");
+
+				this.updateActionbar(
+					{
+						translate: "scpdy.actionHint.pwrgrid.pwrlineTool.canceled",
+					},
+					true,
+				);
+				this._actionbarUpdateCooldown = 15;
+
+				return;
+			}
+
+			if (getTransmitter(this._connectTo.entity)) {
 				this.updateActionbar(
 					{
 						translate: "scpdy.actionHint.pwrgrid.pwrlineTool.theNodeAlreadyHasTransmitter",
@@ -241,15 +297,17 @@ class PowerlineTool extends AdvancedItem {
 				this._actionbarUpdateCooldown = 15;
 
 				this.player.playSound("note.bass");
-			} else {
-				const nodeEntity = this._connectTo.entity;
 
-				setTransmitter(this._connectTo.entity, transmitter);
-
-				const receiversOfTransmitter = getReceiverNodes(transmitter);
-				receiversOfTransmitter.push(nodeEntity);
-				setReceiverNodes(transmitter, receiversOfTransmitter);
+				return;
 			}
+
+			const nodeEntity = this._connectTo.entity;
+
+			setTransmitter(this._connectTo.entity, transmitter);
+
+			const receiversOfTransmitter = getReceiverNodes(transmitter);
+			receiversOfTransmitter.push(nodeEntity);
+			setReceiverNodes(transmitter, receiversOfTransmitter);
 		} else if (this._connectTo.to === "newNode") {
 			const nodeEntity = this.player.dimension.spawnEntity(
 				PWR_NODE_ENTITY_TYPE,
@@ -262,6 +320,16 @@ class PowerlineTool extends AdvancedItem {
 			receiversOfTransmitter.push(nodeEntity);
 			setReceiverNodes(transmitter, receiversOfTransmitter);
 		}
+
+		this.updateActionbar(
+			{
+				translate: "scpdy.actionHint.pwrgrid.pwrlineTool.connected",
+			},
+			true,
+		);
+		this._actionbarUpdateCooldown = 30;
+
+		this.player.playSound("random.orb");
 
 		this.setSelectedTransmitter(undefined);
 	}
