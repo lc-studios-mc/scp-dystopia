@@ -70,7 +70,7 @@ class PowerlineTool extends AdvancedItem {
 					const entity = this._pwrSrcOrNodeInView;
 					mc.system.run(() => {
 						if (this._pwrlineParticleCooldown <= 0) {
-							visualizePwrline(this.player, entity);
+							visualizePwrline(this.player, entity, false, 2);
 							this._pwrlineParticleCooldown = 20;
 						}
 

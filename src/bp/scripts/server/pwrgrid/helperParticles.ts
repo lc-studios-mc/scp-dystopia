@@ -54,10 +54,10 @@ export async function visualizePwrline(
 
 			if (i % waitHappenIter === 0) await mc.system.waitTicks(1);
 		}
-	}
 
-	if (recursive > 0) {
-		visualizePwrline(player, pwrSrcOrNode, true, recursive - 1);
+		if (recursive > 0) {
+			visualizePwrline(player, receiver, true, recursive - 1);
+		}
 	}
 }
 
