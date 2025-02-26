@@ -59,7 +59,9 @@ function onUpdate(pwrNode: mc.Entity): void {
 
 		setPowered(pwrNode, false);
 
-		// TODO play power off sound
+		pwrNode.dimension.playSound("scpdy.pwrgrid.pwr_node.off", pwrNode.location, {
+			volume: 1.2,
+		});
 
 		return;
 	}
@@ -68,5 +70,7 @@ function onUpdate(pwrNode: mc.Entity): void {
 
 	setPowered(pwrNode, true);
 
-	// TODO play power on sound
+	pwrNode.dimension.playSound("scpdy.pwrgrid.pwr_node.on", pwrNode.location, {
+		volume: 1.2,
+	});
 }
