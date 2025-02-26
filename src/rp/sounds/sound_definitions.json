@@ -650,6 +650,20 @@
 			]
 		},
 		// #endregion
+		// #region
+		"scpdy.pwrgrid.pwr_node.on": {
+			"category": "neutral",
+			"max_distance": 10.0,
+			"min_distance": null,
+			"sounds": ["sounds/scpdy/pwrgrid/pwr_node_on"]
+		},
+		"scpdy.pwrgrid.pwr_node.off": {
+			"category": "neutral",
+			"max_distance": 10.0,
+			"min_distance": null,
+			"sounds": ["sounds/scpdy/pwrgrid/pwr_node_off"]
+		},
+		// #endregion
 		// #region SCP-001 Prototype
 		"scpdy.scp001_proto.ambient": {
 			"category": "hostile",
