@@ -1,5 +1,11 @@
 import * as mc from "@minecraft/server";
-import { getTransmitter, isPowered, PWR_NODE_ENTITY_TYPE, setPowered } from "./shared";
+import {
+	getTransmitter,
+	isPowered,
+	isReceivingRedstonePower,
+	PWR_NODE_ENTITY_TYPE,
+	setPowered,
+} from "./shared";
 
 mc.world.afterEvents.dataDrivenEntityTrigger.subscribe(
 	(event) => {
@@ -45,7 +51,10 @@ function onUpdate(pwrNode: mc.Entity): void {
 	const isNodePowered = isPowered(pwrNode);
 	const transmitter = getTransmitter(pwrNode, false);
 
-	if (!transmitter || !isPowered(transmitter)) {
+	const shouldPowerBeOff =
+		!transmitter || !isPowered(transmitter) || isReceivingRedstonePower(pwrNode);
+
+	if (shouldPowerBeOff) {
 		if (!isNodePowered) return;
 
 		setPowered(pwrNode, false);

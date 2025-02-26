@@ -39,6 +39,16 @@ export function setPowered(pwrSrcOrNode: mc.Entity, value: boolean): void {
 	pwrSrcOrNode.setProperty("lc:is_powered", value);
 }
 
+export function isReceivingRedstonePower(pwrSrcOrNode: mc.Entity): boolean {
+	const blockCenter = pwrSrcOrNode.dimension.getBlock(pwrSrcOrNode.location);
+	const blockAbove = blockCenter?.above();
+	const blockBelow = blockCenter?.below();
+	const rsPower1 = blockAbove?.getRedstonePower();
+	const rsPower2 = blockBelow?.getRedstonePower();
+
+	return (rsPower1 !== undefined && rsPower1 > 0) || (rsPower2 !== undefined && rsPower2 > 0);
+}
+
 export function getTransmitter(pwrNode: mc.Entity, removeInvalid = true): mc.Entity | undefined {
 	if (!isPwrNode(pwrNode)) return;
 
