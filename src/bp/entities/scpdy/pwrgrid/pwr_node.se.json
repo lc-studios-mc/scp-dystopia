@@ -87,7 +87,7 @@
 			},
 			"minecraft:body_rotation_blocked": {},
 			"minecraft:physics": {
-				"has_collision": false,
+				"has_collision": true,
 				"has_gravity": false
 			},
 			"minecraft:pushable": {
