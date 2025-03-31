@@ -1,6 +1,23 @@
+import { getModifiedDamageNumber } from "@lib/utils/entityUtils";
+import * as vec3 from "@lib/utils/vec3";
 import { AdvancedItem, AdvancedItemBaseConstructorArgs } from "@logic/advancedItem/AdvancedItem";
 import { registerAdvancedItemProfile } from "@logic/advancedItem/profileRegistry";
 import * as mc from "@minecraft/server";
+import * as beam from "./beam";
+
+function shakeCamera(
+	player: mc.Player,
+	intensity: number,
+	seconds: number,
+	shakeType: "positional" | "rotational" = "rotational",
+): void {
+	player.runCommand(
+		`camerashake add @s ${intensity.toFixed(2)} ${seconds.toFixed(2)} ${shakeType}`,
+	);
+}
+
+const isPlayerImmune = (player: mc.Player): boolean =>
+	[mc.GameMode.creative, mc.GameMode.spectator].includes(player.getGameMode());
 
 registerAdvancedItemProfile({
 	itemTypeId: "lc:scpdy_slasher",
@@ -21,6 +38,22 @@ class Slasher extends AdvancedItem {
 		this.currentState.onExit();
 		this.currentState = newState;
 		this.currentState.onEnter();
+	}
+
+	getHeadFrontLocation(): mc.Vector3 {
+		return vec3.add(this.player.getHeadLocation(), this.player.getViewDirection());
+	}
+
+	playSoundAtHeadFront(soundId: string, opts?: mc.WorldSoundOptions): void {
+		this.player.dimension.playSound(soundId, this.getHeadFrontLocation(), opts);
+	}
+
+	getCooldown(id: string): number {
+		return this.player.getItemCooldown(id);
+	}
+
+	setCooldown(id: string, duration = 2): void {
+		this.player.startItemCooldown(id, duration);
 	}
 
 	onTick(mainhandItemStack: mc.ItemStack): void {
@@ -85,4 +118,108 @@ abstract class SlasherState {
 }
 
 class IdleState extends SlasherState {
+	onSwingArm(): void {
+		this.slasher.transitionTo(new SwingAttackState(this.slasher));
+	}
+}
+
+class SwingAttackState extends SlasherState {
+	private static readonly DAMAGE = 2;
+	private static readonly COOLDOWN = 3;
+	private static readonly STATE_LIFESPAN = 10;
+
+	private ticksUntilExitState = SwingAttackState.STATE_LIFESPAN;
+	private cooldown = 0;
+	private isNextSwingQueued = false;
+	private nextAnimIndex = 0;
+
+	onTick(mainhandItemStack: mc.ItemStack): void {
+		super.onTick(mainhandItemStack);
+
+		if (this.ticksUntilExitState <= 0) {
+			this.slasher.transitionTo(new IdleState(this.slasher));
+			return;
+		}
+
+		this.ticksUntilExitState--;
+
+		if (this.cooldown > 0) this.cooldown--;
+		else if (this.cooldown <= 0 && this.isNextSwingQueued) {
+			this.isNextSwingQueued = false;
+			this.swingAttack();
+		}
+	}
+
+	onEnter(): void {
+		this.swingAttack();
+	}
+
+	onSwingArm(): void {
+		if (this.cooldown > 0) {
+			this.isNextSwingQueued = true;
+			return;
+		}
+
+		this.swingAttack();
+	}
+
+	private swingAttack(): void {
+		this.ticksUntilExitState = SwingAttackState.STATE_LIFESPAN;
+		this.cooldown += SwingAttackState.COOLDOWN;
+
+		this.slasher.playSoundAtHeadFront("scpdy.slasher.swing", { volume: 1.1 });
+
+		const animSwingCd1 = `scpdy_slasher_swing_cd_1`;
+		const animSwingCd2 = `scpdy_slasher_swing_cd_2`;
+
+		if (this.nextAnimIndex === 0) {
+			this.slasher.setCooldown(animSwingCd1, 10);
+			this.slasher.setCooldown(animSwingCd2, 0);
+
+			this.nextAnimIndex = 1;
+		} else {
+			this.slasher.setCooldown(animSwingCd2, 10);
+			this.slasher.setCooldown(animSwingCd1, 0);
+
+			this.nextAnimIndex = 0;
+		}
+
+		shakeCamera(this.slasher.player, 0.05, 0.09);
+
+		this.shootBeams();
+
+		mc.system.run(() => {
+			this.simulateSwingDamage();
+		});
+	}
+
+	private shootBeams(): void {
+		beam.shootSlasherSwingBeam(this.slasher.player, -1);
+		beam.shootSlasherSwingBeam(this.slasher.player, 0);
+		beam.shootSlasherSwingBeam(this.slasher.player, 1);
+	}
+
+	private simulateSwingDamage(): void {
+		const entities = this.slasher.player.dimension.getEntities({
+			closest: 10,
+			maxDistance: 2.2,
+			location: this.slasher.getHeadFrontLocation(),
+		});
+
+		for (let i = 0; i < entities.length; i++) {
+			const entity = entities[i]!;
+			if (entity === this.slasher.player) continue;
+			if (entity instanceof mc.Player) {
+				if (!mc.world.gameRules.pvp) continue;
+				if (isPlayerImmune(entity)) continue;
+			}
+
+			const damage = Math.max(1, getModifiedDamageNumber(SwingAttackState.DAMAGE, entity));
+
+			entity.applyDamage(damage, {
+				cause: mc.EntityDamageCause.override,
+				damagingEntity: this.slasher.player,
+			});
+		}
+	}
 }
