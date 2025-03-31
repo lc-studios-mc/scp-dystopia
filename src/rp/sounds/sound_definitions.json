@@ -648,21 +648,21 @@
 			"category": "hostile",
 			"max_distance": 10.0,
 			"min_distance": null,
-			"sounds": [{ "name": "sounds/scpdy/weapons/slasher/plunge_fall", "volume": 0.9 }]
+			"sounds": [{ "name": "sounds/scpdy/weapons/slasher/plunge_fall", "volume": 0.6 }]
 		},
 		"scpdy.slasher.plunge_fall.2d": {
 			"category": "music",
-			"sounds": [{ "name": "sounds/scpdy/weapons/slasher/plunge_fall", "volume": 0.9 }]
+			"sounds": [{ "name": "sounds/scpdy/weapons/slasher/plunge_fall", "volume": 0.6 }]
 		},
 		"scpdy.slasher.plunge_impact": {
 			"category": "hostile",
 			"max_distance": 10.0,
 			"min_distance": null,
-			"sounds": [{ "name": "sounds/scpdy/weapons/slasher/plunge_impact", "volume": 0.95 }]
+			"sounds": [{ "name": "sounds/scpdy/weapons/slasher/plunge_impact", "volume": 0.9 }]
 		},
 		"scpdy.slasher.plunge_impact.2d": {
 			"category": "music",
-			"sounds": [{ "name": "sounds/scpdy/weapons/slasher/plunge_impact", "volume": 0.95 }]
+			"sounds": [{ "name": "sounds/scpdy/weapons/slasher/plunge_impact", "volume": 0.9 }]
 		},
 		// #endregion
 		// #region Projectile
