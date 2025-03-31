@@ -1,4 +1,5 @@
-import { getModifiedDamageNumber } from "@lib/utils/entityUtils";
+import { getEntityName, getModifiedDamageNumber } from "@lib/utils/entityUtils";
+import { randomInt } from "@lib/utils/mathUtils";
 import * as vec3 from "@lib/utils/vec3";
 import { AdvancedItem, AdvancedItemBaseConstructorArgs } from "@logic/advancedItem/AdvancedItem";
 import { registerAdvancedItemProfile } from "@logic/advancedItem/profileRegistry";
@@ -441,7 +442,7 @@ class SlashingState extends SlasherState {
 		const lockonEntities = lockonCond ? this.getEntitiesInSlashRange(true) : [];
 
 		if (lockonEntities.length > 0) {
-			// TODO: transition to lockon slashing state
+			this.slasher.transitionTo(new LockonSlashingState(this.slasher, lockonEntities));
 			return;
 		}
 
@@ -551,5 +552,193 @@ class SlashingState extends SlasherState {
 		}
 
 		return result;
+	}
+}
+
+class LockonSlashingState extends SlasherState {
+	private endTick = -1;
+	private playerLoc: mc.Vector3 = vec3.ZERO;
+	private playerRot: mc.Vector2 = vec3.ZERO;
+	private entityLockLoc: mc.Vector3 = vec3.ZERO;
+	private nextCritParticleTick = 0;
+
+	constructor(slasher: Slasher, private lockonEntities: mc.Entity[]) {
+		super(slasher);
+
+		this.slasher.setCooldown("scpdy_slasher_slash_hold_cd");
+		this.slasher.setCooldown("scpdy_slasher_slash_start_cd");
+
+		if (lockonEntities.length <= 0) {
+			this.endTick = 0;
+			return;
+		}
+
+		const entity = lockonEntities[0];
+
+		const lockonRelativeLoc = vec3
+			.chain(slasher.player.location)
+			.sub(entity.location)
+			.normalize()
+			.add(entity.location)
+			.done();
+
+		slasher.player.teleport(lockonRelativeLoc, { facingLocation: lockonEntities[0].location });
+
+		this.playerLoc = lockonRelativeLoc;
+		this.playerRot = slasher.player.getRotation();
+		this.entityLockLoc = lockonEntities[0]!.location;
+		this.nextCritParticleTick = randomInt(1, 2);
+		entity.clearVelocity();
+	}
+
+	onEnter(): void {
+		this.slasher.playSound3DAnd2D("scpdy.slasher.slash", 10, { volume: 1.3 });
+	}
+
+	onTick(mainhandItemStack: mc.ItemStack): void {
+		super.onTick(mainhandItemStack);
+
+		if (this.endTick >= 0) {
+			this.ending();
+			return;
+		}
+
+		if (this.currentTick % 8 === 0) this.slasher.playSound3DAnd2D("scpdy.slasher.chainsaw.loop");
+
+		const shouldStartEnding = this.lockonEntities.length <= 0 ||
+			this.slasher.player.inputInfo.getButtonState(mc.InputButton.Sneak) ===
+				mc.ButtonState.Released;
+
+		if (shouldStartEnding) {
+			this.blowOffLockonEntities();
+
+			this.slasher.playSound3DAnd2D("scpdy.slasher.slash", 10, { volume: 1.3 });
+			this.slasher.playSound3DAnd2D("scpdy.slasher.chainsaw.finish", 10, { volume: 1.3 });
+			this.slasher.setCooldown("scpdy_slasher_slash_end_cd");
+			this.slasher.player.playAnimation("animation.scpdy_player.slasher.slash_end");
+
+			this.endTick = this.currentTick;
+			return;
+		}
+
+		this.tickLockon();
+
+		shakeCamera(this.slasher.player, 0.08, 0.1);
+	}
+
+	private ending(): void {
+		if (this.currentTick >= SlashingState.FULL_SLASH_DURATION + this.endTick) {
+			this.slasher.transitionTo(new IdleState(this.slasher));
+			return;
+		}
+
+		if (
+			this.slasher.isBeingUsed &&
+			this.currentTick >= SlashingState.SLASH_REDOABLE_DURATION + this.endTick
+		) {
+			this.slasher.transitionTo(new IdleState(this.slasher));
+		}
+	}
+
+	private blowOffLockonEntities(): void {
+		if (this.lockonEntities.length <= 0) return;
+
+		const impulse = vec3.mul(this.slasher.player.getViewDirection(), 2);
+
+		for (let i = 0; i < this.lockonEntities.length; i++) {
+			const entity = this.lockonEntities[i]!;
+			entity.applyImpulse(impulse);
+		}
+
+		this.lockonEntities = [];
+	}
+
+	private tickLockon(): void {
+		this.slasher.player.teleport(this.playerLoc, { rotation: this.playerRot });
+
+		if (this.nextCritParticleTick === this.currentTick) {
+			this.spawnCritParticle();
+			this.nextCritParticleTick += randomInt(2, 6);
+		}
+
+		shakeCamera(this.slasher.player, 0.04, 0.13, "rotational");
+
+		if (this.currentTick % 3 === 0) {
+			this.slasher.player.playAnimation("animation.scpdy_player.slasher.slash_hold");
+		}
+
+		for (let i = 0; i < this.lockonEntities.length; i++) {
+			const entity = this.lockonEntities[i]!;
+
+			if (!entity.isValid || entity.hasTag(SlashingState.LOCKON_IGNORE_TAG)) {
+				this.lockonEntities.splice(i, 1);
+				i--;
+				continue;
+			}
+
+			const targetHealthComp = entity.getComponent("health");
+
+			if (targetHealthComp?.currentValue == 0) {
+				this.lockonEntities.splice(i, 1);
+				i--;
+				continue;
+			}
+
+			entity.tryTeleport(this.entityLockLoc, { keepVelocity: false });
+
+			entity.applyDamage(1, {
+				cause: mc.EntityDamageCause.override,
+				damagingEntity: this.slasher.player,
+			});
+
+			scp427_1_module.chainsawStun(entity);
+
+			if (i === 0 && targetHealthComp) {
+				this.displayEntityHealthInfo(targetHealthComp);
+			}
+		}
+	}
+
+	private spawnCritParticle(): void {
+		const sparkParticleLoc = vec3
+			.chain(vec3.FORWARD)
+			.mul(0.45)
+			.changeDir(this.slasher.player.getViewDirection())
+			.add(this.slasher.player.getHeadLocation())
+			.done();
+
+		this.slasher.player.dimension.spawnParticle(
+			"lc:scpdy_slasher_spark_emitter",
+			sparkParticleLoc,
+		);
+	}
+
+	private displayEntityHealthInfo(healthComp: mc.EntityHealthComponent): void {
+		const entity = healthComp.entity;
+
+		const targetName = getEntityName(entity);
+
+		const colorText = healthComp.currentValue <= 0
+			? "§c"
+			: healthComp.currentValue <= 30
+			? mc.system.currentTick % 2 === 0
+				? "§b"
+				: "§d"
+			: "§e";
+
+		const currentHealth = Math.floor(healthComp.currentValue);
+		const maxHealth = Math.floor(healthComp.effectiveMax);
+		const healthText = `${currentHealth} / ${maxHealth}`;
+
+		const actionbarText: mc.RawText = {
+			rawtext: [
+				{ text: colorText },
+				{ rawtext: targetName.rawtext },
+				{ text: " — ❤ " },
+				{ text: healthText },
+			],
+		};
+
+		this.slasher.player.onScreenDisplay.setActionBar(actionbarText);
 	}
 }
