@@ -2,6 +2,7 @@ import { getModifiedDamageNumber } from "@lib/utils/entityUtils";
 import * as vec3 from "@lib/utils/vec3";
 import { AdvancedItem, AdvancedItemBaseConstructorArgs } from "@logic/advancedItem/AdvancedItem";
 import { registerAdvancedItemProfile } from "@logic/advancedItem/profileRegistry";
+import * as scp427_1_module from "@logic/scps/scp427/scp427_1";
 import * as mc from "@minecraft/server";
 import * as beam from "./beam";
 
@@ -316,4 +317,239 @@ class ChargingState extends SlasherState {
 }
 
 class SlashingState extends SlasherState {
+	private static readonly DASH_DURATION = 5;
+	private static readonly SLASH_DAMAGING_DURATION = 4;
+	public static readonly SLASH_REDOABLE_DURATION = 5;
+	public static readonly FULL_SLASH_DURATION = 12;
+	private static readonly DIRECT_SLASH_DAMAGE = 19;
+
+	private static readonly LOCKON_EXCLUDED_FAMILIES: string[] = [
+		"projectile",
+		"inanimate",
+		"scp096",
+		"scp682",
+	];
+	private static readonly LOCKON_EXCLUDED_TYPES: string[] = [
+		"minecraft:xp_orb",
+		"minecraft:arrow",
+		"minecraft:fireball",
+		"minecraft:ender_dragon",
+		"minecraft:wither",
+	];
+	public static readonly LOCKON_IGNORE_TAG = "scpdy_ignore_slasher_capture";
+	private static readonly LOCKON_EXCLUDED_TAGS = [SlashingState.LOCKON_IGNORE_TAG];
+
+	private slashTick = 0;
+	private alreadySlashedEntities: mc.Entity[] = [];
+
+	onTick(mainhandItemStack: mc.ItemStack): void {
+		super.onTick(mainhandItemStack);
+
+		if (this.currentTick % 2 === 0) {
+			this.slasher.player.addEffect("weakness", 3, {
+				amplifier: 255,
+				showParticles: false,
+			});
+		}
+
+		if (this.currentTick === 0) {
+			this.onFirstTick();
+			this.chargeReleaseActionbarAnim();
+		}
+
+		if (this.currentTick === this.slashTick) {
+			this.onSlash();
+		} else if (this.currentTick === this.slashTick + 1) {
+			shakeCamera(this.slasher.player, 0.08, 0.1);
+			this.slasher.player.playAnimation("animation.scpdy_player.slasher.slash_end");
+			beam.shootSlasherSlashBeam(this.slasher.player);
+		}
+
+		if (
+			this.currentTick > this.slashTick &&
+			this.currentTick <= SlashingState.SLASH_DAMAGING_DURATION + this.slashTick
+		) {
+			this.simulateSlashDamaging();
+		}
+
+		if (this.currentTick < this.slashTick) return;
+
+		if (this.currentTick >= SlashingState.FULL_SLASH_DURATION + this.slashTick) {
+			this.slasher.transitionTo(new IdleState(this.slasher));
+			return;
+		}
+
+		if (
+			this.slasher.isBeingUsed &&
+			this.currentTick >= SlashingState.SLASH_REDOABLE_DURATION + this.slashTick
+		) {
+			this.slasher.transitionTo(new IdleState(this.slasher));
+		}
+	}
+
+	private onFirstTick(): void {
+		const dash = this.slasher.player.inputInfo.getMovementVector().y > 0.6;
+		if (dash) {
+			this.slashTick = SlashingState.DASH_DURATION; // slashTick determines when the slashing happens, so it should be after dashing.
+
+			this.slasher.setCooldown("scpdy_slasher_dash_cd");
+			this.slasher.playSound3DAnd2D("scpdy.slasher.dash", 10, { volume: 1.3 });
+
+			let dashImpulse = this.getDashImpulse();
+
+			if (this.slasher.player.isOnGround) {
+				dashImpulse.y = 0;
+				dashImpulse = vec3.mul(vec3.normalize(dashImpulse), 4.8);
+				this.slasher.player.applyKnockback(dashImpulse, 0.12);
+			} else {
+				this.slasher.player.applyImpulse(dashImpulse);
+			}
+
+			shakeCamera(this.slasher.player, 0.03, 0.13);
+			this.slasher.player.playAnimation("animation.scpdy_player.slasher.dash_slash_start");
+		} else {
+			this.slasher.player.playAnimation("animation.scpdy_player.slasher.slash_start");
+		}
+	}
+
+	private chargeReleaseActionbarAnim(): void {
+		const uiFrames = [
+			"<X>",
+			"< X >",
+			"<  X  >",
+		];
+
+		for (let i = 0; i < uiFrames.length; i++) {
+			const uiFrame = uiFrames[i]!;
+
+			mc.system.runTimeout(() => {
+				this.slasher.player.onScreenDisplay.setActionBar(`§4${uiFrame}`);
+			}, i);
+		}
+	}
+
+	private getDashImpulse(): mc.Vector3 {
+		return vec3
+			.chain(vec3.FORWARD)
+			.mul(2.2)
+			.changeDir(this.slasher.player.getViewDirection())
+			.done();
+	}
+
+	private onSlash(): void {
+		const lockonCond = this.slasher.player.isSneaking;
+		const lockonEntities = lockonCond ? this.getEntitiesInSlashRange(true) : [];
+
+		if (lockonEntities.length > 0) {
+			// TODO: transition to lockon slashing state
+			return;
+		}
+
+		this.slasher.setCooldown("scpdy_slasher_slash_continue_cd", 3);
+		this.slasher.setCooldown("scpdy_slasher_slash_start_cd");
+		this.slasher.playSound3DAnd2D("scpdy.slasher.slash", 10, { volume: 1.3 });
+	}
+
+	private simulateSlashDamaging(): void {
+		const entities = this.getEntitiesInSlashRange();
+
+		if (entities.length <= 0) return;
+
+		for (let i = 0; i < entities.length; i++) {
+			const entity = entities[i]!;
+
+			if (this.alreadySlashedEntities.includes(entity)) continue;
+
+			const damaged = entity.applyDamage(
+				getModifiedDamageNumber(SlashingState.DIRECT_SLASH_DAMAGE, entity),
+				{
+					cause: mc.EntityDamageCause.override,
+					damagingEntity: this.slasher.player,
+				},
+			);
+
+			if (!damaged) continue;
+
+			scp427_1_module.chainsawStun(entity);
+
+			this.alreadySlashedEntities.push(entity);
+
+			if (i > 2) continue;
+
+			shakeCamera(this.slasher.player, 0.13, 0.26);
+
+			const critParticleLoc = vec3.midpoint(
+				this.slasher.player.getHeadLocation(),
+				entity.getHeadLocation(),
+			);
+
+			this.slasher.player.dimension.spawnParticle(
+				"lc:scpdy_slasher_spark_emitter",
+				critParticleLoc,
+			);
+
+			mc.system.runTimeout(() => {
+				this.slasher.playSoundAtHeadFront("scpdy.slasher.critical", { volume: 1.1 });
+			}, i);
+		}
+	}
+
+	private getEntitiesInSlashRange(lockon = false): mc.Entity[] {
+		const headLoc = this.slasher.player.getHeadLocation();
+		const viewDir = this.slasher.player.getViewDirection();
+		const result: mc.Entity[] = [];
+
+		const checkPositions = [
+			{ z: 1.3, y: 0, maxDistance: 1.8 },
+			{ z: 2.7, y: 0, maxDistance: 1.8 },
+			{ z: 2.2, y: -1.4, maxDistance: 1.9 },
+		];
+
+		const candidates: mc.Entity[] = [];
+
+		for (const pos of checkPositions) {
+			const location = vec3.getRelativeToHead(headLoc, viewDir, {
+				z: pos.z,
+				y: pos.y ?? 0,
+			});
+
+			const entities = this.slasher.player.dimension.getEntities({
+				closest: 5,
+				maxDistance: pos.maxDistance,
+				location,
+				excludeFamilies: lockon ? SlashingState.LOCKON_EXCLUDED_FAMILIES : undefined,
+				excludeTypes: lockon ? SlashingState.LOCKON_EXCLUDED_TYPES : undefined,
+				excludeTags: lockon ? SlashingState.LOCKON_EXCLUDED_TAGS : undefined,
+			});
+
+			candidates.push(...entities);
+		}
+
+		for (const entity of candidates) {
+			if (entity === this.slasher.player) continue;
+			if (result.includes(entity)) continue;
+			if (entity instanceof mc.Player) {
+				if (!mc.world.gameRules.pvp) continue;
+				if (isPlayerImmune(entity)) continue;
+			}
+
+			// Check if entity is actually visible via raycast
+			const raycastHit = [
+				...this.slasher.player.dimension.getEntitiesFromRay(
+					this.slasher.player.getHeadLocation(),
+					vec3.sub(entity.location, this.slasher.player.getHeadLocation()),
+				),
+				...this.slasher.player.dimension.getEntitiesFromRay(
+					this.slasher.getHeadFrontLocation(),
+					vec3.sub(entity.getHeadLocation(), this.slasher.player.getHeadLocation()),
+				),
+			];
+
+			if (raycastHit.some((x) => x.entity === entity)) {
+				result.push(entity);
+			}
+		}
+
+		return result;
+	}
 }
