@@ -48,6 +48,26 @@ class Slasher extends AdvancedItem {
 		this.player.dimension.playSound(soundId, this.getHeadFrontLocation(), opts);
 	}
 
+	playSound3DAnd2D(soundId: string, maxDist = 15, opts?: mc.PlayerSoundOptions): void {
+		const soundId2D = `${soundId}.2d`;
+		this.player.playSound(soundId2D, opts);
+
+		const listeners = this.player.dimension.getPlayers({
+			location: this.player.getHeadLocation(),
+			maxDistance: maxDist,
+		});
+
+		for (const listener of listeners) {
+			if (listener === this.player) continue;
+
+			listener.playSound(soundId, {
+				location: this.player.getHeadLocation(),
+				pitch: opts?.pitch,
+				volume: opts?.volume,
+			});
+		}
+	}
+
 	getCooldown(id: string): number {
 		return this.player.getItemCooldown(id);
 	}
@@ -118,6 +138,14 @@ abstract class SlasherState {
 }
 
 class IdleState extends SlasherState {
+	onTick(mainhandItemStack: mc.ItemStack): void {
+		super.onTick(mainhandItemStack);
+
+		if (!this.slasher.isBeingUsed) return;
+
+		this.slasher.transitionTo(new ChargingState(this.slasher));
+	}
+
 	onSwingArm(): void {
 		this.slasher.transitionTo(new SwingAttackState(this.slasher));
 	}
@@ -222,4 +250,70 @@ class SwingAttackState extends SlasherState {
 			});
 		}
 	}
+}
+
+class ChargingState extends SlasherState {
+	private static readonly FULL_CHARGE_DURATION = 5;
+
+	onTick(mainhandItemStack: mc.ItemStack): void {
+		super.onTick(mainhandItemStack);
+
+		const chargeUIMap = [
+			"§c>     X     <",
+			"§c>    X    <",
+			"§c>   X   <",
+			"§c>  X  <",
+			"§c> X <",
+			"§c>X<",
+		];
+
+		if (this.currentTick < ChargingState.FULL_CHARGE_DURATION) {
+			this.slasher.player.onScreenDisplay.setActionBar(chargeUIMap[this.currentTick]);
+		} else {
+			// Flashy colors for fully charged
+			this.slasher.player.onScreenDisplay.setActionBar(
+				this.currentTick % 2 === 0 ? "§e>X<" : "§b>X<",
+			);
+		}
+
+		if (this.currentTick === 0) {
+			this.slasher.setCooldown("scpdy_slasher_charge_start_cd");
+			this.slasher.player.playAnimation("animation.scpdy_player.slasher.charge_start");
+		}
+
+		if (this.currentTick > 0 && this.currentTick % 6 === 0) {
+			this.slasher.player.playAnimation("animation.scpdy_player.slasher.charge_hold");
+		}
+
+		if (this.currentTick % 8 === 0) {
+			this.slasher.playSoundAtHeadFront("scpdy.slasher.charge_loop");
+		}
+	}
+
+	onStopUse(_event: mc.ItemStopUseAfterEvent): void {
+		if (this.currentTick < ChargingState.FULL_CHARGE_DURATION) this.cancelCharge();
+		else this.releaseFullCharge();
+	}
+
+	private cancelCharge(): void {
+		this.slasher.setCooldown("scpdy_slasher_charge_cancel_cd");
+		this.slasher.transitionTo(new IdleState(this.slasher));
+
+		this.slasher.player.onScreenDisplay.setActionBar("§8---");
+	}
+
+	private releaseFullCharge(): void {
+		const plunge = !this.slasher.player.isOnGround && this.slasher.player.getRotation().x > 83 &&
+			this.slasher.player.inputInfo.getButtonState(mc.InputButton.Jump) === mc.ButtonState.Pressed;
+
+		if (plunge) {
+			// TODO: Transition to plunging state
+			return;
+		}
+
+		this.slasher.transitionTo(new SlashingState(this.slasher));
+	}
+}
+
+class SlashingState extends SlasherState {
 }
