@@ -1,5 +1,5 @@
 import { getEntityName, getModifiedDamageNumber } from "@lib/utils/entityUtils";
-import { randomInt } from "@lib/utils/mathUtils";
+import { randomFloat, randomInt } from "@lib/utils/mathUtils";
 import * as vec3 from "@lib/utils/vec3";
 import { AdvancedItem, AdvancedItemBaseConstructorArgs } from "@logic/advancedItem/AdvancedItem";
 import { registerAdvancedItemProfile } from "@logic/advancedItem/profileRegistry";
@@ -305,11 +305,11 @@ class ChargingState extends SlasherState {
 	}
 
 	private releaseFullCharge(): void {
-		const plunge = !this.slasher.player.isOnGround && this.slasher.player.getRotation().x > 83 &&
+		const plunge = !this.slasher.player.isOnGround && this.slasher.player.getRotation().x > 65 &&
 			this.slasher.player.inputInfo.getButtonState(mc.InputButton.Jump) === mc.ButtonState.Pressed;
 
 		if (plunge) {
-			// TODO: Transition to plunging state
+			this.slasher.transitionTo(new PlungeWindupState(this.slasher));
 			return;
 		}
 
@@ -740,5 +740,251 @@ class LockonSlashingState extends SlasherState {
 		};
 
 		this.slasher.player.onScreenDisplay.setActionBar(actionbarText);
+	}
+}
+
+class PlungeWindupState extends SlasherState {
+	private static readonly COMPLETE_TICK = 8;
+
+	onEnter(): void {
+		this.slasher.player.addEffect("weakness", PlungeWindupState.COMPLETE_TICK + 2, {
+			amplifier: 255,
+			showParticles: false,
+		});
+
+		this.slasher.player.addEffect("resistance", PlungeWindupState.COMPLETE_TICK + 5, {
+			amplifier: 255,
+			showParticles: false,
+		});
+
+		mc.system.run(() => {
+			this.slasher.player.applyImpulse({ x: 0, y: 1.2, z: 0 });
+		});
+
+		this.slasher.playSound3DAnd2D("scpdy.slasher.plunge_windup", 15, { volume: 1.5 });
+		this.slasher.setCooldown("scpdy_plunge_windup_cd");
+
+		// TODO: plunge windup third person animations
+	}
+
+	onTick(mainhandItemStack: mc.ItemStack): void {
+		super.onTick(mainhandItemStack);
+
+		if (this.currentTick === PlungeWindupState.COMPLETE_TICK) {
+			this.slasher.transitionTo(new PlungeFallState(this.slasher, this.slasher.player.location.y));
+			return;
+		}
+	}
+}
+
+class PlungeFallState extends SlasherState {
+	private static readonly FALL_FORCE: mc.Vector3 = { x: 0, y: -3.9, z: 0 };
+
+	constructor(slasher: Slasher, private readonly startHeight: number) {
+		super(slasher);
+	}
+
+	onEnter(): void {
+		this.addEffects();
+
+		this.slasher.playSound3DAnd2D("scpdy.slasher.slash", 12, {
+			volume: 1.3,
+			pitch: randomFloat(0.8, 0.9),
+		});
+		this.slasher.player.applyImpulse(PlungeFallState.FALL_FORCE);
+		this.slasher.setCooldown("scpdy_plunge_fall_cd");
+
+		// TODO: plunge fall third person animations
+	}
+
+	onTick(mainhandItemStack: mc.ItemStack): void {
+		super.onTick(mainhandItemStack);
+
+		if (this.currentTick % 2 === 0) {
+			mc.system.run(() => {
+				this.addEffects();
+			});
+		}
+
+		if (this.currentTick === 0) return;
+
+		const yVelocity = this.slasher.player.getVelocity().y;
+
+		const blockBelow = this.slasher.player.dimension.getBlockBelow(this.slasher.player.location, {
+			maxDistance: Math.abs(yVelocity * 2),
+		});
+
+		if (!blockBelow && yVelocity < -0.5) return;
+
+		this.slasher.transitionTo(new PlungeImpactState(this.slasher, this.startHeight));
+	}
+
+	private addEffects(): void {
+		this.slasher.player.addEffect("resistance", 6, {
+			amplifier: 255,
+			showParticles: false,
+		});
+
+		this.slasher.player.addEffect("weakness", 10, {
+			amplifier: 255,
+			showParticles: false,
+		});
+
+		this.slasher.player.addEffect("slowness", 12, {
+			amplifier: 0,
+		});
+	}
+}
+
+class PlungeImpactState extends SlasherState {
+	private static readonly MIN_DEPTH_CONSIDERED_AS_HIGH = 10;
+	private static readonly STATE_DURATION = 15;
+
+	private readonly fallenDepth: number;
+	private readonly isHighFallDepth: boolean;
+
+	constructor(slasher: Slasher, startHeight: number) {
+		super(slasher);
+
+		this.fallenDepth = startHeight - this.slasher.player.location.y;
+		this.isHighFallDepth = this.fallenDepth >= PlungeImpactState.MIN_DEPTH_CONSIDERED_AS_HIGH;
+
+		this.slasher.player.addEffect("weakness", PlungeImpactState.STATE_DURATION + 2, {
+			amplifier: 255,
+			showParticles: false,
+		});
+	}
+
+	onEnter(): void {
+		if (
+			this.fallenDepth <= 1.2 || (!this.slasher.player.isFalling && !this.slasher.player.isOnGround)
+		) {
+			this.slasher.playSoundAtHeadFront("mace.smash_air", { volume: 1.1 });
+			return;
+		}
+
+		const impactLocation = this.getImpactLocation();
+
+		mc.system.run(() => {
+			this.affectNearbyEntities(impactLocation);
+		});
+
+		this.slasher.setCooldown("scpdy_plunge_impact_cd");
+
+		this.slasher.player.spawnParticle(
+			"lc:scpdy_slasher_spark_emitter",
+			vec3.add(this.slasher.player.location, { x: 0, y: 0.3, z: 0 }),
+		);
+
+		if (this.isHighFallDepth) {
+			this.slasher.playSoundAtHeadFront("mace.heavy_smash_ground", { volume: 1.1 });
+
+			this.slasher.playSound3DAnd2D("scpdy.slasher.plunge_impact", 20, {
+				volume: 1.8,
+				pitch: this.fallenDepth > 50 ? 0.7 : this.fallenDepth > 20 ? randomFloat(0.85, 0.95) : 1,
+			});
+
+			if (mc.system.serverSystemInfo.memoryTier > mc.MemoryTier.Low) {
+				this.slasher.player.dimension.spawnEntity(
+					"lc:scpdy_slasher_plunge_impact_particle_spawner",
+					impactLocation,
+				);
+			}
+		} else {
+			this.slasher.playSoundAtHeadFront("mace.smash_ground", { volume: 1.1 });
+			this.slasher.playSoundAtHeadFront("scpdy.slasher.critical", { volume: 1.4 });
+		}
+
+		this.slasher.player.dimension.spawnParticle(
+			"lc:scpdy_slasher_plunge_impact_emitter",
+			impactLocation,
+		);
+
+		this.shakeNearbyPlayerCameras(impactLocation);
+
+		// TODO: plunge impact third person animation
+	}
+
+	private shakeNearbyPlayerCameras(location: mc.Vector3): void {
+		const locString = vec3.toString2(location);
+		this.slasher.player.dimension.runCommand(
+			`execute positioned ${locString} run camerashake add @a[r=10] 0.3 0.35 rotational`,
+		);
+	}
+
+	private getImpactLocation(): mc.Vector3 {
+		const loc = this.slasher.player.dimension.getBlockBelow(
+			vec3.add(this.slasher.player.location, { x: 0, y: -0.6, z: 0 }),
+			{ maxDistance: 6 },
+		)?.bottomCenter();
+
+		if (!loc) return this.slasher.player.location;
+
+		return vec3.add(loc, { x: 0, y: 0.5, z: 0 });
+	}
+
+	private affectNearbyEntities(impactLocation: mc.Vector3): void {
+		const damage = 10 + Math.min(200, Math.ceil(this.fallenDepth * 3.0));
+
+		this.onNearbyEntities(impactLocation, (entity, wasRayHit) => {
+			if (wasRayHit) {
+				entity.applyDamage(wasRayHit ? damage : 5, {
+					cause: mc.EntityDamageCause.maceSmash,
+					damagingEntity: this.slasher.player,
+				});
+			}
+		});
+	}
+
+	private onNearbyEntities(
+		impactLocation: mc.Vector3,
+		action: (entity: mc.Entity, wasRayHit: boolean) => void,
+	): void {
+		const entities = this.slasher.player.dimension.getEntities({
+			location: impactLocation,
+			maxDistance: this.fallenDepth > 20 ? 4.5 : this.fallenDepth > 50 ? 5.5 : 9,
+			closest: 15,
+		});
+
+		for (let i = 0; i < entities.length; i++) {
+			const entity = entities[i]!;
+
+			if (entity === this.slasher.player) continue;
+			if (entity instanceof mc.Player) {
+				if (!mc.world.gameRules.pvp) continue;
+				if (isPlayerImmune(entity)) continue;
+			}
+
+			let rayHit = false;
+
+			const rayHit1 = this.slasher.player.dimension.getEntitiesFromRay(
+				this.slasher.player.location,
+				vec3.sub(entity.location, this.slasher.player.location),
+			)
+				.some(hitInfo => hitInfo.entity === entity);
+
+			if (rayHit1) {
+				rayHit = true;
+			} else {
+				const rayHit2 = this.slasher.player.dimension.getEntitiesFromRay(
+					this.slasher.player.getHeadLocation(),
+					vec3.sub(entity.getHeadLocation(), this.slasher.player.getHeadLocation()),
+				)
+					.some(hitInfo => hitInfo.entity === entity);
+
+				rayHit = rayHit2;
+			}
+
+			action(entity, rayHit);
+		}
+	}
+
+	onTick(mainhandItemStack: mc.ItemStack): void {
+		super.onTick(mainhandItemStack);
+
+		if (this.currentTick < PlungeImpactState.STATE_DURATION) return;
+
+		this.slasher.setCooldown("scpdy_slasher_pick");
+		this.slasher.transitionTo(new IdleState(this.slasher));
 	}
 }
