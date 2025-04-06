@@ -78,6 +78,55 @@ class Slasher extends AdvancedItem {
 		this.player.startItemCooldown(id, duration);
 	}
 
+	getNextDurabilityDamage(): number | undefined {
+		const value = this.player.getDynamicProperty("nextSlasherDurabilityDamage");
+		if (typeof value !== "number") return;
+		return Math.floor(value);
+	}
+
+	setNextDurabilityDamage(value?: number | undefined) {
+		this.player.setDynamicProperty(
+			"nextSlasherDurabilityDamage",
+			value == undefined || value <= 0 ? undefined : Math.floor(value),
+		);
+	}
+
+	addNextDurabilityDamage(value: number): void {
+		let current = this.getNextDurabilityDamage();
+		if (typeof current !== "number") current = 0;
+		this.setNextDurabilityDamage(current + Math.floor(value));
+	}
+
+	getCurrentDurability(durabilityComp: mc.ItemDurabilityComponent): number {
+		return durabilityComp.maxDurability - durabilityComp.damage;
+	}
+
+	isNeedingRepair(durabilityComp: mc.ItemDurabilityComponent): boolean {
+		return durabilityComp.damage >= durabilityComp.maxDurability;
+	}
+
+	processNextDurabilityDamage(durabilityComp: mc.ItemDurabilityComponent): boolean {
+		const nextDurabilityDamage = this.getNextDurabilityDamage();
+		if (nextDurabilityDamage == undefined) return false;
+
+		this.setNextDurabilityDamage(undefined);
+
+		if (this.player.getGameMode() === mc.GameMode.creative) return false;
+		if (this.isNeedingRepair(durabilityComp)) return false;
+
+		const newDamage = Math.min(this.getCurrentDurability(durabilityComp), nextDurabilityDamage);
+
+		durabilityComp.damage += newDamage;
+
+		return true;
+	}
+
+	getDurabilityComp(slasherItem: mc.ItemStack): mc.ItemDurabilityComponent {
+		const comp = slasherItem.getComponent("durability");
+		if (!comp) throw new Error("Durability component does not exist");
+		return comp;
+	}
+
 	onTick(mainhandItemStack: mc.ItemStack): void {
 		this.currentState.onTick(mainhandItemStack);
 	}
@@ -85,6 +134,7 @@ class Slasher extends AdvancedItem {
 	onRemove(): void {}
 
 	isUsable(event: mc.ItemStartUseAfterEvent): boolean {
+		if (this.isNeedingRepair(this.getDurabilityComp(event.itemStack))) return false;
 		return this.currentState.isUsable(event);
 	}
 
@@ -143,9 +193,23 @@ class IdleState extends SlasherState {
 	onTick(mainhandItemStack: mc.ItemStack): void {
 		super.onTick(mainhandItemStack);
 
-		if (!this.slasher.isBeingUsed) return;
+		if (this.slasher.isBeingUsed) {
+			this.slasher.transitionTo(new ChargingState(this.slasher));
+			return;
+		}
 
-		this.slasher.transitionTo(new ChargingState(this.slasher));
+		const durabilityComp = this.slasher.getDurabilityComp(mainhandItemStack);
+
+		if (this.slasher.isNeedingRepair(durabilityComp)) {
+			this.slasher.player.onScreenDisplay.setActionBar({
+				translate: "scpdy.actionHint.slasher.needsRepair",
+			});
+		}
+
+		if (this.slasher.processNextDurabilityDamage(durabilityComp)) {
+			this.slasher.playerMainhand.setItem(mainhandItemStack);
+			return;
+		}
 	}
 
 	onSwingArm(): void {
@@ -216,6 +280,10 @@ class SwingAttackState extends SlasherState {
 
 		shakeCamera(this.slasher.player, 0.05, 0.09);
 
+		const mainhandItem = this.slasher.playerMainhand.getItem()!;
+		const durabilityComp = this.slasher.getDurabilityComp(mainhandItem);
+		if (this.slasher.isNeedingRepair(durabilityComp)) return;
+
 		this.shootBeams();
 
 		mc.system.run(() => {
@@ -246,22 +314,36 @@ class SwingAttackState extends SlasherState {
 
 			const damage = Math.max(1, getModifiedDamageNumber(SwingAttackState.DAMAGE, entity));
 
-			entity.applyDamage(damage, {
+			const damaged = entity.applyDamage(damage, {
 				cause: mc.EntityDamageCause.override,
 				damagingEntity: this.slasher.player,
 			});
+
+			if (!damaged) continue;
+
+			this.slasher.addNextDurabilityDamage(1);
 		}
 	}
 }
 
 class ChargingState extends SlasherState {
-	private static readonly FULL_CHARGE_DURATION = 5;
+	private static readonly FULL_CHARGE_DURATION = 4;
 
 	onTick(mainhandItemStack: mc.ItemStack): void {
 		super.onTick(mainhandItemStack);
 
+		const durabilityComp = this.slasher.getDurabilityComp(mainhandItemStack);
+		if (this.slasher.isNeedingRepair(durabilityComp)) {
+			this.slasher.transitionTo(new IdleState(this.slasher));
+			return;
+		}
+
+		if (this.slasher.processNextDurabilityDamage(durabilityComp)) {
+			this.slasher.playerMainhand.setItem(mainhandItemStack);
+			return;
+		}
+
 		const chargeUIMap = [
-			"§c>     X     <",
 			"§c>    X    <",
 			"§c>   X   <",
 			"§c>  X  <",
@@ -318,10 +400,11 @@ class ChargingState extends SlasherState {
 }
 
 class SlashingState extends SlasherState {
-	private static readonly DASH_DURATION = 5;
+	private static readonly GROUND_DASH_DURATION = 2;
+	private static readonly AIR_DASH_DURATION = 4;
 	private static readonly SLASH_DAMAGING_DURATION = 4;
 	public static readonly SLASH_REDOABLE_DURATION = 5;
-	public static readonly FULL_SLASH_DURATION = 12;
+	public static readonly FULL_SLASH_DURATION = 10;
 	private static readonly DIRECT_SLASH_DAMAGE = 19;
 
 	private static readonly LOCKON_EXCLUDED_FAMILIES: string[] = [
@@ -391,14 +474,18 @@ class SlashingState extends SlasherState {
 	private onFirstTick(): void {
 		const dash = this.slasher.player.inputInfo.getMovementVector().y > 0.6;
 		if (dash) {
-			this.slashTick = SlashingState.DASH_DURATION; // slashTick determines when the slashing happens, so it should be after dashing.
+			const isOnGround = this.slasher.player.isOnGround;
+
+			this.slashTick = isOnGround
+				? SlashingState.GROUND_DASH_DURATION
+				: SlashingState.AIR_DASH_DURATION;
 
 			this.slasher.setCooldown("scpdy_slasher_dash_cd");
 			this.slasher.playSound3DAnd2D("scpdy.slasher.dash", 10, { volume: 1.3 });
 
 			let dashImpulse = this.getDashImpulse();
 
-			if (this.slasher.player.isOnGround) {
+			if (isOnGround) {
 				dashImpulse.y = 0;
 				dashImpulse = vec3.mul(vec3.normalize(dashImpulse), 4.8);
 				this.slasher.player.applyKnockback(dashImpulse, 0.12);
@@ -474,6 +561,8 @@ class SlashingState extends SlasherState {
 			scp427_1_module.chainsawStun(entity);
 
 			this.alreadySlashedEntities.push(entity);
+
+			this.slasher.addNextDurabilityDamage(2);
 
 			if (i > 2) continue;
 
@@ -778,7 +867,7 @@ class PlungeWindupState extends SlasherState {
 }
 
 class PlungeFallState extends SlasherState {
-	private static readonly FALL_FORCE: mc.Vector3 = { x: 0, y: -3.9, z: 0 };
+	private static readonly FALL_FORCE: mc.Vector3 = { x: 0, y: -3.3, z: 0 };
 
 	constructor(slasher: Slasher, private readonly startHeight: number) {
 		super(slasher);
@@ -863,6 +952,8 @@ class PlungeImpactState extends SlasherState {
 			return;
 		}
 
+		this.slasher.addNextDurabilityDamage(Math.ceil(this.fallenDepth / 2));
+
 		const impactLocation = this.getImpactLocation();
 
 		mc.system.run(() => {
@@ -914,8 +1005,8 @@ class PlungeImpactState extends SlasherState {
 
 	private getImpactLocation(): mc.Vector3 {
 		const loc = this.slasher.player.dimension.getBlockBelow(
-			vec3.add(this.slasher.player.location, { x: 0, y: -0.6, z: 0 }),
-			{ maxDistance: 6 },
+			vec3.add(this.slasher.player.location, { x: 0, y: -1.0, z: 0 }),
+			{ maxDistance: 15 },
 		)?.bottomCenter();
 
 		if (!loc) return this.slasher.player.location;
@@ -924,15 +1015,18 @@ class PlungeImpactState extends SlasherState {
 	}
 
 	private affectNearbyEntities(impactLocation: mc.Vector3): void {
-		const damage = 10 + Math.min(200, Math.ceil(this.fallenDepth * 3.0));
+		const damage = 4 + Math.min(200, Math.ceil(this.fallenDepth / 1.5));
 
 		this.onNearbyEntities(impactLocation, (entity, wasRayHit) => {
-			if (wasRayHit) {
-				entity.applyDamage(wasRayHit ? damage : 5, {
+			try {
+				entity.applyDamage(wasRayHit ? damage : Math.floor(damage / 2), {
 					cause: mc.EntityDamageCause.maceSmash,
 					damagingEntity: this.slasher.player,
 				});
-			}
+				entity.addEffect("slowness", 80, {
+					amplifier: 1,
+				});
+			} catch {}
 		});
 	}
 
