@@ -119,3 +119,19 @@ function getState(scp106: mc.Entity): number {
 function setState(scp106: mc.Entity, value: number): void {
 	scp106.setProperty("lc:state", value);
 }
+
+function getCorrosionRight(scp106: mc.Entity): boolean {
+	return scp106.getProperty("lc:corrosion_right") === true;
+}
+
+function setCorrosionRight(scp106: mc.Entity, value: boolean): void {
+	scp106.setProperty("lc:corrosion_right", value);
+}
+
+function getCorrosionLeft(scp106: mc.Entity): boolean {
+	return scp106.getProperty("lc:corrosion_left") === true;
+}
+
+function setCorrosionLeft(scp106: mc.Entity, value: boolean): void {
+	scp106.setProperty("lc:corrosion_left", value);
+}
