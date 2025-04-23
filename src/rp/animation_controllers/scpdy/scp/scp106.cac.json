@@ -1,0 +1,106 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.scpdy_scp106.main": {
+			"initial_state": "default",
+			"states": {
+				"default": {
+					"transitions": [
+						{ "hidden": "v.diving" },
+						{ "appear": "v.appearing" },
+						{ "idle": "1" }
+					]
+				},
+				"idle": {
+					"animations": [
+						"anim.idle",
+						"anim.look_at_target"
+					],
+					"transitions": [
+						{ "walk": "q.modified_move_speed > 0.03" },
+						{ "dive": "v.diving" },
+						{ "appear": "v.appearing" },
+						{ "throw_right": "v.throwing_right" },
+						{ "throw_left": "v.throwing_left" }
+					],
+					"blend_transition": 0.2
+				},
+				"walk": {
+					"animations": [
+						"anim.walk",
+						"anim.look_at_target"
+					],
+					"transitions": [
+						{ "idle": "q.modified_move_speed <= 0.03" },
+						{ "dive": "v.diving" },
+						{ "appear": "v.appearing" },
+						{ "throw_right": "v.throwing_right" },
+						{ "throw_left": "v.throwing_left" }
+					],
+					"blend_transition": 0.3
+				},
+				"dive": {
+					"animations": [
+						"anim.dive"
+					],
+					"transitions": [
+						{ "appear": "v.appearing" },
+						{ "hidden": "q.all_animations_finished" }
+					],
+					"blend_transition": 0
+				},
+				"hidden": {
+					"animations": [
+						"anim.hidden"
+					],
+					"transitions": [
+						{ "appear": "v.appearing" }
+					],
+					"blend_transition": 0
+				},
+				"appear": {
+					"animations": [
+						"anim.appear"
+					],
+					"transitions": [
+						{ "idle": "!v.appearing" }
+					],
+					"blend_transition": 0.2
+				},
+				"throw_right": {
+					"animations": [
+						"anim.throw_right"
+					],
+					"transitions": [
+						{ "idle": "q.all_animations_finished" }
+					],
+					"blend_transition": 0.3
+				},
+				"throw_left": {
+					"animations": [
+						"anim.throw_left"
+					],
+					"transitions": [
+						{ "idle": "q.all_animations_finished" }
+					],
+					"blend_transition": 0.3
+				}
+			}
+		},
+		"controller.animation.scpdy_scp106.corrosion": {
+			"initial_state": "default",
+			"states": {
+				"default": {
+					"animations": [
+						{
+							"anim.corrosion_right": "v.corrosion_right"
+						},
+						{
+							"anim.corrosion_left": "v.corrosion_left"
+						}
+					]
+				}
+			}
+		}
+	}
+}

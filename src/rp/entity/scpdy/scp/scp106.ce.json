@@ -1,0 +1,68 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "lc:scpdy_scp106",
+			"materials": {
+				"default": "entity_emissive_alpha"
+			},
+			"textures": {
+				"default": "textures/scpdy/scp/scp106"
+			},
+			"geometry": {
+				"default": "geometry.scpdy_scp106"
+			},
+			"animations": {
+				// Animation Controllers
+				"ctrl.main": "controller.animation.scpdy_scp106.main",
+				"ctrl.corrosion": "controller.animation.scpdy_scp106.corrosion",
+
+				// Animations
+				"anim.idle": "animation.scpdy_scp106.idle",
+				"anim.walk": "animation.scpdy_scp106.walk",
+				"anim.dive": "animation.scpdy_scp106.dive",
+				"anim.appear": "animation.scpdy_scp106.appear",
+				"anim.melee_attack": "animation.scpdy_scp106.melee_attack",
+				"anim.throw_right": "animation.scpdy_scp106.throw_right",
+				"anim.throw_left": "animation.scpdy_scp106.throw_left",
+				"anim.corrosion_right": "animation.scpdy_scp106.corrosion_right",
+				"anim.corrosion_left": "animation.scpdy_scp106.corrosion_left",
+				"anim.look_at_target": "animation.scpdy_scp106.look_at_target",
+				"anim.hidden": "animation.scpdy_scp106.hidden"
+			},
+			"scripts": {
+				"scale": "0.9375",
+				"animate": [
+					"ctrl.main",
+					"ctrl.corrosion",
+					"anim.melee_attack"
+				],
+				"initialize": [
+					"v.diving = false;",
+					"v.appearing = false;",
+					"v.throwing_right = false;",
+					"v.throwing_left = false;",
+					"v.corrosion_right = false;",
+					"v.corrosion_left = false;"
+				],
+				"pre_animation": [
+					"v.diving = q.property('lc:diving');",
+					"v.appearing = q.property('lc:appearing');",
+					"v.throwing_right = q.property('lc:throwing_right');",
+					"v.throwing_left = q.property('lc:throwing_left');",
+					"v.corrosion_right = q.property('lc:corrosion_right');",
+					"v.corrosion_left = q.property('lc:corrosion_left');",
+
+					"v.walk_anim_time = q.modified_distance_moved / 6.5;",
+					"v.melee_attack_anim_time = v.attack_time / 2;"
+				]
+			},
+			"render_controllers": ["controller.render.scpdy.scp106"],
+			"spawn_egg": {
+				"base_color": "#1c1211",
+				"overlay_color": "#734d41"
+			},
+			"enable_attachables": true
+		}
+	}
+}
