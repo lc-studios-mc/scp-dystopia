@@ -50,6 +50,7 @@ function onUpdate(scp106: mc.Entity): void {
 	if (state === STATE.default) {
 		if (!isInContactWithTarget && isStuck(scp106)) {
 			setState(scp106, STATE.diving);
+			scp106.addTag("scpdy_ignore_slasher_capture");
 			scp106.triggerEvent("lc:disable_free_movement");
 		}
 	} else if (state === STATE.hidden) {
@@ -75,6 +76,7 @@ function onFinishDive(scp106: mc.Entity): void {
 
 function onFinishAppear(scp106: mc.Entity): void {
 	setState(scp106, STATE.default);
+	scp106.removeTag("scpdy_ignore_slasher_capture");
 	scp106.triggerEvent("lc:enable_free_movement");
 }
 
