@@ -157,7 +157,7 @@
 					"priority": 11
 				},
 				"minecraft:mob_effect": {
-					"effect_range": 0.7,
+					"effect_range": 0.4,
 					"mob_effect": "wither"
 				}
 			},
