@@ -17,9 +17,7 @@
 			"scripts": {
 				"animate": [
 					"ctrl.main",
-					{
-						"anim.script_update": "q.has_target"
-					}
+					"anim.script_update"
 				]
 			},
 			"properties": {
