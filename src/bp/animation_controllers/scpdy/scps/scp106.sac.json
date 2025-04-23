@@ -21,19 +21,19 @@
 				"appearing_slow": {
 					"animations": ["anim.appearing_slow"],
 					"transitions": [
-						{ "default": "q.property('lc:state') != 2" }
+						{ "default": "q.property('lc:state') != 3" }
 					]
 				},
 				"appearing_fast": {
 					"animations": ["anim.appearing_fast"],
 					"transitions": [
-						{ "default": "q.property('lc:state') != 3" }
+						{ "default": "q.property('lc:state') != 4" }
 					]
 				},
 				"throwing": {
 					"animations": ["anim.throwing"],
 					"transitions": [
-						{ "default": "q.property('lc:state') != 4 && q.property('lc:state') != 5" }
+						{ "default": "q.property('lc:state') != 5 && q.property('lc:state') != 6" }
 					]
 				}
 			}
