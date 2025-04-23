@@ -78,12 +78,14 @@ function onUpdateHidden(scp106: mc.Entity): void {
 
 		// TODO: Particle
 	} else if (totalTick === 4) {
-		setState(scp106, STATE.appearingSlow);
+		setState(scp106, STATE.appearingFast);
 		scp106.removeEffect("invisibility");
 		scp106.triggerEvent("lc:show");
 		scp106.tryTeleport(riseLocation);
 		scp106.setDynamicProperty("hiddenTotalTick", undefined);
 		scp106.setDynamicProperty("riseLocation", undefined);
+		setCorrosionRight(scp106, true);
+		setCorrosionLeft(scp106, true);
 		return;
 	}
 
