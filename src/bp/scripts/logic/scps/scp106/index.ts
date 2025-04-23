@@ -36,20 +36,25 @@ mc.system.afterEvents.scriptEventReceive.subscribe(event => {
 });
 
 function onUpdate(scp106: mc.Entity): void {
+	if (!scp106.target) return;
+
 	// Stop riding something
 	mc.system.run(() => {
 		scp106.runCommand("ride @s stop_riding");
 	});
 
+	const isInContactWithTarget = vec3.distance(scp106.target.location, scp106.location) <= 0.6;
+
 	const state = getState(scp106);
 
 	if (state === STATE.default) {
-		if (isStuck(scp106)) {
+		if (!isInContactWithTarget && isStuck(scp106)) {
 			setState(scp106, STATE.diving);
 			scp106.triggerEvent("lc:disable_free_movement");
 		}
 	} else if (state === STATE.hidden) {
 		scp106.addEffect("invisibility", 12, { showParticles: false });
+		scp106.clearVelocity();
 	}
 }
 
@@ -58,7 +63,7 @@ function onFinishDive(scp106: mc.Entity): void {
 
 	scp106.tryTeleport({
 		x: scp106.location.x,
-		y: scp106.location.y - 1.5,
+		y: scp106.location.y - 0.6,
 		z: scp106.location.z,
 	});
 
