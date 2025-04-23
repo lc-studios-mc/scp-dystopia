@@ -12,7 +12,7 @@
 			"animation_length": 1.0,
 			"loop": false,
 			"timeline": {
-				"0.42": ["/scriptevent scpdy_scp106:finish_dive"]
+				"0.75": ["/scriptevent scpdy_scp106:finish_dive"]
 			}
 		},
 		"animation.scpdy.bp.scp106.appearing_slow": {
