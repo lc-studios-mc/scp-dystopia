@@ -54,7 +54,7 @@
 		"components": {
 			"minecraft:is_hidden_when_invisible": {},
 			"minecraft:knockback_resistance": {
-				"value": 0.8
+				"value": 1.0
 			},
 			"minecraft:experience_reward": {
 				"on_death": "20"
