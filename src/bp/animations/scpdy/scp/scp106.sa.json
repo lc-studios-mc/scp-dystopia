@@ -19,6 +19,7 @@
 			"animation_length": 8.0,
 			"loop": false,
 			"timeline": {
+				"0.0": ["/playsound scpdy.scp106.appear_slow @a[r=15] ~ ~ ~ 1.4 1.0"],
 				"7.0": ["/scriptevent scpdy_scp106:finish_appear"]
 			}
 		},
@@ -26,6 +27,7 @@
 			"animation_length": 1.0,
 			"loop": false,
 			"timeline": {
+				"0.0": ["/playsound scpdy.scp106.appear_fast @a[r=15] ~ ~ ~ 1.4 1.0"],
 				"0.75": ["/scriptevent scpdy_scp106:finish_appear"]
 			}
 		},
