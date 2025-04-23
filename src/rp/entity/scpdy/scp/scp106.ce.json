@@ -57,6 +57,9 @@
 					"v.melee_attack_anim_time = v.attack_time / 2;"
 				]
 			},
+			"particle_effects": {
+				"corrosion": "lc:scpdy_corrosion_emitter"
+			},
 			"render_controllers": ["controller.render.scpdy.scp106"],
 			"spawn_egg": {
 				"base_color": "#1c1211",
