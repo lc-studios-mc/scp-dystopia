@@ -7,10 +7,16 @@
 			"is_summonable": true,
 			"is_experimental": false,
 			"animations": {
-				"anim.script_update": "animation.scpdy.bp.scp106.script_update"
+				"ctrl.main": "controller.animation.scpdy.bp.scp106.main",
+				"anim.script_update": "animation.scpdy.bp.scp106.script_update",
+				"anim.diving": "animation.scpdy.bp.scp106.diving",
+				"anim.appearing_slow": "animation.scpdy.bp.scp106.appearing_slow",
+				"anim.appearing_fast": "animation.scpdy.bp.scp106.appearing_fast",
+				"anim.throwing": "animation.scpdy.bp.scp106.throwing"
 			},
 			"scripts": {
 				"animate": [
+					"ctrl.main",
 					{
 						"anim.script_update": "q.has_target"
 					}
@@ -22,10 +28,11 @@
 					"range": [
 						// 0 - Default
 						// 1 - Diving
-						// 2 - Appearing Slow
-						// 3 - Appearing Fast
-						// 4 - Throwing Right
-						// 5 - Throwing Left
+						// 2 - Hidden
+						// 3 - Appearing Slow
+						// 4 - Appearing Fast
+						// 5 - Throwing Right
+						// 6 - Throwing Left
 						0,
 						4
 					],
@@ -125,11 +132,6 @@
 			"minecraft:movement_sound_distance_offset": {
 				"value": 0.47
 			},
-			"minecraft:collision_box": {
-				"width": 0.6,
-				"height": 1.9
-			},
-			"minecraft:physics": {},
 			"minecraft:pushable": {
 				"is_pushable": false,
 				"is_pushable_by_piston": false
@@ -155,6 +157,33 @@
 					"priority": 11
 				}
 			},
+			"shown": {
+				"minecraft:collision_box": {
+					"width": 0.6,
+					"height": 1.9
+				},
+				"minecraft:physics": {},
+				"minecraft:game_event_movement_tracking": {
+					"emit_flap": false,
+					"emit_move": true,
+					"emit_swim": true
+				}
+			},
+			"hidden": {
+				"minecraft:collision_box": {
+					"width": 0.3,
+					"height": 0.3
+				},
+				"minecraft:physics": {
+					"has_collision": false,
+					"has_gravity": false
+				},
+				"minecraft:game_event_movement_tracking": {
+					"emit_flap": false,
+					"emit_move": false,
+					"emit_swim": false
+				}
+			},
 			"no_ambient_sound": {
 				"minecraft:ambient_sound_interval": {
 					"event_name": "none"
@@ -170,7 +199,49 @@
 		"events": {
 			"minecraft:entity_spawned": {
 				"add": {
-					"component_groups": ["free", "ambient_sound_normal"]
+					"component_groups": ["free", "shown", "ambient_sound_normal"]
+				}
+			},
+			"lc:enable_free_movement": {
+				"add": {
+					"component_groups": ["free"]
+				}
+			},
+			"lc:disable_free_movement": {
+				"remove": {
+					"component_groups": ["free"]
+				}
+			},
+			"lc:show": {
+				"remove": {
+					"component_groups": ["hidden"]
+				},
+				"add": {
+					"component_groups": ["shown"]
+				}
+			},
+			"lc:hide": {
+				"remove": {
+					"component_groups": ["shown"]
+				},
+				"add": {
+					"component_groups": ["hidden"]
+				}
+			},
+			"lc:enable_ambient_sound": {
+				"remove": {
+					"component_groups": ["no_ambient_sound"]
+				},
+				"add": {
+					"component_groups": ["ambient_sound_normal"]
+				}
+			},
+			"lc:disable_ambient_sound": {
+				"remove": {
+					"component_groups": ["ambient_sound_normal"]
+				},
+				"add": {
+					"component_groups": ["no_ambient_sound"]
 				}
 			}
 		}

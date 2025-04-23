@@ -18,7 +18,10 @@
 				{
 					"name": "waist",
 					"parent": "root",
-					"pivot": [0, 12, 0]
+					"pivot": [0, 12, 0],
+					"locators": {
+						"bottom": [0, 2, 0]
+					}
 				},
 				{
 					"name": "upperBody",

@@ -6,7 +6,8 @@
 			"states": {
 				"default": {
 					"transitions": [
-						{ "hidden": "v.diving" },
+						{ "dive": "v.diving" },
+						{ "hidden": "v.hidden" },
 						{ "appear_slow": "v.appearing_slow" },
 						{ "appear_fast": "v.appearing_fast" },
 						{ "idle": "1" }
@@ -49,7 +50,7 @@
 					"transitions": [
 						{ "appear_slow": "v.appearing_slow" },
 						{ "appear_fast": "v.appearing_fast" },
-						{ "hidden": "q.all_animations_finished" }
+						{ "hidden": "v.hidden" }
 					],
 					"blend_transition": 0
 				},

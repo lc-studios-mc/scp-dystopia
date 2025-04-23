@@ -7,6 +7,34 @@
 			"timeline": {
 				"0.0": ["/scriptevent scpdy_scp106:update"]
 			}
+		},
+		"animation.scpdy.bp.scp106.diving": {
+			"animation_length": 1.0,
+			"loop": false,
+			"timeline": {
+				"0.42": ["/scriptevent scpdy_scp106:finish_dive"]
+			}
+		},
+		"animation.scpdy.bp.scp106.appearing_slow": {
+			"animation_length": 8.0,
+			"loop": false,
+			"timeline": {
+				"7.0": ["/scriptevent scpdy_scp106:finish_appear"]
+			}
+		},
+		"animation.scpdy.bp.scp106.appearing_fast": {
+			"animation_length": 1.0,
+			"loop": false,
+			"timeline": {
+				"0.75": ["/scriptevent scpdy_scp106:finish_appear"]
+			}
+		},
+		"animation.scpdy.bp.scp106.throwing": {
+			"animation_length": 0.9,
+			"loop": false,
+			"timeline": {
+				"0.8": ["/scriptevent scpdy_scp106:finish_throw"]
+			}
 		}
 	}
 }

@@ -1,0 +1,42 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.scpdy.bp.scp106.main": {
+			"initial_state": "default",
+			"states": {
+				"default": {
+					"transitions": [
+						{ "diving": "q.property('lc:state') == 1" },
+						{ "appearing_slow": "q.property('lc:state') == 3" },
+						{ "appearing_fast": "q.property('lc:state') == 4" },
+						{ "throwing": "q.property('lc:state') == 5 || q.property('lc:state') == 6" }
+					]
+				},
+				"diving": {
+					"animations": ["anim.diving"],
+					"transitions": [
+						{ "default": "q.property('lc:state') != 1" }
+					]
+				},
+				"appearing_slow": {
+					"animations": ["anim.appearing_slow"],
+					"transitions": [
+						{ "default": "q.property('lc:state') != 2" }
+					]
+				},
+				"appearing_fast": {
+					"animations": ["anim.appearing_fast"],
+					"transitions": [
+						{ "default": "q.property('lc:state') != 3" }
+					]
+				},
+				"throwing": {
+					"animations": ["anim.throwing"],
+					"transitions": [
+						{ "default": "q.property('lc:state') != 4 && q.property('lc:state') != 5" }
+					]
+				}
+			}
+		}
+	}
+}

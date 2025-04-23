@@ -40,6 +40,7 @@
 				],
 				"initialize": [
 					"v.diving = false;",
+					"v.hidden = false;",
 					"v.appearing_slow = false;",
 					"v.appearing_fast = false;",
 					"v.throwing_right = false;",
@@ -50,12 +51,13 @@
 				"pre_animation": [
 					"v.state = q.property('lc:state');",
 					"v.diving = v.state == 1;",
-					"v.appearing_slow = v.state == 2;",
-					"v.appearing_fast = v.state == 3;",
-					"v.throwing_right = v.state == 4;",
-					"v.throwing_left = v.state == 5;",
-					"v.corrosion_right = q.property('lc:corrosion_right');",
-					"v.corrosion_left = q.property('lc:corrosion_left');",
+					"v.hidden = v.state == 2;",
+					"v.appearing_slow = v.state == 3;",
+					"v.appearing_fast = v.state == 4;",
+					"v.throwing_right = v.state == 5;",
+					"v.throwing_left = v.state == 6;",
+					"v.corrosion_right = !v.hidden && q.property('lc:corrosion_right');",
+					"v.corrosion_left = !v.hidden && q.property('lc:corrosion_left');",
 
 					"v.walk_anim_time = q.modified_distance_moved / 6.5;",
 					"v.melee_attack_anim_time = v.attack_time / 2;"
