@@ -1,6 +1,7 @@
 import * as vec3 from "@lib/utils/vec3";
 import * as mc from "@minecraft/server";
 import { SCP106_ENTITY_TYPE_ID } from "./shared";
+import { getRiseLocation } from "./utils";
 
 const STATE = {
 	default: 0,
@@ -59,8 +60,34 @@ function onUpdate(scp106: mc.Entity): void {
 }
 
 function onUpdateHidden(scp106: mc.Entity): void {
-	if (!scp106.target) return;
+	let totalTick = scp106.getDynamicProperty("hiddenTotalTick");
+	if (typeof totalTick !== "number") {
+		totalTick = 0;
+	}
 
+	let riseLocation = scp106.getDynamicProperty("riseLocation") as mc.Vector3 | undefined;
+	if (!riseLocation) {
+		riseLocation = getRiseLocation(scp106);
+		scp106.setDynamicProperty("riseLocation", riseLocation);
+	}
+
+	if (totalTick === 1) {
+		scp106.tryTeleport(vec3.add(riseLocation, vec3.DOWN));
+	} else if (totalTick === 2) {
+		if (scp106.target) scp106.lookAt(scp106.target.location);
+
+		// TODO: Particle
+	} else if (totalTick === 4) {
+		setState(scp106, STATE.appearingSlow);
+		scp106.removeEffect("invisibility");
+		scp106.triggerEvent("lc:show");
+		scp106.tryTeleport(riseLocation);
+		scp106.setDynamicProperty("hiddenTotalTick", undefined);
+		scp106.setDynamicProperty("riseLocation", undefined);
+		return;
+	}
+
+	scp106.setDynamicProperty("hiddenTotalTick", totalTick + 1);
 	scp106.addEffect("invisibility", 12, { showParticles: false });
 	scp106.clearVelocity();
 }
@@ -70,7 +97,7 @@ function onFinishDive(scp106: mc.Entity): void {
 
 	scp106.tryTeleport({
 		x: scp106.location.x,
-		y: scp106.location.y - 0.6,
+		y: scp106.location.y - 1.0,
 		z: scp106.location.z,
 	});
 
