@@ -158,6 +158,10 @@
 				}
 			},
 			"shown": {
+				"minecraft:mob_effect": {
+					"effect_range": 0.7,
+					"mob_effect": "wither"
+				},
 				"minecraft:collision_box": {
 					"width": 0.6,
 					"height": 1.9
