@@ -15,17 +15,17 @@ export function getRiseLocation(scp106: mc.Entity): mc.Vector3 {
 	}) ??
 		getRiseLocationBelow(scp106.dimension, {
 			x: targetLoc.x - 1,
-			y: targetLoc.y + 1.2,
+			y: targetLoc.y + 0.2,
 			z: targetLoc.z,
 		}) ??
 		getRiseLocationBelow(scp106.dimension, {
 			x: targetLoc.x,
-			y: targetLoc.y + 1.2,
+			y: targetLoc.y + 0.2,
 			z: targetLoc.z + 1,
 		}) ??
 		getRiseLocationBelow(scp106.dimension, {
 			x: targetLoc.x,
-			y: targetLoc.y + 1.2,
+			y: targetLoc.y + 0.2,
 			z: targetLoc.z - 1,
 		});
 
