@@ -9,10 +9,10 @@
 			}
 		},
 		"animation.scpdy.bp.scp106.diving": {
-			"animation_length": 1.0,
+			"animation_length": 1.5,
 			"loop": false,
 			"timeline": {
-				"0.75": ["/scriptevent scpdy_scp106:finish_dive"]
+				"1.1": ["/scriptevent scpdy_scp106:finish_dive"]
 			}
 		},
 		"animation.scpdy.bp.scp106.appearing_slow": {
