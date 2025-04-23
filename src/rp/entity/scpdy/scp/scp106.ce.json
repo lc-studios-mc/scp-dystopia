@@ -46,10 +46,11 @@
 					"v.corrosion_left = false;"
 				],
 				"pre_animation": [
-					"v.diving = q.property('lc:diving');",
-					"v.appearing = q.property('lc:appearing');",
-					"v.throwing_right = q.property('lc:throwing_right');",
-					"v.throwing_left = q.property('lc:throwing_left');",
+					"v.state = q.property('lc:state');",
+					"v.diving = v.state == 1;",
+					"v.appearing = v.state == 2;",
+					"v.throwing_right = v.state == 4;",
+					"v.throwing_left = v.state == 5;",
 					"v.corrosion_right = q.property('lc:corrosion_right');",
 					"v.corrosion_left = q.property('lc:corrosion_left');",
 

@@ -17,24 +17,19 @@
 				]
 			},
 			"properties": {
-				"lc:diving": {
-					"type": "bool",
-					"default": false,
-					"client_sync": true
-				},
-				"lc:appearing": {
-					"type": "bool",
-					"default": false,
-					"client_sync": true
-				},
-				"lc:throwing_right": {
-					"type": "bool",
-					"default": false,
-					"client_sync": true
-				},
-				"lc:throwing_left": {
-					"type": "bool",
-					"default": false,
+				"lc:state": {
+					"type": "int",
+					"range": [
+						// 0 - Default
+						// 1 - Diving
+						// 2 - Appearing Slow
+						// 3 - Appearing Fast
+						// 4 - Throwing Right
+						// 5 - Throwing Left
+						0,
+						4
+					],
+					"default": 0,
 					"client_sync": true
 				},
 				"lc:corrosion_right": {
