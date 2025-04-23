@@ -54,9 +54,15 @@ function onUpdate(scp106: mc.Entity): void {
 			scp106.triggerEvent("lc:disable_free_movement");
 		}
 	} else if (state === STATE.hidden) {
-		scp106.addEffect("invisibility", 12, { showParticles: false });
-		scp106.clearVelocity();
+		onUpdateHidden(scp106);
 	}
+}
+
+function onUpdateHidden(scp106: mc.Entity): void {
+	if (!scp106.target) return;
+
+	scp106.addEffect("invisibility", 12, { showParticles: false });
+	scp106.clearVelocity();
 }
 
 function onFinishDive(scp106: mc.Entity): void {
