@@ -7,7 +7,8 @@
 				"default": {
 					"transitions": [
 						{ "hidden": "v.diving" },
-						{ "appear": "v.appearing" },
+						{ "appear_slow": "v.appearing_slow" },
+						{ "appear_fast": "v.appearing_fast" },
 						{ "idle": "1" }
 					]
 				},
@@ -19,7 +20,8 @@
 					"transitions": [
 						{ "walk": "q.modified_move_speed > 0.03" },
 						{ "dive": "v.diving" },
-						{ "appear": "v.appearing" },
+						{ "appear_slow": "v.appearing_slow" },
+						{ "appear_fast": "v.appearing_fast" },
 						{ "throw_right": "v.throwing_right" },
 						{ "throw_left": "v.throwing_left" }
 					],
@@ -33,7 +35,8 @@
 					"transitions": [
 						{ "idle": "q.modified_move_speed <= 0.03" },
 						{ "dive": "v.diving" },
-						{ "appear": "v.appearing" },
+						{ "appear_slow": "v.appearing_slow" },
+						{ "appear_fast": "v.appearing_fast" },
 						{ "throw_right": "v.throwing_right" },
 						{ "throw_left": "v.throwing_left" }
 					],
@@ -44,7 +47,8 @@
 						"anim.dive"
 					],
 					"transitions": [
-						{ "appear": "v.appearing" },
+						{ "appear_slow": "v.appearing_slow" },
+						{ "appear_fast": "v.appearing_fast" },
 						{ "hidden": "q.all_animations_finished" }
 					],
 					"blend_transition": 0
@@ -54,16 +58,26 @@
 						"anim.hidden"
 					],
 					"transitions": [
-						{ "appear": "v.appearing" }
+						{ "appear_slow": "v.appearing_slow" },
+						{ "appear_fast": "v.appearing_fast" }
 					],
 					"blend_transition": 0
 				},
-				"appear": {
+				"appear_slow": {
 					"animations": [
-						"anim.appear"
+						"anim.appear_slow"
 					],
 					"transitions": [
-						{ "idle": "!v.appearing" }
+						{ "idle": "!v.appearing_slow" }
+					],
+					"blend_transition": 0.2
+				},
+				"appear_fast": {
+					"animations": [
+						"anim.appear_fast"
+					],
+					"transitions": [
+						{ "idle": "!v.appearing_fast" }
 					],
 					"blend_transition": 0.2
 				},

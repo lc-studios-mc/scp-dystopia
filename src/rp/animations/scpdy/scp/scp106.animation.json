@@ -252,7 +252,184 @@
 				}
 			}
 		},
-		"animation.scpdy_scp106.appear": {
+		"animation.scpdy_scp106.appear_slow": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 7,
+			"bones": {
+				"root": {
+					"position": {
+						"0.0": {
+							"post": [0, -19, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"4.3333": {
+							"post": [0, -3.1, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"5.6667": {
+							"post": [0, -1.13, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"7.0": [0, 0, 0]
+					}
+				},
+				"upperBody": {
+					"rotation": {
+						"0.0": {
+							"post": [0, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"1.25": {
+							"post": [0, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"1.875": {
+							"post": [0, 0, 2.5],
+							"lerp_mode": "catmullrom"
+						},
+						"2.7917": {
+							"post": [0, 0, -2.5],
+							"lerp_mode": "catmullrom"
+						},
+						"3.8333": {
+							"post": [0, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"4.4167": {
+							"post": [0, -1, 1],
+							"lerp_mode": "catmullrom"
+						},
+						"5.3333": {
+							"post": [0, 0, 2],
+							"lerp_mode": "catmullrom"
+						},
+						"6.125": {
+							"post": [0, 0, -1],
+							"lerp_mode": "catmullrom"
+						},
+						"6.75": [0, 0, 0]
+					}
+				},
+				"body": {
+					"rotation": {
+						"0.0": {
+							"post": [77.5, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"4.0": {
+							"post": [85, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"4.2083": {
+							"post": [62.93, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"4.625": {
+							"post": [52.96, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"5.2083": {
+							"post": [15, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"6.0833": {
+							"post": [-5, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"6.8333": [0, 0, 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"0.0": {
+							"post": [42.5, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"4.0": {
+							"post": [20, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"4.2083": {
+							"post": [8.11, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"4.9167": [40, 0, 0],
+						"5.875": [7.5, 0, 0],
+						"6.7917": ["q.target_x_rotation - this", "q.target_y_rotation - this", 0]
+					}
+				},
+				"leftArm": {
+					"rotation": {
+						"0.0": {
+							"post": [-77.5, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"2.0": {
+							"post": [-85.13784, -4.9821, -0.42326],
+							"lerp_mode": "catmullrom"
+						},
+						"3.0417": {
+							"post": [-89.58406, 2.34063, -0.18963],
+							"lerp_mode": "catmullrom"
+						},
+						"4.0": {
+							"post": [-85, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"5.2083": {
+							"post": [-22.5, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"6.25": {
+							"post": [9.99067, 0.43399, -2.46207],
+							"lerp_mode": "catmullrom"
+						},
+						"6.7917": [0, 0, -2.5]
+					}
+				},
+				"rightArm": {
+					"rotation": {
+						"0.0": {
+							"post": [-77.5, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"2.0": {
+							"post": [-85.15166, -2.49107, -0.21123],
+							"lerp_mode": "catmullrom"
+						},
+						"3.0417": {
+							"post": [-89.5906, 3.67024, -0.07706],
+							"lerp_mode": "catmullrom"
+						},
+						"4.0": {
+							"post": [-85, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"5.2083": {
+							"post": [-22.5, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"6.0": {
+							"post": [9.99067, -0.43399, 2.46207],
+							"lerp_mode": "catmullrom"
+						},
+						"6.7917": [0, 0, 2.5]
+					}
+				},
+				"leftLeg": {
+					"rotation": [-7.64016, -10.71446, -3.1723]
+				},
+				"rightLeg": {
+					"rotation": [7.48684, 4.05734, 5.79056]
+				}
+			},
+			"sound_effects": {
+				"0.0": {
+					"effect": "appear_slow"
+				}
+			}
+		},
+		"animation.scpdy_scp106.appear_fast": {
 			"loop": "hold_on_last_frame",
 			"animation_length": 0.6,
 			"bones": {
