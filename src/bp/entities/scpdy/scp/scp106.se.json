@@ -6,8 +6,15 @@
 			"is_spawnable": true,
 			"is_summonable": true,
 			"is_experimental": false,
+			"animations": {
+				"anim.script_update": "animation.scpdy.bp.scp106.script_update"
+			},
 			"scripts": {
-				"animate": []
+				"animate": [
+					{
+						"anim.script_update": "q.has_target"
+					}
+				]
 			},
 			"properties": {
 				"lc:diving": {
