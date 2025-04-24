@@ -122,7 +122,7 @@
 				"priority": 2
 			},
 			"minecraft:preferred_path": {
-				"max_fall_blocks": 10
+				"max_fall_blocks": 7
 			},
 			"minecraft:can_climb": {},
 			"minecraft:movement": {
