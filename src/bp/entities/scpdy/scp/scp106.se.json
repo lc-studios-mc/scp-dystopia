@@ -162,7 +162,7 @@
 					"priority": 0,
 					"cooldown_time": 0.7,
 					"horizontal_reach": 0.7,
-					"speed_multiplier": 1.1,
+					"speed_multiplier": 1.15,
 					"track_target": true
 				},
 				"minecraft:behavior.random_stroll": {
