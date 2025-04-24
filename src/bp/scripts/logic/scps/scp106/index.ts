@@ -53,6 +53,19 @@ function onUpdate(scp106: mc.Entity): void {
 			setState(scp106, STATE.diving);
 			scp106.addTag("scpdy_ignore_slasher_capture");
 			scp106.triggerEvent("lc:disable_free_movement");
+			return;
+		}
+
+		// Give wither effect to contacting entities
+		for (
+			const entity of scp106.dimension.getEntities({
+				location: vec3.add(scp106.location, vec3.UP),
+				maxDistance: 1.3,
+				closest: 10,
+				excludeTypes: [SCP106_ENTITY_TYPE_ID],
+			})
+		) {
+			entity.addEffect("wither", 60, { amplifier: 1 });
 		}
 	} else if (state === STATE.hidden) {
 		onUpdateHidden(scp106);
@@ -122,7 +135,7 @@ function onFinishThrow(scp106: mc.Entity): void {
 
 function isStuck(scp106: mc.Entity): boolean {
 	const stuckDuration = getStuckDuration(scp106);
-	return stuckDuration > 4;
+	return stuckDuration > 3;
 }
 
 function getStuckDuration(scp106: mc.Entity): number {
