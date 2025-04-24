@@ -102,6 +102,7 @@
 						"filters": {
 							"all_of": [
 								{ "test": "is_family", "subject": "other", "operator": "!=", "value": "scp106" },
+								{ "test": "is_family", "subject": "other", "operator": "!=", "value": "scp173" },
 								{ "test": "is_family", "subject": "other", "operator": "!=", "value": "inanimate" },
 								{
 									"any_of": [
