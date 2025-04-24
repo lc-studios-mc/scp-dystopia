@@ -91,10 +91,28 @@
 						"filters": {
 							"any_of": [
 								{ "test": "is_family", "subject": "other", "value": "player" },
-								{ "test": "is_family", "subject": "other", "value": "villager" }
+								{ "test": "is_family", "subject": "other", "value": "villager" },
+								{ "test": "is_family", "subject": "other", "value": "human" }
 							]
 						},
 						"max_dist": 64,
+						"must_see": false
+					},
+					{
+						"filters": {
+							"all_of": [
+								{ "test": "is_family", "subject": "other", "operator": "!=", "value": "scp106" },
+								{ "test": "is_family", "subject": "other", "operator": "!=", "value": "inanimate" },
+								{
+									"any_of": [
+										{ "test": "is_family", "subject": "other", "value": "animal" },
+										{ "test": "is_family", "subject": "other", "value": "monster" },
+										{ "test": "is_family", "subject": "other", "value": "scp" }
+									]
+								}
+							]
+						},
+						"max_dist": 12,
 						"must_see": false
 					}
 				]
