@@ -1202,10 +1202,28 @@
 		},
 		"animation.scpdy_scp106.hidden": {
 			"loop": true,
-			"animation_length": 0.5,
 			"bones": {
 				"root": {
+					"position": [0, -22.92, 0],
 					"scale": 0
+				},
+				"body": {
+					"rotation": [80, 0, 0]
+				},
+				"head": {
+					"rotation": [50, 0, 0]
+				},
+				"leftArm": {
+					"rotation": [-67.5, 0, 0]
+				},
+				"rightArm": {
+					"rotation": [-67.5, 0, 0]
+				},
+				"leftLeg": {
+					"rotation": [-2.5, 0, -2.5]
+				},
+				"rightLeg": {
+					"rotation": [2.49762, -0.10901, 2.49762]
 				}
 			},
 			"particle_effects": {
