@@ -31,11 +31,18 @@
 				"0.75": ["/scriptevent scpdy_scp106:finish_appear"]
 			}
 		},
-		"animation.scpdy.bp.scp106.throwing": {
+		"animation.scpdy.bp.scp106.throwing_left": {
 			"animation_length": 0.9,
 			"loop": false,
 			"timeline": {
-				"0.8": ["/scriptevent scpdy_scp106:finish_throw"]
+				"0.8": ["/scriptevent scpdy_scp106:finish_throw_left"]
+			}
+		},
+		"animation.scpdy.bp.scp106.throwing_right": {
+			"animation_length": 0.9,
+			"loop": false,
+			"timeline": {
+				"0.8": ["/scriptevent scpdy_scp106:finish_throw_right"]
 			}
 		}
 	}

@@ -12,7 +12,8 @@
 				"anim.diving": "animation.scpdy.bp.scp106.diving",
 				"anim.appearing_slow": "animation.scpdy.bp.scp106.appearing_slow",
 				"anim.appearing_fast": "animation.scpdy.bp.scp106.appearing_fast",
-				"anim.throwing": "animation.scpdy.bp.scp106.throwing"
+				"anim.throwing_right": "animation.scpdy.bp.scp106.throwing_right",
+				"anim.throwing_left": "animation.scpdy.bp.scp106.throwing_left"
 			},
 			"scripts": {
 				"animate": [
@@ -32,19 +33,19 @@
 						// 5 - Throwing Right
 						// 6 - Throwing Left
 						0,
-						4
+						6
 					],
 					"default": 0,
 					"client_sync": true
 				},
 				"lc:corrosion_right": {
 					"type": "bool",
-					"default": false,
+					"default": true,
 					"client_sync": true
 				},
 				"lc:corrosion_left": {
 					"type": "bool",
-					"default": false,
+					"default": true,
 					"client_sync": true
 				}
 			}

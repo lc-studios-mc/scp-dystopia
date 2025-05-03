@@ -9,7 +9,8 @@
 						{ "diving": "q.property('lc:state') == 1" },
 						{ "appearing_slow": "q.property('lc:state') == 3" },
 						{ "appearing_fast": "q.property('lc:state') == 4" },
-						{ "throwing": "q.property('lc:state') == 5 || q.property('lc:state') == 6" }
+						{ "throwing_right": "q.property('lc:state') == 5" },
+						{ "throwing_left": "q.property('lc:state') == 6" }
 					]
 				},
 				"diving": {
@@ -30,10 +31,16 @@
 						{ "default": "q.property('lc:state') != 4" }
 					]
 				},
-				"throwing": {
-					"animations": ["anim.throwing"],
+				"throwing_right": {
+					"animations": ["anim.throwing_right"],
 					"transitions": [
-						{ "default": "q.property('lc:state') != 5 && q.property('lc:state') != 6" }
+						{ "default": "q.property('lc:state') != 5" }
+					]
+				},
+				"throwing_left": {
+					"animations": ["anim.throwing_left"],
+					"transitions": [
+						{ "default": "q.property('lc:state') != 6" }
 					]
 				}
 			}

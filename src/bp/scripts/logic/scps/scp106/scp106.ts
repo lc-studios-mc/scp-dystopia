@@ -28,8 +28,11 @@ mc.system.afterEvents.scriptEventReceive.subscribe(event => {
 		case "scpdy_scp106:finish_appear":
 			onFinishAppear(event.sourceEntity);
 			break;
-		case "scpdy_scp106:finish_throw":
-			onFinishThrow(event.sourceEntity);
+		case "scpdy_scp106:finish_throw_right":
+			onFinishThrow(event.sourceEntity, "right");
+			break;
+		case "scpdy_scp106:finish_throw_left":
+			onFinishThrow(event.sourceEntity, "left");
 			break;
 	}
 }, {
@@ -37,38 +40,65 @@ mc.system.afterEvents.scriptEventReceive.subscribe(event => {
 });
 
 function onUpdate(scp106: mc.Entity): void {
-	if (!scp106.target) return;
-
 	// Stop riding something
 	mc.system.run(() => {
 		scp106.runCommand("ride @s stop_riding");
 	});
 
-	const isInContactWithTarget = vec3.distance(scp106.target.location, scp106.location) <= 0.6;
-
 	const state = getState(scp106);
 
 	if (state === STATE.default) {
-		if (!isInContactWithTarget && isStuck(scp106)) {
-			setState(scp106, STATE.diving);
-			scp106.addTag("scpdy_ignore_slasher_capture");
-			scp106.triggerEvent("lc:disable_free_movement");
-			return;
-		}
-
-		// Give wither effect to contacting entities
-		for (
-			const entity of scp106.dimension.getEntities({
-				location: vec3.add(scp106.location, vec3.UP),
-				maxDistance: 1.3,
-				closest: 10,
-				excludeTypes: [SCP106_ENTITY_TYPE_ID],
-			})
-		) {
-			entity.addEffect("wither", 60, { amplifier: 1 });
-		}
+		onUpdateDefault(scp106);
 	} else if (state === STATE.hidden) {
 		onUpdateHidden(scp106);
+	}
+}
+
+function onUpdateDefault(scp106: mc.Entity): void {
+	if (!scp106.target) return;
+
+	const targetDist = vec3.distance(scp106.target.location, scp106.location);
+	const isInContactWithTarget = targetDist <= 0.6;
+
+	if (!isInContactWithTarget && isStuck(scp106)) {
+		setState(scp106, STATE.diving);
+		scp106.addTag("scpdy_ignore_slasher_capture");
+		scp106.triggerEvent("lc:disable_free_movement");
+		return;
+	}
+
+	// Give wither effect to contacting entities
+	for (
+		const entity of scp106.dimension.getEntities({
+			location: vec3.add(scp106.location, vec3.UP),
+			maxDistance: 1.3,
+			closest: 10,
+			excludeTypes: [SCP106_ENTITY_TYPE_ID],
+		})
+	) {
+		try {
+			entity.addEffect("wither", 60, { amplifier: 1 });
+		} catch {}
+	}
+
+	if (targetDist <= 6) return;
+
+	const isSeeingTarget = scp106.dimension.getEntitiesFromRay(
+		scp106.getHeadLocation(),
+		vec3.normalize(vec3.sub(scp106.target.location, scp106.getHeadLocation())),
+		{ maxDistance: 30, type: scp106.target.typeId },
+	).some(x => x.entity === scp106.target);
+
+	if (!isSeeingTarget) return;
+
+	if (getCorrosionLeft(scp106)) {
+		setState(scp106, STATE.throwingLeft);
+		scp106.triggerEvent("lc:disable_free_movement");
+		scp106.lookAt(scp106.target.location);
+	} else if (getCorrosionRight(scp106)) {
+		setState(scp106, STATE.throwingRight);
+		scp106.triggerEvent("lc:disable_free_movement");
+		scp106.lookAt(scp106.target.location);
 	}
 }
 
@@ -128,9 +158,17 @@ function onFinishAppear(scp106: mc.Entity): void {
 	scp106.triggerEvent("lc:enable_free_movement");
 }
 
-function onFinishThrow(scp106: mc.Entity): void {
-	setState(scp106, STATE.default);
-	scp106.triggerEvent("lc:enable_free_movement");
+function onFinishThrow(scp106: mc.Entity, which: "left" | "right"): void {
+	if (which === "left") {
+		setCorrosionLeft(scp106, false);
+	} else {
+		setCorrosionRight(scp106, false);
+	}
+
+	mc.system.runTimeout(() => {
+		setState(scp106, STATE.default);
+		scp106.triggerEvent("lc:enable_free_movement");
+	}, 1);
 }
 
 function isStuck(scp106: mc.Entity): boolean {
