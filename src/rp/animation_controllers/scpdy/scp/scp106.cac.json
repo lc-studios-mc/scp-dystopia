@@ -87,7 +87,7 @@
 						"anim.throw_right"
 					],
 					"transitions": [
-						{ "idle": "q.all_animations_finished" }
+						{ "idle": "!v.throwing_right" }
 					],
 					"blend_transition": 0.3
 				},
@@ -96,7 +96,7 @@
 						"anim.throw_left"
 					],
 					"transitions": [
-						{ "idle": "q.all_animations_finished" }
+						{ "idle": "!v.throwing_left" }
 					],
 					"blend_transition": 0.3
 				}
