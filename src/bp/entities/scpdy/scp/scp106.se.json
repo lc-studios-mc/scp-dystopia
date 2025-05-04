@@ -16,10 +16,7 @@
 				"anim.throwing_left": "animation.scpdy.bp.scp106.throwing_left"
 			},
 			"scripts": {
-				"animate": [
-					"ctrl.main",
-					"anim.script_update"
-				]
+				"animate": ["ctrl.main", "anim.script_update"]
 			},
 			"properties": {
 				"lc:state": {
@@ -32,8 +29,7 @@
 						// 4 - Appearing Fast
 						// 5 - Throwing Right
 						// 6 - Throwing Left
-						0,
-						6
+						0, 6
 					],
 					"default": 0,
 					"client_sync": true
@@ -123,7 +119,7 @@
 				"priority": 2
 			},
 			"minecraft:preferred_path": {
-				"max_fall_blocks": 7
+				"max_fall_blocks": 5
 			},
 			"minecraft:can_climb": {},
 			"minecraft:movement": {
