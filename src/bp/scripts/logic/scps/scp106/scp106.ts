@@ -13,31 +13,34 @@ const STATE = {
 	throwingLeft: 6,
 } as const;
 
-mc.system.afterEvents.scriptEventReceive.subscribe(event => {
-	if (!event.sourceEntity) return;
-	if (event.sourceEntity.typeId !== SCP106_ENTITY_TYPE_ID) return;
-	if (!event.sourceEntity.isValid) return;
+mc.system.afterEvents.scriptEventReceive.subscribe(
+	(event) => {
+		if (!event.sourceEntity) return;
+		if (event.sourceEntity.typeId !== SCP106_ENTITY_TYPE_ID) return;
+		if (!event.sourceEntity.isValid) return;
 
-	switch (event.id) {
-		case "scpdy_scp106:update":
-			onUpdate(event.sourceEntity);
-			break;
-		case "scpdy_scp106:finish_dive":
-			onFinishDive(event.sourceEntity);
-			break;
-		case "scpdy_scp106:finish_appear":
-			onFinishAppear(event.sourceEntity);
-			break;
-		case "scpdy_scp106:finish_throw_right":
-			onFinishThrow(event.sourceEntity, "right");
-			break;
-		case "scpdy_scp106:finish_throw_left":
-			onFinishThrow(event.sourceEntity, "left");
-			break;
-	}
-}, {
-	namespaces: ["scpdy_scp106"],
-});
+		switch (event.id) {
+			case "scpdy_scp106:update":
+				onUpdate(event.sourceEntity);
+				break;
+			case "scpdy_scp106:finish_dive":
+				onFinishDive(event.sourceEntity);
+				break;
+			case "scpdy_scp106:finish_appear":
+				onFinishAppear(event.sourceEntity);
+				break;
+			case "scpdy_scp106:finish_throw_right":
+				onFinishThrow(event.sourceEntity, "right");
+				break;
+			case "scpdy_scp106:finish_throw_left":
+				onFinishThrow(event.sourceEntity, "left");
+				break;
+		}
+	},
+	{
+		namespaces: ["scpdy_scp106"],
+	},
+);
 
 function onUpdate(scp106: mc.Entity): void {
 	// Stop riding something
@@ -68,14 +71,12 @@ function onUpdateDefault(scp106: mc.Entity): void {
 	}
 
 	// Give wither effect to contacting entities
-	for (
-		const entity of scp106.dimension.getEntities({
-			location: vec3.add(scp106.location, vec3.UP),
-			maxDistance: 1.3,
-			closest: 10,
-			excludeTypes: [SCP106_ENTITY_TYPE_ID],
-		})
-	) {
+	for (const entity of scp106.dimension.getEntities({
+		location: vec3.add(scp106.location, vec3.UP),
+		maxDistance: 1.3,
+		closest: 10,
+		excludeTypes: [SCP106_ENTITY_TYPE_ID],
+	})) {
 		try {
 			entity.addEffect("wither", 60, { amplifier: 1 });
 		} catch {}
@@ -83,11 +84,13 @@ function onUpdateDefault(scp106: mc.Entity): void {
 
 	if (targetDist <= 6) return;
 
-	const isSeeingTarget = scp106.dimension.getEntitiesFromRay(
-		scp106.getHeadLocation(),
-		vec3.normalize(vec3.sub(scp106.target.location, scp106.getHeadLocation())),
-		{ maxDistance: 30, type: scp106.target.typeId },
-	).some(x => x.entity === scp106.target);
+	const isSeeingTarget = scp106.dimension
+		.getEntitiesFromRay(
+			scp106.getHeadLocation(),
+			vec3.normalize(vec3.sub(scp106.target.getHeadLocation(), scp106.getHeadLocation())),
+			{ maxDistance: 30, type: scp106.target.typeId },
+		)
+		.some((x) => x.entity === scp106.target);
 
 	if (!isSeeingTarget) return;
 
