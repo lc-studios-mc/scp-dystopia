@@ -162,8 +162,10 @@ function throwCorrosion(scp106: mc.Entity): void {
 
 	if (doRight) {
 		setState(scp106, SCP106_STATE.throwingRight);
+		setCorrosionRight(scp106, false);
 	} else {
 		setState(scp106, SCP106_STATE.throwingLeft);
+		setCorrosionLeft(scp106, false);
 	}
 
 	scp106.lookAt(scp106.target.getHeadLocation());
@@ -175,12 +177,10 @@ function onUpdateHiddenState(scp106: mc.Entity): void {}
 
 function onFinishThrowingCorrosionRight(scp106: mc.Entity): void {
 	onFinishThrowingCorrosion(scp106);
-	setCorrosionRight(scp106, false);
 }
 
 function onFinishThrowingCorrosionLeft(scp106: mc.Entity): void {
 	onFinishThrowingCorrosion(scp106);
-	setCorrosionLeft(scp106, false);
 }
 
 function onFinishThrowingCorrosion(scp106: mc.Entity): void {
