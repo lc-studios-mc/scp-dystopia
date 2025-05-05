@@ -12,6 +12,7 @@ import {
 	setCorrosionLeft,
 	setCorrosionRight,
 	setCorrosionThrowCooldown,
+	setState,
 } from "./shared";
 import { randomInt } from "@/lib/utils/mathUtils";
 
@@ -73,8 +74,7 @@ function onUpdate(scp106: mc.Entity): void {
 }
 
 function onUpdateDefaultState(scp106: mc.Entity): void {
-	const target = scp106.target;
-	if (!target) return;
+	if (!scp106.target) return;
 
 	updateCorrosionAcquisitionCooldown(scp106);
 
@@ -110,10 +110,35 @@ function updateCorrosionThrowCooldown(scp106: mc.Entity): void {
 		return;
 	}
 
-	setCorrosionThrowCooldown(scp106, randomInt(5, 9));
+	if (!scp106.target) return;
+
+	const raycastHitsInTargetDir = scp106.dimension.getEntitiesFromRay(
+		scp106.getHeadLocation(),
+		vec3.normalize(vec3.sub(scp106.target.getHeadLocation(), scp106.getHeadLocation())),
+		{ maxDistance: 32, type: scp106.target.typeId },
+	);
+
+	const isSeeingTarget = raycastHitsInTargetDir.some((x) => x.entity === scp106.target);
+
+	if (!isSeeingTarget) return; // Do not throw corrosion when cannot see target
+
+	setCorrosionThrowCooldown(scp106, randomInt(5, 11));
 	throwCorrosion(scp106);
 }
 
-function throwCorrosion(scp106: mc.Entity): void {}
+function throwCorrosion(scp106: mc.Entity): void {
+	if (!scp106.target) return;
+
+	scp106.lookAt(scp106.target.getHeadLocation());
+
+	scp106.triggerEvent("lc:disable_free_movement");
+
+	let right = !getCorrosionRight(scp106) && Math.random() > 0.5;
+	if (right) {
+		setState(scp106, SCP106_STATE.throwingRight);
+	} else {
+		setState(scp106, SCP106_STATE.throwingLeft);
+	}
+}
 
 function onUpdateHiddenState(scp106: mc.Entity): void {}
