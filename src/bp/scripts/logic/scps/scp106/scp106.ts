@@ -138,7 +138,7 @@ function updateCorrosionThrowCooldown(scp106: mc.Entity): void {
 	if (!isSeeingTarget) return; // Do not throw corrosion when cannot see target
 
 	const newCooldown =
-		mc.world.getDifficulty() === mc.Difficulty.Hard ? randomInt(2, 3) : randomInt(4, 7);
+		mc.world.getDifficulty() === mc.Difficulty.Hard ? randomInt(1, 2) : randomInt(2, 4);
 
 	setCorrosionThrowCooldown(scp106, newCooldown);
 	throwCorrosion(scp106);
