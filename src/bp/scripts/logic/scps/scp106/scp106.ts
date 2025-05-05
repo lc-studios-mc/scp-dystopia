@@ -237,4 +237,8 @@ function onFinishDive(scp106: mc.Entity): void {
 	scp106.tryTeleport({ x: scp106.location.x, y: scp106.location.y - 0.6, z: scp106.location.z });
 }
 
-function onUpdateHiddenState(scp106: mc.Entity): void {}
+function onUpdateHiddenState(scp106: mc.Entity): void {
+	mc.system.run(() => {
+		scp106.addEffect("invisibility", 30, { showParticles: false });
+	});
+}
