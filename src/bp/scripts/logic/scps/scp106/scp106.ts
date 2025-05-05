@@ -1,6 +1,7 @@
 import * as mc from "@minecraft/server";
 import * as vec3 from "@lib/utils/vec3";
 import {
+	calculateCombatEmergeLocation,
 	getCorrosionAcquisitionCooldown,
 	getCorrosionLeft,
 	getCorrosionRight,
@@ -244,25 +245,45 @@ function onFinishDive(scp106: mc.Entity): void {
 }
 
 function onUpdateHiddenState(scp106: mc.Entity): void {
-	mc.system.run(() => {
-		scp106.addEffect("invisibility", 30, { showParticles: false });
-	});
+	scp106.addEffect("invisibility", 30, { showParticles: false });
 
 	const diveCtx = getDiveContext(scp106);
 	const hidingTick = getHidingTick(scp106);
 
+	setHidingTick(scp106, hidingTick + 1);
+
 	if (diveCtx === "combat") {
-		return;
+		onUpdateCombatHiding(scp106, hidingTick);
 	}
 
 	if (diveCtx === "retreat") {
+	}
+}
+
+function onUpdateCombatHiding(scp106: mc.Entity, hidingTick: number): void {
+	const emergeLoc =
+		(scp106.getDynamicProperty("emergeLocation") as mc.Vector3 | undefined) ??
+		calculateCombatEmergeLocation(scp106);
+
+	if (hidingTick === 1) {
+		scp106.tryTeleport(emergeLoc);
 		return;
 	}
 
-	setHidingTick(scp106, hidingTick + 1);
+	if (hidingTick === 3) {
+		stopHiding(scp106);
+		setState(scp106, SCP106_STATE.appearingFast);
+
+		if (scp106.target) {
+			scp106.lookAt(scp106.target.getHeadLocation());
+		}
+
+		return;
+	}
 }
 
 function stopHiding(scp106: mc.Entity): void {
+	scp106.removeEffect("invisibility");
 	scp106.triggerEvent("lc:show");
 	scp106.triggerEvent("lc:enable_ambient_sound");
 	setHidingTick(scp106, 0);

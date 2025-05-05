@@ -1,4 +1,5 @@
 import * as mc from "@minecraft/server";
+import * as vec3 from "@lib/utils/vec3";
 
 export type DiveContext = "combat" | "retreat";
 
@@ -14,6 +15,29 @@ export const SCP106_STATE = {
 	throwingLeft: 60,
 	retreating: 70,
 } as const;
+
+export function calculateCombatEmergeLocation(scp106: mc.Entity): mc.Vector3 {
+	if (!scp106.target) {
+		return { x: scp106.location.x, y: scp106.location.y + 0.6, z: scp106.location.z };
+	}
+
+	const test = (loc: mc.Vector3): mc.Vector3 | undefined => {
+		try {
+			const block = scp106.dimension.getBlockBelow(loc, { maxDistance: 5 });
+			return block?.above()?.bottomCenter();
+		} catch {}
+	};
+
+	const targetLoc = scp106.target.location;
+
+	return (
+		test(vec3.add(targetLoc, { x: 1, y: 0, z: 0 })) ??
+		test(vec3.add(targetLoc, { x: 0, y: 0, z: 1 })) ??
+		test(vec3.add(targetLoc, { x: -1, y: 0, z: 0 })) ??
+		test(vec3.add(targetLoc, { x: 0, y: 0, z: -1 })) ??
+		targetLoc
+	);
+}
 
 export function getState(scp106: mc.Entity): number {
 	return Number(scp106.getProperty("lc:state"));
