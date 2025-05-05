@@ -15,11 +15,13 @@ mc.world.afterEvents.dataDrivenEntityTrigger.subscribe(
 
 mc.world.afterEvents.projectileHitEntity.subscribe((event) => {
 	if (event.projectile.typeId !== CORROSION_PROJECTILE_ENTITY_TYPE_ID) return;
+	if (!event.projectile.isValid) return;
 	explode(event.projectile, event.location, event.getEntityHit().entity, event.source);
 });
 
 mc.world.afterEvents.projectileHitBlock.subscribe((event) => {
 	if (event.projectile.typeId !== CORROSION_PROJECTILE_ENTITY_TYPE_ID) return;
+	if (!event.projectile.isValid) return;
 	explode(event.projectile, event.location);
 });
 
