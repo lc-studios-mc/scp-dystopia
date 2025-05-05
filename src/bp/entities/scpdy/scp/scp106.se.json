@@ -144,9 +144,6 @@
 				"base_value": 2.0625,
 				"jump_prevented_value": 0.5625
 			},
-			"minecraft:movement_sound_distance_offset": {
-				"value": 0.47
-			},
 			"minecraft:pushable": {
 				"is_pushable": true,
 				"is_pushable_by_piston": true
@@ -173,6 +170,9 @@
 				}
 			},
 			"shown": {
+				"minecraft:movement_sound_distance_offset": {
+					"value": 0.47
+				},
 				"minecraft:collision_box": {
 					"width": 0.6,
 					"height": 1.9
@@ -185,6 +185,9 @@
 				}
 			},
 			"hidden": {
+				"minecraft:movement_sound_distance_offset": {
+					"value": 9999.0
+				},
 				"minecraft:collision_box": {
 					"width": 0.3,
 					"height": 0.3
