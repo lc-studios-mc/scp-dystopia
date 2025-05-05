@@ -27,15 +27,18 @@ function onUpdate(scp106: mc.Entity): void {
 
 	if (state === SCP106_STATE.hidden) return;
 
-	// Give wither effect (corrosion) to entities in contact
 	const entitiesInContact = scp106.dimension.getEntities({
 		closest: 20,
 		maxDistance: 1.55,
 		location: vec3.add(scp106.location, vec3.UP),
 		excludeTypes: [SCP106_ENTITY_TYPE_ID],
 	});
+
+	// Give wither (corrosion) effect to entities in contact
 	for (const entity of entitiesInContact) {
-		entity.addEffect("wither", 60, { amplifier: 1 });
+		mc.system.run(() => {
+			entity.addEffect("wither", 100, { amplifier: 1 });
+		});
 	}
 
 	if (state === SCP106_STATE.default) {
