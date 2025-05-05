@@ -97,7 +97,7 @@ function updateCorrosionAcquisitionCooldown(scp106: mc.Entity): void {
 	}
 
 	acquireCorrosion(scp106);
-	setCorrosionAcquisitionCooldown(scp106, randomInt(8, 32));
+	setCorrosionAcquisitionCooldown(scp106, randomInt(8, 16));
 }
 
 function acquireCorrosion(scp106: mc.Entity): void {
@@ -128,7 +128,7 @@ function updateCorrosionThrowCooldown(scp106: mc.Entity): void {
 
 	if (!isSeeingTarget) return; // Do not throw corrosion when cannot see target
 
-	setCorrosionThrowCooldown(scp106, randomInt(5, 11));
+	setCorrosionThrowCooldown(scp106, randomInt(8, 16));
 	throwCorrosion(scp106);
 }
 
