@@ -11,7 +11,8 @@ mc.system.afterEvents.scriptEventReceive.subscribe(
 		const scp106 = event.sourceEntity;
 
 		switch (event.id) {
-			case "":
+			case "scpdy_scp106:update":
+				onUpdate(scp106);
 				break;
 		}
 	},
@@ -19,3 +20,5 @@ mc.system.afterEvents.scriptEventReceive.subscribe(
 		namespaces: ["scpdy_scp106"],
 	},
 );
+
+function onUpdate(scp106: mc.Entity): void {}
