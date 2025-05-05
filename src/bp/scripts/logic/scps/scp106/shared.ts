@@ -36,3 +36,21 @@ export function getCorrosionLeft(scp106: mc.Entity): boolean {
 export function setCorrosionLeft(scp106: mc.Entity, value: boolean): void {
 	scp106.setProperty("lc:corrosion_left", value);
 }
+
+export function getCorrosionAcquisitionCooldown(scp106: mc.Entity): number {
+	const value = Number(scp106.getDynamicProperty("corrosionAcquisitionCooldown"));
+	return isNaN(value) ? 0 : value;
+}
+
+export function setCorrosionAcquisitionCooldown(scp106: mc.Entity, value: number): void {
+	scp106.setDynamicProperty("corrosionAcquisitionCooldown", value);
+}
+
+export function getCorrosionThrowCooldown(scp106: mc.Entity): number {
+	const value = Number(scp106.getDynamicProperty("corrosionThrowCooldown"));
+	return isNaN(value) ? 0 : value;
+}
+
+export function setCorrosionThrowCooldown(scp106: mc.Entity, value: number): void {
+	scp106.setDynamicProperty("corrosionThrowCooldown", value);
+}
