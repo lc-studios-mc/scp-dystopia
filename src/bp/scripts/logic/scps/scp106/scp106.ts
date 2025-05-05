@@ -69,9 +69,9 @@ function onUpdate(scp106: mc.Entity): void {
 
 	// Give wither (corrosion) effect to entities in contact
 	for (const entity of entitiesInContact) {
-		mc.system.run(() => {
+		try {
 			entity.addEffect("wither", 100, { amplifier: 1 });
-		});
+		} catch {}
 	}
 
 	if (mc.world.getDifficulty() === mc.Difficulty.Hard) {
