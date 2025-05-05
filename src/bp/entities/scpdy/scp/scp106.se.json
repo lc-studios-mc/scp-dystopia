@@ -171,7 +171,23 @@
 			},
 			"throwing_corrosion": {
 				"minecraft:behavior.look_at_target": {
-					"priority": 1
+					"priority": 1,
+					"look_distance": 64.0,
+					"look_time": [0.0, 0.1],
+					"probability": 1.0
+				},
+				"minecraft:behavior.fire_at_target": {
+					"priority": 0,
+					"projectile_def": "lc:scpdy_unknown_core_fireball",
+					"attack_range": [0, 64],
+					"attack_cooldown": 1.0,
+					"pre_shoot_delay": 0.22,
+					"post_shoot_delay": 0.0,
+					"ranged_fov": 180.0,
+					"owner_anchor": 1,
+					"owner_offset": [0.0, 0.0, 0.0],
+					"target_anchor": 0,
+					"target_offset": [0.0, 0.4, 0.0]
 				}
 			},
 			"shown": {
