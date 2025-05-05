@@ -20,7 +20,7 @@
 			"loop": false,
 			"timeline": {
 				"0.0": ["/playsound scpdy.scp106.appear_slow @a[r=15] ~ ~ ~ 1.4 1.0"],
-				"7.0": ["/scriptevent scpdy_scp106:finish_appear"]
+				"7.0": ["/scriptevent scpdy_scp106:finish_appear_slow"]
 			}
 		},
 		"animation.scpdy.bp.scp106.appearing_fast": {
@@ -28,14 +28,7 @@
 			"loop": false,
 			"timeline": {
 				"0.0": ["/playsound scpdy.scp106.appear_fast @a[r=15] ~ ~ ~ 1.4 1.0"],
-				"0.75": ["/scriptevent scpdy_scp106:finish_appear"]
-			}
-		},
-		"animation.scpdy.bp.scp106.throwing_left": {
-			"animation_length": 0.9,
-			"loop": false,
-			"timeline": {
-				"0.8": ["/scriptevent scpdy_scp106:finish_throw_left"]
+				"0.75": ["/scriptevent scpdy_scp106:finish_appear_fast"]
 			}
 		},
 		"animation.scpdy.bp.scp106.throwing_right": {
@@ -43,6 +36,13 @@
 			"loop": false,
 			"timeline": {
 				"0.8": ["/scriptevent scpdy_scp106:finish_throw_right"]
+			}
+		},
+		"animation.scpdy.bp.scp106.throwing_left": {
+			"animation_length": 0.9,
+			"loop": false,
+			"timeline": {
+				"0.8": ["/scriptevent scpdy_scp106:finish_throw_left"]
 			}
 		}
 	}
