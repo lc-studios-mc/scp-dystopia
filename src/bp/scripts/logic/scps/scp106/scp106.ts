@@ -135,16 +135,27 @@ function updateCorrosionThrowCooldown(scp106: mc.Entity): void {
 function throwCorrosion(scp106: mc.Entity): void {
 	if (!scp106.target) return;
 
-	scp106.lookAt(scp106.target.getHeadLocation());
+	const rightCorrosion = getCorrosionRight(scp106);
+	const leftCorrosion = getCorrosionLeft(scp106);
 
-	scp106.triggerEvent("lc:disable_free_movement");
+	if (!rightCorrosion && !leftCorrosion) return;
 
-	let right = getCorrosionRight(scp106) && Math.random() > 0.5;
-	if (right) {
+	let doRight = false;
+
+	if (rightCorrosion && leftCorrosion) {
+		doRight = Math.random() > 0.5;
+	} else {
+		doRight = rightCorrosion;
+	}
+
+	if (doRight) {
 		setState(scp106, SCP106_STATE.throwingRight);
 	} else {
 		setState(scp106, SCP106_STATE.throwingLeft);
 	}
+
+	scp106.lookAt(scp106.target.getHeadLocation());
+	scp106.triggerEvent("lc:disable_free_movement");
 }
 
 function onUpdateHiddenState(scp106: mc.Entity): void {}
