@@ -169,6 +169,11 @@
 					"priority": 11
 				}
 			},
+			"throwing_corrosion": {
+				"minecraft:behavior.look_at_target": {
+					"priority": 1
+				}
+			},
 			"shown": {
 				"minecraft:movement_sound_distance_offset": {
 					"value": 0.47
@@ -228,6 +233,16 @@
 			"lc:disable_free_movement": {
 				"remove": {
 					"component_groups": ["free"]
+				}
+			},
+			"lc:add_throwing_corrosion": {
+				"add": {
+					"component_groups": ["throwing_corrosion"]
+				}
+			},
+			"lc:remove_throwing_corrosion": {
+				"remove": {
+					"component_groups": ["throwing_corrosion"]
 				}
 			},
 			"lc:show": {
