@@ -22,14 +22,15 @@
 				"lc:state": {
 					"type": "int",
 					"range": [
-						// 0 - Default
-						// 1 - Diving
-						// 2 - Hidden
-						// 3 - Appearing Slow
-						// 4 - Appearing Fast
-						// 5 - Throwing Right
-						// 6 - Throwing Left
-						0, 6
+						// 0  - default
+						// 10 - diving
+						// 20 - hidden
+						// 30 - appearing slow
+						// 40 - appearing fast
+						// 50 - throwing right
+						// 60 - throwing left
+						// 70 - retreating
+						0, 200
 					],
 					"default": 0,
 					"client_sync": true
