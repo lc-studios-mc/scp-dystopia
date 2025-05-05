@@ -54,3 +54,20 @@ export function getCorrosionThrowCooldown(scp106: mc.Entity): number {
 export function setCorrosionThrowCooldown(scp106: mc.Entity, value: number): void {
 	scp106.setDynamicProperty("corrosionThrowCooldown", value);
 }
+
+export function getLastLocation(scp106: mc.Entity) {
+	return scp106.getDynamicProperty("lastLocation") as mc.Vector3 | undefined;
+}
+
+export function setLastLocation(scp106: mc.Entity, value?: mc.Vector3): void {
+	scp106.setDynamicProperty("lastLocation", value);
+}
+
+export function getStuckDuration(scp106: mc.Entity): number {
+	const value = Number(scp106.getDynamicProperty("stuckDuration"));
+	return isNaN(value) ? 0 : value;
+}
+
+export function setStuckDuration(scp106: mc.Entity, value: number): void {
+	scp106.setDynamicProperty("stuckDuration", value);
+}

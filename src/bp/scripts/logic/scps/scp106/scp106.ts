@@ -5,14 +5,18 @@ import {
 	getCorrosionLeft,
 	getCorrosionRight,
 	getCorrosionThrowCooldown,
+	getLastLocation,
 	getState,
+	getStuckDuration,
 	SCP106_ENTITY_TYPE_ID,
 	SCP106_STATE,
 	setCorrosionAcquisitionCooldown,
 	setCorrosionLeft,
 	setCorrosionRight,
 	setCorrosionThrowCooldown,
+	setLastLocation,
 	setState,
+	setStuckDuration,
 } from "./shared";
 import { randomInt } from "@/lib/utils/mathUtils";
 
@@ -86,11 +90,46 @@ function onUpdate(scp106: mc.Entity): void {
 function onUpdateDefaultState(scp106: mc.Entity): void {
 	if (!scp106.target) return;
 
+	if (isStuck(scp106)) {
+		startDive(scp106);
+		return;
+	}
+
 	updateCorrosionAcquisitionCooldown(scp106);
 
 	if (!getCorrosionRight(scp106) && !getCorrosionLeft(scp106)) return;
 
 	updateCorrosionThrowCooldown(scp106);
+}
+
+function isStuck(scp106: mc.Entity): boolean {
+	const isTargetNearby =
+		scp106.target && vec3.distance(scp106.location, scp106.target.location) <= 2.0;
+	return !isTargetNearby && updateStuckDuration(scp106) > 0;
+}
+
+function updateStuckDuration(scp106: mc.Entity): number {
+	const lastLocation = getLastLocation(scp106);
+
+	setLastLocation(scp106, scp106.location);
+
+	if (!lastLocation || vec3.distance(lastLocation, scp106.location) > 0.3) {
+		setStuckDuration(scp106, 0);
+		return 0;
+	}
+
+	const stuckDuration = getStuckDuration(scp106);
+
+	setStuckDuration(scp106, stuckDuration + 1);
+
+	return stuckDuration;
+}
+
+function startDive(scp106: mc.Entity): void {
+	setState(scp106, SCP106_STATE.diving);
+	setStuckDuration(scp106, 0);
+
+	scp106.triggerEvent("lc:disable_free_movement");
 }
 
 function updateCorrosionAcquisitionCooldown(scp106: mc.Entity): void {
