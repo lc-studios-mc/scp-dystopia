@@ -37,12 +37,12 @@
 				},
 				"lc:corrosion_right": {
 					"type": "bool",
-					"default": true,
+					"default": false,
 					"client_sync": true
 				},
 				"lc:corrosion_left": {
 					"type": "bool",
-					"default": true,
+					"default": false,
 					"client_sync": true
 				}
 			}
