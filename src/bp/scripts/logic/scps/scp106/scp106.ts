@@ -257,6 +257,7 @@ function onUpdateHiddenState(scp106: mc.Entity): void {
 	}
 
 	if (diveCtx === "retreat") {
+		// TODO: retreat hidden state
 	}
 }
 
