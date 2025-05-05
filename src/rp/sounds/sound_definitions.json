@@ -669,17 +669,17 @@
 				{ "name": "sounds/scpdy/scp/scp106/step_3", "volume": 1.5 }
 			]
 		},
-		"scpdy.scp106.appear_slow": {
+		"scpdy.scp106.emerge_slow": {
 			"category": "hostile",
 			"max_distance": 10.0,
 			"min_distance": null,
-			"sounds": [{ "name": "sounds/scpdy/scp/scp106/appear_slow", "volume": 1.1 }]
+			"sounds": [{ "name": "sounds/scpdy/scp/scp106/emerge_slow", "volume": 1.1 }]
 		},
-		"scpdy.scp106.appear_fast": {
+		"scpdy.scp106.emerge_fast": {
 			"category": "hostile",
 			"max_distance": 10.0,
 			"min_distance": null,
-			"sounds": [{ "name": "sounds/scpdy/scp/scp106/appear_fast", "volume": 1.1 }]
+			"sounds": [{ "name": "sounds/scpdy/scp/scp106/emerge_fast", "volume": 1.1 }]
 		},
 		// #endregion
 		// #endregion
