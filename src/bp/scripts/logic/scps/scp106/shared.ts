@@ -23,10 +23,14 @@ export function calculateCombatEmergeLocation(scp106: mc.Entity): mc.Vector3 {
 
 	const test = (loc: mc.Vector3): mc.Vector3 | undefined => {
 		try {
-			const block = scp106.dimension.getBlockBelow(loc, { maxDistance: 5 });
-			if (!block) return;
-			if (!block.isAir) return;
-			return block.above()?.bottomCenter();
+			const block1 = scp106.dimension.getBlockBelow(loc, { maxDistance: 5 });
+			if (!block1) return;
+
+			const block2 = block1.above();
+			if (!block2) return;
+			if (!block2.isAir) return;
+
+			return block2.bottomCenter();
 		} catch {}
 	};
 
