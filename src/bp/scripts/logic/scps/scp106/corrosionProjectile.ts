@@ -41,7 +41,7 @@ function explode(
 				damagingEntity: source,
 			});
 
-			hitEntity?.addEffect("slowness", 180, { amplifier: 0 });
+			hitEntity?.addEffect("blindness", 140, { amplifier: 0 });
 		} catch {}
 
 		const entities = projectile.dimension.getEntities({
