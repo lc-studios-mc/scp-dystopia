@@ -108,7 +108,7 @@ function onUpdateDefaultState(scp106: mc.Entity): void {
 function isStuck(scp106: mc.Entity): boolean {
 	const isTargetNearby =
 		scp106.target && vec3.distance(scp106.location, scp106.target.location) <= 2.0;
-	return !isTargetNearby && updateStuckDuration(scp106) > 0;
+	return !isTargetNearby && updateStuckDuration(scp106) > 2;
 }
 
 function updateStuckDuration(scp106: mc.Entity): number {
