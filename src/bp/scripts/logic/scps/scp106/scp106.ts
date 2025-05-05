@@ -28,6 +28,12 @@ mc.system.afterEvents.scriptEventReceive.subscribe(
 			case "scpdy_scp106:update":
 				onUpdate(scp106);
 				break;
+			case "scpdy_scp106:finish_throw_right":
+				onFinishThrowingCorrosionRight(scp106);
+				break;
+			case "scpdy_scp106:finish_throw_left":
+				onFinishThrowingCorrosionLeft(scp106);
+				break;
 		}
 	},
 	{
@@ -133,7 +139,7 @@ function throwCorrosion(scp106: mc.Entity): void {
 
 	scp106.triggerEvent("lc:disable_free_movement");
 
-	let right = !getCorrosionRight(scp106) && Math.random() > 0.5;
+	let right = getCorrosionRight(scp106) && Math.random() > 0.5;
 	if (right) {
 		setState(scp106, SCP106_STATE.throwingRight);
 	} else {
@@ -142,3 +148,18 @@ function throwCorrosion(scp106: mc.Entity): void {
 }
 
 function onUpdateHiddenState(scp106: mc.Entity): void {}
+
+function onFinishThrowingCorrosionRight(scp106: mc.Entity): void {
+	onFinishThrowingCorrosion(scp106);
+	setCorrosionRight(scp106, false);
+}
+
+function onFinishThrowingCorrosionLeft(scp106: mc.Entity): void {
+	onFinishThrowingCorrosion(scp106);
+	setCorrosionLeft(scp106, false);
+}
+
+function onFinishThrowingCorrosion(scp106: mc.Entity): void {
+	setState(scp106, SCP106_STATE.default);
+	scp106.triggerEvent("lc:enable_free_movement");
+}
