@@ -5,7 +5,7 @@ const CORROSION_PROJECTILE_ENTITY_TYPE_ID = "lc:scpdy_corrosion_projectile";
 
 mc.world.afterEvents.dataDrivenEntityTrigger.subscribe(
 	({ entity }) => {
-		explode(entity);
+		explode(entity, entity.location);
 	},
 	{
 		entityTypes: [CORROSION_PROJECTILE_ENTITY_TYPE_ID],
@@ -15,17 +15,22 @@ mc.world.afterEvents.dataDrivenEntityTrigger.subscribe(
 
 mc.world.afterEvents.projectileHitEntity.subscribe((event) => {
 	if (event.projectile.typeId !== CORROSION_PROJECTILE_ENTITY_TYPE_ID) return;
-	explode(event.projectile, event.getEntityHit().entity, event.source);
+	explode(event.projectile, event.location, event.getEntityHit().entity, event.source);
 });
 
 mc.world.afterEvents.projectileHitBlock.subscribe((event) => {
 	if (event.projectile.typeId !== CORROSION_PROJECTILE_ENTITY_TYPE_ID) return;
-	explode(event.projectile);
+	explode(event.projectile, event.location);
 });
 
-function explode(projectile: mc.Entity, hitEntity?: mc.Entity, source?: mc.Entity): void {
+function explode(
+	projectile: mc.Entity,
+	location: mc.Vector3,
+	hitEntity?: mc.Entity,
+	source?: mc.Entity,
+): void {
 	try {
-		projectile.dimension.spawnParticle("lc:scpdy_corrosion_burst_emitter", projectile.location);
+		projectile.dimension.spawnParticle("lc:scpdy_corrosion_burst_emitter", location);
 
 		try {
 			const damage = mc.world.getDifficulty() === mc.Difficulty.Hard ? 9 : 6;
@@ -41,7 +46,7 @@ function explode(projectile: mc.Entity, hitEntity?: mc.Entity, source?: mc.Entit
 
 		const entities = projectile.dimension.getEntities({
 			closest: 10,
-			location: projectile.location,
+			location: location,
 			maxDistance: 2.4,
 			excludeTypes: [SCP106_ENTITY_TYPE_ID, CORROSION_PROJECTILE_ENTITY_TYPE_ID],
 		});
