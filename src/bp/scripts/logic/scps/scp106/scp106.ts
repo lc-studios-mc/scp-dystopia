@@ -266,13 +266,15 @@ function onUpdateCombatHiding(scp106: mc.Entity, hidingTick: number): void {
 		calculateCombatEmergeLocation(scp106);
 
 	if (hidingTick === 1) {
-		scp106.tryTeleport(emergeLoc);
+		scp106.tryTeleport(vec3.sub(emergeLoc, vec3.UP));
 		return;
 	}
 
 	if (hidingTick === 3) {
 		stopHiding(scp106);
 		setState(scp106, SCP106_STATE.appearingFast);
+
+		scp106.tryTeleport(emergeLoc);
 
 		if (scp106.target) {
 			scp106.lookAt(scp106.target.getHeadLocation());
