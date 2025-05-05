@@ -29,36 +29,34 @@ function explode(
 	hitEntity?: mc.Entity,
 	source?: mc.Entity,
 ): void {
+	projectile.dimension.spawnParticle("lc:scpdy_corrosion_burst_emitter", location);
+
 	try {
-		projectile.dimension.spawnParticle("lc:scpdy_corrosion_burst_emitter", location);
+		const damage = mc.world.getDifficulty() === mc.Difficulty.Hard ? 9 : 6;
 
-		try {
-			const damage = mc.world.getDifficulty() === mc.Difficulty.Hard ? 9 : 6;
-
-			hitEntity?.applyDamage(damage, {
-				cause: mc.EntityDamageCause.override,
-				damagingProjectile: projectile,
-				damagingEntity: source,
-			});
-
-			hitEntity?.addEffect("blindness", 140, { amplifier: 0 });
-		} catch {}
-
-		const entities = projectile.dimension.getEntities({
-			closest: 10,
-			location: location,
-			maxDistance: 2.4,
-			excludeTypes: [SCP106_ENTITY_TYPE_ID, CORROSION_PROJECTILE_ENTITY_TYPE_ID],
+		hitEntity?.applyDamage(damage, {
+			cause: mc.EntityDamageCause.override,
+			damagingProjectile: projectile,
+			damagingEntity: source,
 		});
 
-		for (let i = 0; i < entities.length; i++) {
-			const entity = entities[i]!;
+		hitEntity?.addEffect("blindness", 140, { amplifier: 0 });
+	} catch {}
 
-			try {
-				entity.addEffect("wither", 100, { amplifier: 1 });
-			} catch {}
-		}
-	} finally {
-		projectile.remove();
+	const entities = projectile.dimension.getEntities({
+		closest: 10,
+		location: location,
+		maxDistance: 2.4,
+		excludeTypes: [SCP106_ENTITY_TYPE_ID, CORROSION_PROJECTILE_ENTITY_TYPE_ID],
+	});
+
+	for (let i = 0; i < entities.length; i++) {
+		const entity = entities[i]!;
+
+		try {
+			entity.addEffect("wither", 100, { amplifier: 1 });
+		} catch {}
 	}
+
+	projectile.remove();
 }
