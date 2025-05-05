@@ -1,5 +1,7 @@
 import * as mc from "@minecraft/server";
 
+export type DiveContext = "combat" | "retreat";
+
 export const SCP106_ENTITY_TYPE_ID = "lc:scpdy_scp106";
 
 export const SCP106_STATE = {
@@ -70,4 +72,12 @@ export function getStuckDuration(scp106: mc.Entity): number {
 
 export function setStuckDuration(scp106: mc.Entity, value: number): void {
 	scp106.setDynamicProperty("stuckDuration", value);
+}
+
+export function getDiveContext(scp106: mc.Entity) {
+	return scp106.getDynamicProperty("diveContext") as DiveContext | undefined;
+}
+
+export function setDiveContext(scp106: mc.Entity, value?: DiveContext): void {
+	scp106.setDynamicProperty("diveContext", value);
 }
