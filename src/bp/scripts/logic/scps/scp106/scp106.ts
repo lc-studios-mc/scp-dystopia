@@ -6,6 +6,7 @@ import {
 	getCorrosionRight,
 	getCorrosionThrowCooldown,
 	getDiveContext,
+	getHidingTick,
 	getLastLocation,
 	getState,
 	getStuckDuration,
@@ -16,6 +17,7 @@ import {
 	setCorrosionRight,
 	setCorrosionThrowCooldown,
 	setDiveContext,
+	setHidingTick,
 	setLastLocation,
 	setState,
 	setStuckDuration,
@@ -247,13 +249,21 @@ function onUpdateHiddenState(scp106: mc.Entity): void {
 	});
 
 	const diveCtx = getDiveContext(scp106);
+	const hidingTick = getHidingTick(scp106);
 
 	if (diveCtx === "combat") {
-	} else if (diveCtx === "retreat") {
+		return;
 	}
+
+	if (diveCtx === "retreat") {
+		return;
+	}
+
+	setHidingTick(scp106, hidingTick + 1);
 }
 
-function showAndEnableAmbientSound(scp106: mc.Entity): void {
+function stopHiding(scp106: mc.Entity): void {
 	scp106.triggerEvent("lc:show");
 	scp106.triggerEvent("lc:enable_ambient_sound");
+	setHidingTick(scp106, 0);
 }

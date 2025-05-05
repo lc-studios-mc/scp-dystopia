@@ -81,3 +81,12 @@ export function getDiveContext(scp106: mc.Entity) {
 export function setDiveContext(scp106: mc.Entity, value?: DiveContext): void {
 	scp106.setDynamicProperty("diveContext", value);
 }
+
+export function getHidingTick(scp106: mc.Entity): number {
+	const value = Number(scp106.getDynamicProperty("hidingTick"));
+	return isNaN(value) ? 0 : value;
+}
+
+export function setHidingTick(scp106: mc.Entity, value: number): void {
+	scp106.setDynamicProperty("hidingTick", value);
+}
