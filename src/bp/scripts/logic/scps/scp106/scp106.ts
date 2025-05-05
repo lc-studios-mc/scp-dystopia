@@ -5,6 +5,7 @@ import {
 	getCorrosionLeft,
 	getCorrosionRight,
 	getCorrosionThrowCooldown,
+	getDiveContext,
 	getLastLocation,
 	getState,
 	getStuckDuration,
@@ -14,9 +15,11 @@ import {
 	setCorrosionLeft,
 	setCorrosionRight,
 	setCorrosionThrowCooldown,
+	setDiveContext,
 	setLastLocation,
 	setState,
 	setStuckDuration,
+	type DiveContext,
 } from "./shared";
 import { randomInt } from "@/lib/utils/mathUtils";
 
@@ -94,7 +97,7 @@ function onUpdateDefaultState(scp106: mc.Entity): void {
 	if (!scp106.target) return;
 
 	if (isStuck(scp106)) {
-		startDive(scp106);
+		startDive(scp106, "combat");
 		return;
 	}
 
@@ -128,8 +131,9 @@ function updateStuckDuration(scp106: mc.Entity): number {
 	return stuckDuration;
 }
 
-function startDive(scp106: mc.Entity): void {
+function startDive(scp106: mc.Entity, context: DiveContext): void {
 	setState(scp106, SCP106_STATE.diving);
+	setDiveContext(scp106, context);
 	setStuckDuration(scp106, 0);
 
 	scp106.triggerEvent("lc:disable_free_movement");
@@ -241,4 +245,15 @@ function onUpdateHiddenState(scp106: mc.Entity): void {
 	mc.system.run(() => {
 		scp106.addEffect("invisibility", 30, { showParticles: false });
 	});
+
+	const diveCtx = getDiveContext(scp106);
+
+	if (diveCtx === "combat") {
+	} else if (diveCtx === "retreat") {
+	}
+}
+
+function showAndEnableAmbientSound(scp106: mc.Entity): void {
+	scp106.triggerEvent("lc:show");
+	scp106.triggerEvent("lc:enable_ambient_sound");
 }
