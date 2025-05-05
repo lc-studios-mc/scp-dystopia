@@ -1249,12 +1249,6 @@
 				"rightLeg": {
 					"rotation": [2.49762, -0.10901, 2.49762]
 				}
-			},
-			"particle_effects": {
-				"0.0": {
-					"effect": "corrosion",
-					"locator": "bottom"
-				}
 			}
 		}
 	}
