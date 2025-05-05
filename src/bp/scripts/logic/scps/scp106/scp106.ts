@@ -234,6 +234,7 @@ function onFinishDive(scp106: mc.Entity): void {
 	scp106.clearVelocity();
 	scp106.triggerEvent("lc:hide");
 	scp106.triggerEvent("lc:disable_ambient_sound");
+	scp106.tryTeleport({ x: scp106.location.x, y: scp106.location.y - 0.6, z: scp106.location.z });
 }
 
 function onUpdateHiddenState(scp106: mc.Entity): void {}
