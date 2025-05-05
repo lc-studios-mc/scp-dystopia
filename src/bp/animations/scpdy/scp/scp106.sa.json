@@ -5,7 +5,7 @@
 			"animation_length": 0.5,
 			"loop": true,
 			"timeline": {
-				"0.0": ["/scriptevent scpdy_scp106:update"]
+				"0.25": ["/scriptevent scpdy_scp106:update"]
 			}
 		},
 		"animation.scpdy.bp.scp106.diving": {
