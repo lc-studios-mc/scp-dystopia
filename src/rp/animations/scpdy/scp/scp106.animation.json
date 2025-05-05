@@ -1172,6 +1172,30 @@
 				}
 			}
 		},
+		"animation.scpdy_scp106.retreat": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 1,
+			"bones": {
+				"body": {
+					"rotation": [0, 0, 0]
+				},
+				"head": {
+					"rotation": [0, 0, 0]
+				},
+				"leftArm": {
+					"rotation": [0, 0, -2.5]
+				},
+				"rightArm": {
+					"rotation": [0, 0, 2.5]
+				},
+				"leftLeg": {
+					"rotation": [-5.00083, -2.70832, -2.27264]
+				},
+				"rightLeg": {
+					"rotation": [4.99917, 2.27268, 2.70829]
+				}
+			}
+		},
 		"animation.scpdy_scp106.corrosion_right": {
 			"loop": true,
 			"animation_length": 0.5,
