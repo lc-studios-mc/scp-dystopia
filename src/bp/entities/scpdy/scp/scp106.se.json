@@ -22,14 +22,14 @@
 				"lc:state": {
 					"type": "int",
 					"range": [
-						// 0  - default
-						// 10 - diving
-						// 20 - hidden
-						// 30 - appearing slow
-						// 40 - appearing fast
-						// 50 - throwing right
-						// 60 - throwing left
-						// 70 - retreating
+						// 0   - default
+						// 10  - diving
+						// 20  - hidden
+						// 30  - appearing slow
+						// 40  - appearing fast
+						// 50  - throwing right
+						// 60  - throwing left
+						// 100 - neutralized
 						0, 100
 					],
 					"default": 0,
@@ -242,7 +242,15 @@
 		"events": {
 			"minecraft:entity_spawned": {
 				"add": {
-					"component_groups": ["free", "shown", "ambient_sound_normal"]
+					"component_groups": ["default_family", "free", "shown", "ambient_sound_normal"]
+				}
+			},
+			"lc:spawn_neutralized": {
+				"add": {
+					"component_groups": ["neutralized_family", "shown"]
+				},
+				"set_property": {
+					"lc:state": 100
 				}
 			},
 			"lc:enable_free_movement": {
