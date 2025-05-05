@@ -178,10 +178,10 @@
 				},
 				"minecraft:behavior.fire_at_target": {
 					"priority": 0,
-					"projectile_def": "lc:scpdy_unknown_core_fireball",
+					"projectile_def": "lc:scpdy_corrosion_projectile",
 					"attack_range": [0, 64],
 					"attack_cooldown": 1.0,
-					"pre_shoot_delay": 0.22,
+					"pre_shoot_delay": 0.2,
 					"post_shoot_delay": 0.0,
 					"ranged_fov": 180.0,
 					"owner_anchor": 1,
