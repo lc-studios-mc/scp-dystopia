@@ -74,6 +74,10 @@ function onUpdate(scp106: mc.Entity): void {
 		});
 	}
 
+	if (mc.world.getDifficulty() === mc.Difficulty.Hard) {
+		scp106.addEffect("speed", 100, { amplifier: 0, showParticles: false });
+	}
+
 	if (state === SCP106_STATE.default) {
 		onUpdateDefaultState(scp106);
 	}
@@ -121,6 +125,7 @@ function updateCorrosionThrowCooldown(scp106: mc.Entity): void {
 	}
 
 	if (!scp106.target) return;
+	if (vec3.distance(scp106.location, scp106.target.location) < 3.5) return;
 
 	const raycastHitsInTargetDir = scp106.dimension.getEntitiesFromRay(
 		scp106.getHeadLocation(),
