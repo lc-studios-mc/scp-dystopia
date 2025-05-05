@@ -40,8 +40,8 @@ mc.world.afterEvents.entitySpawn.subscribe((event) => {
 });
 
 function onSpawn(scp106: mc.Entity): void {
-	setCorrosionAcquisitionCooldown(scp106, 20);
-	setCorrosionThrowCooldown(scp106, 20);
+	setCorrosionAcquisitionCooldown(scp106, 7);
+	setCorrosionThrowCooldown(scp106, 7);
 }
 
 /** This function should be called for each SCP-106 entity every 0.5 seconds. */
@@ -110,7 +110,7 @@ function updateCorrosionThrowCooldown(scp106: mc.Entity): void {
 		return;
 	}
 
-	setCorrosionThrowCooldown(scp106, 6);
+	setCorrosionThrowCooldown(scp106, randomInt(5, 9));
 	throwCorrosion(scp106);
 }
 
