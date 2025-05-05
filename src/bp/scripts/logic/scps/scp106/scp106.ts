@@ -212,8 +212,6 @@ function throwCorrosion(scp106: mc.Entity): void {
 	scp106.triggerEvent("lc:add_throwing_corrosion");
 }
 
-function onUpdateHiddenState(scp106: mc.Entity): void {}
-
 function onFinishThrowingCorrosionRight(scp106: mc.Entity): void {
 	onFinishThrowingCorrosion(scp106);
 }
@@ -227,3 +225,5 @@ function onFinishThrowingCorrosion(scp106: mc.Entity): void {
 	scp106.triggerEvent("lc:enable_free_movement");
 	scp106.triggerEvent("lc:remove_throwing_corrosion");
 }
+
+function onUpdateHiddenState(scp106: mc.Entity): void {}
