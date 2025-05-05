@@ -23,9 +23,9 @@
 					}
 				},
 				"ignored_entities": ["lc:scpdy_scp106"],
-				"power": 1.9,
-				"gravity": 0.01,
-				"inertia": 1.0,
+				"power": 2.0,
+				"gravity": 0.012,
+				"inertia": 1.06,
 				"liquid_inertia": 1.0,
 				"uncertainty_base": 0.0,
 				"uncertainty_multiplier": 0.0,
@@ -37,7 +37,7 @@
 			"minecraft:timer": {
 				"looping": false,
 				"randomInterval": false,
-				"time": 3.0,
+				"time": 2.5,
 				"time_down_event": {
 					"event": "bom",
 					"target": "self"
