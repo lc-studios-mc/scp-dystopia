@@ -32,6 +32,9 @@ mc.system.afterEvents.scriptEventReceive.subscribe(
 			case "scpdy_scp106:update":
 				onUpdate(scp106);
 				break;
+			case "scpdy_scp106:finish_dive":
+				onFinishDive(scp106);
+				break;
 			case "scpdy_scp106:finish_throw_right":
 				onFinishThrowingCorrosionRight(scp106);
 				break;
@@ -224,6 +227,13 @@ function onFinishThrowingCorrosion(scp106: mc.Entity): void {
 	setState(scp106, SCP106_STATE.default);
 	scp106.triggerEvent("lc:enable_free_movement");
 	scp106.triggerEvent("lc:remove_throwing_corrosion");
+}
+
+function onFinishDive(scp106: mc.Entity): void {
+	setState(scp106, SCP106_STATE.hidden);
+	scp106.clearVelocity();
+	scp106.triggerEvent("lc:hide");
+	scp106.triggerEvent("lc:disable_ambient_sound");
 }
 
 function onUpdateHiddenState(scp106: mc.Entity): void {}
