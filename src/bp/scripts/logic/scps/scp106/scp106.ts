@@ -77,6 +77,10 @@ function onUpdateDefaultState(scp106: mc.Entity): void {
 	if (!target) return;
 
 	updateCorrosionAcquisitionCooldown(scp106);
+
+	if (!getCorrosionRight(scp106) && !getCorrosionLeft(scp106)) return;
+
+	updateCorrosionThrowCooldown(scp106);
 }
 
 function updateCorrosionAcquisitionCooldown(scp106: mc.Entity): void {
