@@ -280,7 +280,7 @@
 				}
 			}
 		},
-		"animation.scpdy_scp106.appear_slow": {
+		"animation.scpdy_scp106.emerge_slow": {
 			"loop": "hold_on_last_frame",
 			"animation_length": 7,
 			"bones": {
@@ -453,11 +453,11 @@
 			},
 			"sound_effects": {
 				"0.0": {
-					"effect": "appear_slow"
+					"effect": "emerge_slow"
 				}
 			}
 		},
-		"animation.scpdy_scp106.appear_fast": {
+		"animation.scpdy_scp106.emerge_fast": {
 			"loop": "hold_on_last_frame",
 			"animation_length": 0.8,
 			"bones": {

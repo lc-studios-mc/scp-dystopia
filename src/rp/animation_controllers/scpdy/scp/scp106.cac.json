@@ -8,8 +8,8 @@
 					"transitions": [
 						{ "dive": "v.diving" },
 						{ "hidden": "v.hidden" },
-						{ "appear_slow": "v.appearing_slow" },
-						{ "appear_fast": "v.appearing_fast" },
+						{ "emerge_slow": "v.emerging_slow" },
+						{ "emerge_fast": "v.emerging_fast" },
 						{ "idle": "1" }
 					]
 				},
@@ -18,8 +18,8 @@
 					"transitions": [
 						{ "walk": "q.modified_move_speed > 0.03" },
 						{ "dive": "v.diving" },
-						{ "appear_slow": "v.appearing_slow" },
-						{ "appear_fast": "v.appearing_fast" },
+						{ "emerge_slow": "v.emerging_slow" },
+						{ "emerge_fast": "v.emerging_fast" },
 						{ "throw_right": "v.throwing_right" },
 						{ "throw_left": "v.throwing_left" }
 					],
@@ -30,8 +30,8 @@
 					"transitions": [
 						{ "idle": "q.modified_move_speed <= 0.03" },
 						{ "dive": "v.diving" },
-						{ "appear_slow": "v.appearing_slow" },
-						{ "appear_fast": "v.appearing_fast" },
+						{ "emerge_slow": "v.emerging_slow" },
+						{ "emerge_fast": "v.emerging_fast" },
 						{ "throw_right": "v.throwing_right" },
 						{ "throw_left": "v.throwing_left" }
 					],
@@ -40,8 +40,8 @@
 				"dive": {
 					"animations": ["anim.dive"],
 					"transitions": [
-						{ "appear_slow": "v.appearing_slow" },
-						{ "appear_fast": "v.appearing_fast" },
+						{ "emerge_slow": "v.emerging_slow" },
+						{ "emerge_fast": "v.emerging_fast" },
 						{ "hidden": "v.hidden" }
 					],
 					"blend_transition": 0
@@ -49,19 +49,19 @@
 				"hidden": {
 					"animations": ["anim.hidden"],
 					"transitions": [
-						{ "appear_slow": "v.appearing_slow" },
-						{ "appear_fast": "v.appearing_fast" }
+						{ "emerge_slow": "v.emerging_slow" },
+						{ "emerge_fast": "v.emerging_fast" }
 					],
 					"blend_transition": 0
 				},
-				"appear_slow": {
-					"animations": ["anim.appear_slow"],
-					"transitions": [{ "idle": "!v.appearing_slow" }],
+				"emerge_slow": {
+					"animations": ["anim.emerge_slow"],
+					"transitions": [{ "idle": "!v.emerging_slow" }],
 					"blend_transition": 0.2
 				},
-				"appear_fast": {
-					"animations": ["anim.appear_fast"],
-					"transitions": [{ "idle": "!v.appearing_fast" }],
+				"emerge_fast": {
+					"animations": ["anim.emerge_fast"],
+					"transitions": [{ "idle": "!v.emerging_fast" }],
 					"blend_transition": 0.2
 				},
 				"throw_right": {

@@ -7,8 +7,8 @@
 				"default": {
 					"transitions": [
 						{ "diving": "q.property('lc:state') == 10" },
-						{ "appearing_slow": "q.property('lc:state') == 30" },
-						{ "appearing_fast": "q.property('lc:state') == 40" },
+						{ "emerging_slow": "q.property('lc:state') == 30" },
+						{ "emerging_fast": "q.property('lc:state') == 40" },
 						{ "throwing_right": "q.property('lc:state') == 50" },
 						{ "throwing_left": "q.property('lc:state') == 60" }
 					]
@@ -17,12 +17,12 @@
 					"animations": ["anim.diving"],
 					"transitions": [{ "default": "q.property('lc:state') != 10" }]
 				},
-				"appearing_slow": {
-					"animations": ["anim.appearing_slow"],
+				"emerging_slow": {
+					"animations": ["anim.emerging_slow"],
 					"transitions": [{ "default": "q.property('lc:state') != 30" }]
 				},
-				"appearing_fast": {
-					"animations": ["anim.appearing_fast"],
+				"emerging_fast": {
+					"animations": ["anim.emerging_fast"],
 					"transitions": [{ "default": "q.property('lc:state') != 40" }]
 				},
 				"throwing_right": {

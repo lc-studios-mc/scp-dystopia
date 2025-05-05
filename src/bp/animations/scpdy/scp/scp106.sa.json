@@ -15,20 +15,20 @@
 				"1.1": ["/scriptevent scpdy_scp106:finish_dive"]
 			}
 		},
-		"animation.scpdy.bp.scp106.appearing_slow": {
+		"animation.scpdy.bp.scp106.emerging_slow": {
 			"animation_length": 8.0,
 			"loop": false,
 			"timeline": {
-				"0.0": ["/playsound scpdy.scp106.appear_slow @a[r=15] ~ ~ ~ 1.4 1.0"],
-				"7.0": ["/scriptevent scpdy_scp106:finish_appear_slow"]
+				"0.0": ["/playsound scpdy.scp106.emerge_slow @a[r=15] ~ ~ ~ 1.4 1.0"],
+				"7.0": ["/scriptevent scpdy_scp106:finish_emerge_slow"]
 			}
 		},
-		"animation.scpdy.bp.scp106.appearing_fast": {
+		"animation.scpdy.bp.scp106.emerging_fast": {
 			"animation_length": 1.0,
 			"loop": false,
 			"timeline": {
-				"0.0": ["/playsound scpdy.scp106.appear_fast @a[r=15] ~ ~ ~ 1.4 1.0"],
-				"0.75": ["/scriptevent scpdy_scp106:finish_appear_fast"]
+				"0.0": ["/playsound scpdy.scp106.emerge_fast @a[r=15] ~ ~ ~ 1.4 1.0"],
+				"0.75": ["/scriptevent scpdy_scp106:finish_emerge_fast"]
 			}
 		},
 		"animation.scpdy.bp.scp106.throwing_right": {

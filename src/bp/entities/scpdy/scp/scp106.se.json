@@ -10,8 +10,8 @@
 				"ctrl.main": "controller.animation.scpdy.bp.scp106.main",
 				"anim.script_update": "animation.scpdy.bp.scp106.script_update",
 				"anim.diving": "animation.scpdy.bp.scp106.diving",
-				"anim.appearing_slow": "animation.scpdy.bp.scp106.appearing_slow",
-				"anim.appearing_fast": "animation.scpdy.bp.scp106.appearing_fast",
+				"anim.emerging_slow": "animation.scpdy.bp.scp106.emerging_slow",
+				"anim.emerging_fast": "animation.scpdy.bp.scp106.emerging_fast",
 				"anim.throwing_right": "animation.scpdy.bp.scp106.throwing_right",
 				"anim.throwing_left": "animation.scpdy.bp.scp106.throwing_left"
 			},
@@ -25,8 +25,8 @@
 						// 0   - default
 						// 10  - diving
 						// 20  - hidden
-						// 30  - appearing slow
-						// 40  - appearing fast
+						// 30  - emerging slow
+						// 40  - emerging fast
 						// 50  - throwing right
 						// 60  - throwing left
 						// 100 - neutralized

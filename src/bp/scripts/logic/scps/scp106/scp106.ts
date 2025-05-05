@@ -47,11 +47,11 @@ mc.system.afterEvents.scriptEventReceive.subscribe(
 			case "scpdy_scp106:finish_throw_left":
 				onFinishThrowingCorrosionLeft(scp106);
 				break;
-			case "scpdy_scp106:finish_appear_slow":
-				onFinishAppearingSlow(scp106);
+			case "scpdy_scp106:finish_emerge_slow":
+				onFinishEmergingSlow(scp106);
 				break;
-			case "scpdy_scp106:finish_appear_fast":
-				onFinishAppearingFast(scp106);
+			case "scpdy_scp106:finish_emerge_fast":
+				onFinishEmergingFast(scp106);
 				break;
 		}
 	},
@@ -279,7 +279,7 @@ function onUpdateCombatHiding(scp106: mc.Entity, hidingTick: number): void {
 
 	if (hidingTick === 3) {
 		stopHiding(scp106);
-		setState(scp106, SCP106_STATE.appearingFast);
+		setState(scp106, SCP106_STATE.emergingFast);
 
 		scp106.tryTeleport(emergeLoc);
 
@@ -298,15 +298,15 @@ function stopHiding(scp106: mc.Entity): void {
 	setHidingTick(scp106, 0);
 }
 
-function onFinishAppearingSlow(scp106: mc.Entity): void {
-	onFinishAppearing(scp106);
+function onFinishEmergingSlow(scp106: mc.Entity): void {
+	onFinishEmerging(scp106);
 }
 
-function onFinishAppearingFast(scp106: mc.Entity): void {
-	onFinishAppearing(scp106);
+function onFinishEmergingFast(scp106: mc.Entity): void {
+	onFinishEmerging(scp106);
 }
 
-function onFinishAppearing(scp106: mc.Entity): void {
+function onFinishEmerging(scp106: mc.Entity): void {
 	setState(scp106, SCP106_STATE.default);
 
 	scp106.triggerEvent("lc:enable_free_movement");
