@@ -8,11 +8,12 @@ export function getRiseLocation(scp106: mc.Entity): mc.Vector3 {
 
 	const targetLoc = scp106.target.location;
 
-	const result = getRiseLocationBelow(scp106.dimension, {
-		x: targetLoc.x + 1,
-		y: targetLoc.y,
-		z: targetLoc.z,
-	}) ??
+	const result =
+		getRiseLocationBelow(scp106.dimension, {
+			x: targetLoc.x + 1,
+			y: targetLoc.y,
+			z: targetLoc.z,
+		}) ??
 		getRiseLocationBelow(scp106.dimension, {
 			x: targetLoc.x - 1,
 			y: targetLoc.y + 0.2,
@@ -32,10 +33,7 @@ export function getRiseLocation(scp106: mc.Entity): mc.Vector3 {
 	return result ?? targetLoc;
 }
 
-function getRiseLocationBelow(
-	dimension: mc.Dimension,
-	location: mc.Vector3,
-): mc.Vector3 | null {
+function getRiseLocationBelow(dimension: mc.Dimension, location: mc.Vector3): mc.Vector3 | null {
 	const block = dimension.getBlockBelow(location, { maxDistance: 3 })?.above();
 	if (!block) return null;
 	if (!block.isAir) return null;

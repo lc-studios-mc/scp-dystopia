@@ -14,10 +14,7 @@
 					]
 				},
 				"idle": {
-					"animations": [
-						"anim.idle",
-						"anim.look_at_target"
-					],
+					"animations": ["anim.idle", "anim.look_at_target"],
 					"transitions": [
 						{ "walk": "q.modified_move_speed > 0.03" },
 						{ "dive": "v.diving" },
@@ -29,10 +26,7 @@
 					"blend_transition": 0.2
 				},
 				"walk": {
-					"animations": [
-						"anim.walk",
-						"anim.look_at_target"
-					],
+					"animations": ["anim.walk", "anim.look_at_target"],
 					"transitions": [
 						{ "idle": "q.modified_move_speed <= 0.03" },
 						{ "dive": "v.diving" },
@@ -44,9 +38,7 @@
 					"blend_transition": 0.3
 				},
 				"dive": {
-					"animations": [
-						"anim.dive"
-					],
+					"animations": ["anim.dive"],
 					"transitions": [
 						{ "appear_slow": "v.appearing_slow" },
 						{ "appear_fast": "v.appearing_fast" },
@@ -55,9 +47,7 @@
 					"blend_transition": 0
 				},
 				"hidden": {
-					"animations": [
-						"anim.hidden"
-					],
+					"animations": ["anim.hidden"],
 					"transitions": [
 						{ "appear_slow": "v.appearing_slow" },
 						{ "appear_fast": "v.appearing_fast" }
@@ -65,39 +55,23 @@
 					"blend_transition": 0
 				},
 				"appear_slow": {
-					"animations": [
-						"anim.appear_slow"
-					],
-					"transitions": [
-						{ "idle": "!v.appearing_slow" }
-					],
+					"animations": ["anim.appear_slow"],
+					"transitions": [{ "idle": "!v.appearing_slow" }],
 					"blend_transition": 0.2
 				},
 				"appear_fast": {
-					"animations": [
-						"anim.appear_fast"
-					],
-					"transitions": [
-						{ "idle": "!v.appearing_fast" }
-					],
+					"animations": ["anim.appear_fast"],
+					"transitions": [{ "idle": "!v.appearing_fast" }],
 					"blend_transition": 0.2
 				},
 				"throw_right": {
-					"animations": [
-						"anim.throw_right"
-					],
-					"transitions": [
-						{ "idle": "!v.throwing_right" }
-					],
+					"animations": ["anim.throw_right"],
+					"transitions": [{ "idle": "!v.throwing_right" }],
 					"blend_transition": 0.3
 				},
 				"throw_left": {
-					"animations": [
-						"anim.throw_left"
-					],
-					"transitions": [
-						{ "idle": "!v.throwing_left" }
-					],
+					"animations": ["anim.throw_left"],
+					"transitions": [{ "idle": "!v.throwing_left" }],
 					"blend_transition": 0.3
 				}
 			}

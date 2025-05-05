@@ -33,11 +33,7 @@
 			},
 			"scripts": {
 				"scale": "0.9375",
-				"animate": [
-					"ctrl.main",
-					"ctrl.corrosion",
-					"anim.melee_attack"
-				],
+				"animate": ["ctrl.main", "ctrl.corrosion", "anim.melee_attack"],
 				"initialize": [
 					"v.diving = false;",
 					"v.hidden = false;",
