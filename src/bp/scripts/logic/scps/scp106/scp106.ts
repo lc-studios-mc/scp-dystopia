@@ -47,6 +47,12 @@ mc.system.afterEvents.scriptEventReceive.subscribe(
 			case "scpdy_scp106:finish_throw_left":
 				onFinishThrowingCorrosionLeft(scp106);
 				break;
+			case "scpdy_scp106:finish_appear_slow":
+				onFinishAppearingSlow(scp106);
+				break;
+			case "scpdy_scp106:finish_appear_fast":
+				onFinishAppearingFast(scp106);
+				break;
 		}
 	},
 	{
@@ -290,4 +296,18 @@ function stopHiding(scp106: mc.Entity): void {
 	scp106.triggerEvent("lc:show");
 	scp106.triggerEvent("lc:enable_ambient_sound");
 	setHidingTick(scp106, 0);
+}
+
+function onFinishAppearingSlow(scp106: mc.Entity): void {
+	onFinishAppearing(scp106);
+}
+
+function onFinishAppearingFast(scp106: mc.Entity): void {
+	onFinishAppearing(scp106);
+}
+
+function onFinishAppearing(scp106: mc.Entity): void {
+	setState(scp106, SCP106_STATE.default);
+
+	scp106.triggerEvent("lc:enable_free_movement");
 }
