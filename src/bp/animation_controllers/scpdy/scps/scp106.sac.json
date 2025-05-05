@@ -6,32 +6,32 @@
 			"states": {
 				"default": {
 					"transitions": [
-						{ "diving": "q.property('lc:state') == 1" },
-						{ "appearing_slow": "q.property('lc:state') == 3" },
-						{ "appearing_fast": "q.property('lc:state') == 4" },
-						{ "throwing_right": "q.property('lc:state') == 5" },
-						{ "throwing_left": "q.property('lc:state') == 6" }
+						{ "diving": "q.property('lc:state') == 10" },
+						{ "appearing_slow": "q.property('lc:state') == 30" },
+						{ "appearing_fast": "q.property('lc:state') == 40" },
+						{ "throwing_right": "q.property('lc:state') == 50" },
+						{ "throwing_left": "q.property('lc:state') == 60" }
 					]
 				},
 				"diving": {
 					"animations": ["anim.diving"],
-					"transitions": [{ "default": "q.property('lc:state') != 1" }]
+					"transitions": [{ "default": "q.property('lc:state') != 10" }]
 				},
 				"appearing_slow": {
 					"animations": ["anim.appearing_slow"],
-					"transitions": [{ "default": "q.property('lc:state') != 3" }]
+					"transitions": [{ "default": "q.property('lc:state') != 30" }]
 				},
 				"appearing_fast": {
 					"animations": ["anim.appearing_fast"],
-					"transitions": [{ "default": "q.property('lc:state') != 4" }]
+					"transitions": [{ "default": "q.property('lc:state') != 40" }]
 				},
 				"throwing_right": {
 					"animations": ["anim.throwing_right"],
-					"transitions": [{ "default": "q.property('lc:state') != 5" }]
+					"transitions": [{ "default": "q.property('lc:state') != 50" }]
 				},
 				"throwing_left": {
 					"animations": ["anim.throwing_left"],
-					"transitions": [{ "default": "q.property('lc:state') != 6" }]
+					"transitions": [{ "default": "q.property('lc:state') != 60" }]
 				}
 			}
 		}
