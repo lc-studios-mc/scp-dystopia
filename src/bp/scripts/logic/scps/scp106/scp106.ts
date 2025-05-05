@@ -96,8 +96,12 @@ function updateCorrosionAcquisitionCooldown(scp106: mc.Entity): void {
 		return;
 	}
 
+	const newCooldown =
+		mc.world.getDifficulty() === mc.Difficulty.Hard ? randomInt(4, 6) : randomInt(8, 12);
+
+	setCorrosionAcquisitionCooldown(scp106, newCooldown);
+
 	acquireCorrosion(scp106);
-	setCorrosionAcquisitionCooldown(scp106, randomInt(8, 16));
 }
 
 function acquireCorrosion(scp106: mc.Entity): void {
@@ -128,7 +132,10 @@ function updateCorrosionThrowCooldown(scp106: mc.Entity): void {
 
 	if (!isSeeingTarget) return; // Do not throw corrosion when cannot see target
 
-	setCorrosionThrowCooldown(scp106, randomInt(4, 8));
+	const newCooldown =
+		mc.world.getDifficulty() === mc.Difficulty.Hard ? randomInt(2, 3) : randomInt(4, 7);
+
+	setCorrosionThrowCooldown(scp106, newCooldown);
 	throwCorrosion(scp106);
 }
 
