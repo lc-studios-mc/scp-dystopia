@@ -30,7 +30,7 @@
 						// 50 - throwing right
 						// 60 - throwing left
 						// 70 - retreating
-						0, 200
+						0, 100
 					],
 					"default": 0,
 					"client_sync": true
