@@ -4,6 +4,7 @@ import {
 	getCorrosionAcquisitionCooldown,
 	getCorrosionLeft,
 	getCorrosionRight,
+	getCorrosionThrowCooldown,
 	getState,
 	SCP106_ENTITY_TYPE_ID,
 	SCP106_STATE,
@@ -75,19 +76,18 @@ function onUpdateDefaultState(scp106: mc.Entity): void {
 	const target = scp106.target;
 	if (!target) return;
 
-	updateCorrosionAcquisition(scp106);
+	updateCorrosionAcquisitionCooldown(scp106);
 }
 
-function updateCorrosionAcquisition(scp106: mc.Entity): void {
+function updateCorrosionAcquisitionCooldown(scp106: mc.Entity): void {
 	const corrosionAcquisitionCooldown = getCorrosionAcquisitionCooldown(scp106);
-
-	if (corrosionAcquisitionCooldown <= 0) {
-		acquireCorrosion(scp106);
-		setCorrosionAcquisitionCooldown(scp106, randomInt(8, 32));
+	if (corrosionAcquisitionCooldown > 0) {
+		setCorrosionAcquisitionCooldown(scp106, corrosionAcquisitionCooldown - 1);
 		return;
 	}
 
-	setCorrosionAcquisitionCooldown(scp106, corrosionAcquisitionCooldown - 1);
+	acquireCorrosion(scp106);
+	setCorrosionAcquisitionCooldown(scp106, randomInt(8, 32));
 }
 
 function acquireCorrosion(scp106: mc.Entity): void {
@@ -98,5 +98,18 @@ function acquireCorrosion(scp106: mc.Entity): void {
 		setCorrosionLeft(scp106, true);
 	}
 }
+
+function updateCorrosionThrowCooldown(scp106: mc.Entity): void {
+	const corrosionThrowCooldown = getCorrosionThrowCooldown(scp106);
+	if (corrosionThrowCooldown > 0) {
+		setCorrosionThrowCooldown(scp106, corrosionThrowCooldown - 1);
+		return;
+	}
+
+	setCorrosionThrowCooldown(scp106, 6);
+	throwCorrosion(scp106);
+}
+
+function throwCorrosion(scp106: mc.Entity): void {}
 
 function onUpdateHiddenState(scp106: mc.Entity): void {}
