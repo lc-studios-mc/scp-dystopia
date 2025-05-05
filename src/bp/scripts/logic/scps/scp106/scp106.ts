@@ -25,7 +25,10 @@ mc.system.afterEvents.scriptEventReceive.subscribe(
 function onUpdate(scp106: mc.Entity): void {
 	const state = getState(scp106);
 
-	if (state === SCP106_STATE.hidden) return;
+	if (state === SCP106_STATE.hidden) {
+		onUpdateHiddenState(scp106);
+		return;
+	}
 
 	const entitiesInContact = scp106.dimension.getEntities({
 		closest: 20,
@@ -47,3 +50,5 @@ function onUpdate(scp106: mc.Entity): void {
 }
 
 function onUpdateDefaultState(scp106: mc.Entity): void {}
+
+function onUpdateHiddenState(scp106: mc.Entity): void {}
