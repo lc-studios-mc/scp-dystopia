@@ -31,7 +31,7 @@
 					"definition_event": {
 						"affect_projectile": true,
 						"event_trigger": {
-							"event": "minecraft:explode",
+							"event": "bom",
 							"target": "self"
 						}
 					}
@@ -53,7 +53,7 @@
 				"randomInterval": false,
 				"time": 3.0,
 				"time_down_event": {
-					"event": "minecraft:explode",
+					"event": "bom",
 					"target": "self"
 				}
 			},
@@ -66,7 +66,7 @@
 			"minecraft:transient": {}
 		},
 		"events": {
-			"minecraft:explode": {}
+			"bom": {}
 		}
 	}
 }
