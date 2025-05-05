@@ -21,7 +21,5 @@ mc.system.afterEvents.scriptEventReceive.subscribe(
 	},
 );
 
-/**
- * This function should be called for each SCP-106 entity every 0.5 seconds.
- */
+/** This function should be called for each SCP-106 entity every 0.5 seconds. */
 function onUpdate(scp106: mc.Entity): void {}
