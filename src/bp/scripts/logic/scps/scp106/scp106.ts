@@ -128,7 +128,7 @@ function updateCorrosionThrowCooldown(scp106: mc.Entity): void {
 
 	if (!isSeeingTarget) return; // Do not throw corrosion when cannot see target
 
-	setCorrosionThrowCooldown(scp106, randomInt(8, 16));
+	setCorrosionThrowCooldown(scp106, randomInt(4, 8));
 	throwCorrosion(scp106);
 }
 
