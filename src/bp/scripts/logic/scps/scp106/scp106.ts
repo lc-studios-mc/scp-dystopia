@@ -101,7 +101,7 @@ function updateCorrosionAcquisitionCooldown(scp106: mc.Entity): void {
 	}
 
 	const newCooldown =
-		mc.world.getDifficulty() === mc.Difficulty.Hard ? randomInt(4, 6) : randomInt(8, 12);
+		mc.world.getDifficulty() === mc.Difficulty.Hard ? randomInt(3, 5) : randomInt(8, 12);
 
 	setCorrosionAcquisitionCooldown(scp106, newCooldown);
 
