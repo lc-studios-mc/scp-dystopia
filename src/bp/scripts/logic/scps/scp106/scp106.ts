@@ -342,7 +342,11 @@ function onUpdateRetreatHiding(scp106: mc.Entity, hidingTick: number): void {
 	const healthComp = scp106.getComponent("health")!;
 	healthComp.setCurrentValue(
 		Math.floor(
-			clamp(healthComp.currentValue + 50, healthComp.effectiveMin, healthComp.effectiveMax),
+			clamp(
+				healthComp.currentValue + randomInt(3, 6),
+				healthComp.effectiveMin,
+				healthComp.effectiveMax,
+			),
 		),
 	);
 
