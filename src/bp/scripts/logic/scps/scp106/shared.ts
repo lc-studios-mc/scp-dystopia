@@ -30,6 +30,7 @@ export function calculateCombatEmergeLocation(
 		try {
 			const block1 = scp106.dimension.getBlockBelow(loc, { maxDistance: 5 });
 			if (!block1) return;
+			if (!block1.isSolid) return;
 
 			const block2 = block1.above();
 			if (!block2) return;
