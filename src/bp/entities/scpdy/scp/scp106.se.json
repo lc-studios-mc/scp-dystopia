@@ -67,6 +67,12 @@
 				"triggers": [
 					{
 						"on_damage": {
+							"filters": { "test": "is_family", "subject": "other", "value": "scpdy_scp106" }
+						},
+						"deals_damage": "no"
+					},
+					{
+						"on_damage": {
 							"filters": {
 								"all_of": [
 									{
@@ -135,7 +141,18 @@
 				]
 			},
 			"minecraft:behavior.hurt_by_target": {
-				"priority": 2
+				"priority": 2,
+				"entity_types": [
+					{
+						"filters": {
+							"test": "is_family",
+							"subject": "other",
+							"operator": "!=",
+							"value": "scp106"
+						},
+						"max_dist": 64
+					}
+				]
 			},
 			"minecraft:preferred_path": {
 				"max_fall_blocks": 5
