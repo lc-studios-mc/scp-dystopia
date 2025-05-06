@@ -336,11 +336,31 @@ function onUpdateRetreatHiding(scp106: mc.Entity, hidingTick: number): void {
 	const healthComp = scp106.getComponent("health")!;
 	healthComp.setCurrentValue(
 		Math.floor(
-			clamp(healthComp.currentValue + 6, healthComp.effectiveMin, healthComp.effectiveMax),
+			clamp(healthComp.currentValue + 50, healthComp.effectiveMin, healthComp.effectiveMax),
 		),
 	);
 
 	if (healthComp.currentValue < 300) return;
+
+	const nearbyPossibleTargets = scp106.dimension.getEntities({
+		closest: 10,
+		maxDistance: 400,
+		location: scp106.location,
+		excludeFamilies: ["inanimate"],
+		excludeTypes: [SCP106_ENTITY_TYPE_ID],
+	});
+
+	const newTarget = nearbyPossibleTargets[randomInt(0, nearbyPossibleTargets.length - 1)];
+
+	if (!newTarget) return;
+
+	const emergeLoc = calculateCombatEmergeLocation(scp106, newTarget);
+
+	stopHiding(scp106);
+	setState(scp106, SCP106_STATE.emergingSlow);
+
+	scp106.tryTeleport(emergeLoc);
+	scp106.lookAt(newTarget.getHeadLocation());
 }
 
 function stopHiding(scp106: mc.Entity): void {
@@ -368,5 +388,5 @@ function onFinishRetreatDive(scp106: mc.Entity): void {
 	setHideContext(scp106, "retreat");
 	enterHiddenState(scp106);
 	scp106.triggerEvent("lc:join_default_family");
-	scp106.tryTeleport({ x: scp106.location.x, y: -0.6, z: scp106.location.z });
+	scp106.tryTeleport({ x: scp106.location.x, y: -63.5, z: scp106.location.z });
 }
