@@ -6,6 +6,7 @@
 			"states": {
 				"default": {
 					"transitions": [
+						{ "retreat": "v.retreating" },
 						{ "dive": "v.diving" },
 						{ "hidden": "v.hidden" },
 						{ "emerge_slow": "v.emerging_slow" },
@@ -21,7 +22,8 @@
 						{ "emerge_slow": "v.emerging_slow" },
 						{ "emerge_fast": "v.emerging_fast" },
 						{ "throw_right": "v.throwing_right" },
-						{ "throw_left": "v.throwing_left" }
+						{ "throw_left": "v.throwing_left" },
+						{ "retreat": "v.retreating" }
 					],
 					"blend_transition": 0.2
 				},
@@ -73,6 +75,10 @@
 					"animations": ["anim.throw_left"],
 					"transitions": [{ "idle": "!v.throwing_left" }],
 					"blend_transition": 0.3
+				},
+				"retreat": {
+					"animations": ["anim.retreat"],
+					"transitions": [{ "hidden": "v.hidden" }]
 				}
 			}
 		},
