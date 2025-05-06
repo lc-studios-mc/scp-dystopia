@@ -66,6 +66,16 @@
 			"minecraft:damage_sensor": {
 				"triggers": [
 					{
+						"on_damage": {
+							"filters": {
+								"test": "has_damage",
+								"value": "fatal"
+							},
+							"event": "lc:fatality"
+						},
+						"deals_damage": "no_but_side_effects_apply"
+					},
+					{
 						"cause": "fall",
 						"deals_damage": "no"
 					}
@@ -241,6 +251,11 @@
 					"range": 4,
 					"value": 5.5
 				}
+			},
+			"respawn_retreating": {
+				"minecraft:transformation": {
+					"into": "lc:scpdy_scp106<lc:spawn_retreating>"
+				}
 			}
 		},
 		"events": {
@@ -315,6 +330,11 @@
 				},
 				"add": {
 					"component_groups": ["no_ambient_sound"]
+				}
+			},
+			"lc:fatality": {
+				"add": {
+					"component_groups": ["respawn_retreating"]
 				}
 			}
 		}

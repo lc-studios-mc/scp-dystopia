@@ -85,6 +85,7 @@ mc.world.afterEvents.dataDrivenEntityTrigger.subscribe(
 
 function onSpawnRetreating(scp106: mc.Entity): void {
 	setHideContext(scp106, "retreat");
+	scp106.removeTag("scp096_1");
 
 	const healthComp = scp106.getComponent("health")!;
 	healthComp.setCurrentValue(10);
