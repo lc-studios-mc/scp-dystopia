@@ -23,7 +23,15 @@ export function calculateCombatEmergeLocation(
 	const target = targetArg ?? scp106.target;
 
 	if (!target) {
-		return { x: scp106.location.x, y: scp106.location.y + 0.6, z: scp106.location.z };
+		const block = scp106.dimension.getBlockBelow({
+			x: scp106.location.x,
+			y: 320,
+			z: scp106.location.z,
+		});
+
+		if (!block) return { x: scp106.location.x, y: scp106.location.y + 0.6, z: scp106.location.z };
+
+		return block.above()?.bottomCenter() ?? scp106.location;
 	}
 
 	const test = (loc: mc.Vector3): mc.Vector3 | undefined => {
