@@ -70,6 +70,20 @@ function onSpawn(scp106: mc.Entity): void {
 	setCorrosionThrowCooldown(scp106, 7);
 }
 
+mc.world.afterEvents.dataDrivenEntityTrigger.subscribe(
+	({ entity }) => {
+		onSpawnNeutralized(entity);
+	},
+	{
+		entityTypes: [SCP106_ENTITY_TYPE_ID],
+		eventTypes: ["lc:spawn_neutralized"],
+	},
+);
+
+function onSpawnNeutralized(scp106: mc.Entity): void {
+	setDiveContext(scp106, "retreat");
+}
+
 /** This function should be called for each SCP-106 entity every 0.5 seconds. */
 function onUpdate(scp106: mc.Entity): void {
 	const state = getState(scp106);
