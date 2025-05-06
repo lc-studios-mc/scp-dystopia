@@ -24,7 +24,7 @@ import {
 	setStuckDuration,
 	type HideContext,
 } from "./shared";
-import { clamp, randomInt } from "@/lib/utils/mathUtils";
+import { clamp, randomFloat, randomInt } from "@/lib/utils/mathUtils";
 
 mc.system.afterEvents.scriptEventReceive.subscribe(
 	(event) => {
@@ -308,9 +308,13 @@ function onUpdateHiddenState(scp106: mc.Entity): void {
 }
 
 function onUpdateCombatHiding(scp106: mc.Entity, hidingTick: number): void {
-	const emergeLoc =
-		(scp106.getDynamicProperty("emergeLocation") as mc.Vector3 | undefined) ??
-		calculateCombatEmergeLocation(scp106);
+	let emergeLoc = scp106.getDynamicProperty("emergeLocation") as mc.Vector3 | undefined;
+
+	if (!emergeLoc) {
+		emergeLoc = calculateCombatEmergeLocation(scp106);
+
+		scp106.setDynamicProperty("emergeLocation", emergeLoc);
+	}
 
 	if (hidingTick === 1) {
 		scp106.tryTeleport(vec3.sub(emergeLoc, vec3.UP));
@@ -327,6 +331,8 @@ function onUpdateCombatHiding(scp106: mc.Entity, hidingTick: number): void {
 			scp106.lookAt(scp106.target.getHeadLocation());
 		}
 
+		scp106.setDynamicProperty("emergeLocation", undefined);
+
 		return;
 	}
 }
@@ -342,25 +348,38 @@ function onUpdateRetreatHiding(scp106: mc.Entity, hidingTick: number): void {
 
 	if (healthComp.currentValue < 300) return;
 
-	const nearbyPossibleTargets = scp106.dimension.getEntities({
-		closest: 10,
-		maxDistance: 400,
-		location: scp106.location,
-		excludeFamilies: ["inanimate"],
-		excludeTypes: [SCP106_ENTITY_TYPE_ID],
-	});
+	if (hidingTick % 3 !== 0) return;
 
-	const newTarget = nearbyPossibleTargets[randomInt(0, nearbyPossibleTargets.length - 1)];
+	let emergeLoc = scp106.getDynamicProperty("emergeLocation") as mc.Vector3 | undefined;
 
-	if (!newTarget) return;
+	if (!emergeLoc) {
+		const nearbyPossibleTargets = scp106.dimension.getEntities({
+			closest: 10,
+			maxDistance: 400,
+			location: scp106.location,
+			excludeFamilies: ["inanimate"],
+			excludeTypes: [SCP106_ENTITY_TYPE_ID],
+		});
 
-	const emergeLoc = calculateCombatEmergeLocation(scp106, newTarget);
+		const newTarget = nearbyPossibleTargets[randomInt(0, nearbyPossibleTargets.length - 1)];
+
+		if (!newTarget) return;
+
+		emergeLoc = calculateCombatEmergeLocation(scp106, newTarget);
+		scp106.setDynamicProperty("emergeLocation", emergeLoc);
+
+		scp106.tryTeleport({ x: emergeLoc.x, y: emergeLoc.y - 0.9, z: emergeLoc.z });
+
+		return;
+	}
 
 	stopHiding(scp106);
 	setState(scp106, SCP106_STATE.emergingSlow);
 
 	scp106.tryTeleport(emergeLoc);
-	scp106.lookAt(newTarget.getHeadLocation());
+	scp106.setRotation({ x: 0, y: randomFloat(-180, 180) });
+
+	scp106.setDynamicProperty("emergeLocation", undefined);
 }
 
 function stopHiding(scp106: mc.Entity): void {
