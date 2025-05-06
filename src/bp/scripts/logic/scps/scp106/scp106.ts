@@ -356,5 +356,5 @@ function onFinishRetreatDive(scp106: mc.Entity): void {
 	setHideContext(scp106, "retreat");
 	enterHiddenState(scp106);
 	scp106.triggerEvent("lc:join_default_family");
-	scp106.tryTeleport({ x: scp106.location.x, y: -60, z: scp106.location.z });
+	scp106.tryTeleport({ x: scp106.location.x, y: -1, z: scp106.location.z });
 }
