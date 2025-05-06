@@ -29,7 +29,7 @@
 						// 40  - emerging fast
 						// 50  - throwing right
 						// 60  - throwing left
-						// 100 - neutralized
+						// 100 - retreating
 						0, 100
 					],
 					"default": 0,
