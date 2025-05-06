@@ -16,8 +16,13 @@ export const SCP106_STATE = {
 	retreating: 100,
 } as const;
 
-export function calculateCombatEmergeLocation(scp106: mc.Entity): mc.Vector3 {
-	if (!scp106.target) {
+export function calculateCombatEmergeLocation(
+	scp106: mc.Entity,
+	targetArg?: mc.Entity,
+): mc.Vector3 {
+	const target = targetArg ?? scp106.target;
+
+	if (!target) {
 		return { x: scp106.location.x, y: scp106.location.y + 0.6, z: scp106.location.z };
 	}
 
@@ -34,7 +39,7 @@ export function calculateCombatEmergeLocation(scp106: mc.Entity): mc.Vector3 {
 		} catch {}
 	};
 
-	const targetLoc = scp106.target.location;
+	const targetLoc = target.location;
 
 	return (
 		test(vec3.add(targetLoc, { x: 1, y: 0, z: 0 })) ??
