@@ -353,13 +353,22 @@ function onUpdateRetreatHiding(scp106: mc.Entity, hidingTick: number): void {
 	let emergeLoc = scp106.getDynamicProperty("emergeLocation") as mc.Vector3 | undefined;
 
 	if (!emergeLoc) {
-		const nearbyPossibleTargets = scp106.dimension.getEntities({
-			closest: 10,
-			maxDistance: 400,
-			location: scp106.location,
-			excludeFamilies: ["inanimate"],
-			excludeTypes: [SCP106_ENTITY_TYPE_ID],
-		});
+		const nearbyPossibleTargets = scp106.dimension
+			.getEntities({
+				closest: 10,
+				maxDistance: 400,
+				location: scp106.location,
+				excludeFamilies: ["inanimate"],
+				excludeTypes: [SCP106_ENTITY_TYPE_ID],
+			})
+			.filter((entity) => {
+				if (entity instanceof mc.Player) {
+					// Ignore creative players
+					if ([mc.GameMode.creative, mc.GameMode.spectator].includes(entity.getGameMode())) return;
+				} else if (!entity.matches({ families: ["mob"] })) return;
+
+				return entity;
+			});
 
 		const newTarget = nearbyPossibleTargets[randomInt(0, nearbyPossibleTargets.length - 1)];
 
