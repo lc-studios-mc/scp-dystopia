@@ -155,7 +155,8 @@
 					},
 					"attack": {
 						"sound": "scpdy.scp106.attack",
-						"volume": 1.2
+						"volume": 1.2,
+						"pitch": [0.9, 1.1]
 					},
 					"death": {
 						"sound": "scpdy.scp106.death",
