@@ -141,6 +141,10 @@
 				"base_value": 2.0625,
 				"jump_prevented_value": 0.5625
 			},
+			"minecraft:pushable": {
+				"is_pushable": false,
+				"is_pushable_by_piston": false
+			},
 			"minecraft:nameable": {},
 			"minecraft:persistent": {}
 		},
@@ -201,10 +205,6 @@
 					"width": 0.6,
 					"height": 1.9
 				},
-				"minecraft:pushable": {
-					"is_pushable": true,
-					"is_pushable_by_piston": true
-				},
 				"minecraft:physics": {},
 				"minecraft:game_event_movement_tracking": {
 					"emit_flap": false,
@@ -219,10 +219,6 @@
 				"minecraft:collision_box": {
 					"width": 0.3,
 					"height": 0.3
-				},
-				"minecraft:pushable": {
-					"is_pushable": false,
-					"is_pushable_by_piston": false
 				},
 				"minecraft:physics": {
 					"has_collision": false,
