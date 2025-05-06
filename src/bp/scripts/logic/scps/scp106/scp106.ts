@@ -82,6 +82,9 @@ mc.world.afterEvents.dataDrivenEntityTrigger.subscribe(
 
 function onSpawnNeutralized(scp106: mc.Entity): void {
 	setHideContext(scp106, "retreat");
+
+	const healthComp = scp106.getComponent("health")!;
+	healthComp.setCurrentValue(10);
 }
 
 /** This function should be called for each SCP-106 entity every 0.5 seconds. */
