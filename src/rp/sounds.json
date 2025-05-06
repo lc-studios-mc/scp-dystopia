@@ -153,6 +153,10 @@
 						"sound": "scpdy.scp106.step",
 						"volume": 1.5
 					},
+					"attack": {
+						"sound": "scpdy.scp106.attack",
+						"volume": 1.2
+					},
 					"death": {
 						"sound": "scpdy.scp106.death",
 						"volume": 6.0
