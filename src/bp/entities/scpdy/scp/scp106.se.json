@@ -55,9 +55,6 @@
 			"minecraft:experience_reward": {
 				"on_death": "20"
 			},
-			"minecraft:type_family": {
-				"family": ["mob", "monster", "hostile_scp", "scp", "scp106", "scpdy_scp106"]
-			},
 			"minecraft:health": {
 				"value": 810,
 				"max": 810
@@ -148,6 +145,16 @@
 			"minecraft:persistent": {}
 		},
 		"component_groups": {
+			"default_family": {
+				"minecraft:type_family": {
+					"family": ["mob", "monster", "hostile_scp", "scp", "scp106", "scpdy_scp106"]
+				}
+			},
+			"inanimate_family": {
+				"minecraft:type_family": {
+					"family": ["inanimate"]
+				}
+			},
 			"free": {
 				"minecraft:behavior.melee_box_attack": {
 					"priority": 0,
@@ -247,7 +254,7 @@
 			},
 			"lc:spawn_neutralized": {
 				"add": {
-					"component_groups": ["neutralized_family", "shown"]
+					"component_groups": ["inanimate_family", "shown"]
 				},
 				"set_property": {
 					"lc:state": 100
