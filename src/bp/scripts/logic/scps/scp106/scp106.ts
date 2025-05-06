@@ -88,7 +88,7 @@ function onSpawnRetreating(scp106: mc.Entity): void {
 	scp106.removeTag("scp096_1");
 
 	const healthComp = scp106.getComponent("health")!;
-	healthComp.setCurrentValue(10);
+	healthComp.setCurrentValue(20);
 }
 
 /** This function should be called for each SCP-106 entity every 0.5 seconds. */
