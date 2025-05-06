@@ -248,7 +248,7 @@
 					"component_groups": ["default_family", "free", "shown", "ambient_sound_normal"]
 				}
 			},
-			"lc:spawn_neutralized": {
+			"lc:spawn_retreating": {
 				"add": {
 					"component_groups": ["inanimate_family", "shown"]
 				},

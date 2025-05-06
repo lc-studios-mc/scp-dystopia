@@ -72,15 +72,15 @@ function onSpawn(scp106: mc.Entity): void {
 
 mc.world.afterEvents.dataDrivenEntityTrigger.subscribe(
 	({ entity }) => {
-		onSpawnNeutralized(entity);
+		onSpawnRetreating(entity);
 	},
 	{
 		entityTypes: [SCP106_ENTITY_TYPE_ID],
-		eventTypes: ["lc:spawn_neutralized"],
+		eventTypes: ["lc:spawn_retreating"],
 	},
 );
 
-function onSpawnNeutralized(scp106: mc.Entity): void {
+function onSpawnRetreating(scp106: mc.Entity): void {
 	setHideContext(scp106, "retreat");
 
 	const healthComp = scp106.getComponent("health")!;
