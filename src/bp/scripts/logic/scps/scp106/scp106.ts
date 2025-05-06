@@ -53,6 +53,9 @@ mc.system.afterEvents.scriptEventReceive.subscribe(
 			case "scpdy_scp106:finish_emerge_fast":
 				onFinishEmergingFast(scp106);
 				break;
+			case "scpdy_scp106:finish_retreat":
+				onFinishRetreatDive(scp106);
+				break;
 		}
 	},
 	{
@@ -260,6 +263,10 @@ function onFinishThrowingCorrosion(scp106: mc.Entity): void {
 }
 
 function onFinishDive(scp106: mc.Entity): void {
+	enterHiddenState(scp106);
+}
+
+function enterHiddenState(scp106: mc.Entity): void {
 	setState(scp106, SCP106_STATE.hidden);
 	scp106.clearVelocity();
 	scp106.triggerEvent("lc:hide");
@@ -327,4 +334,9 @@ function onFinishEmerging(scp106: mc.Entity): void {
 	setState(scp106, SCP106_STATE.default);
 
 	scp106.triggerEvent("lc:enable_free_movement");
+}
+
+function onFinishRetreatDive(scp106: mc.Entity): void {
+	setHideContext(scp106, "retreat");
+	enterHiddenState(scp106);
 }

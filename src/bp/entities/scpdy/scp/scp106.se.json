@@ -13,7 +13,8 @@
 				"anim.emerging_slow": "animation.scpdy.bp.scp106.emerging_slow",
 				"anim.emerging_fast": "animation.scpdy.bp.scp106.emerging_fast",
 				"anim.throwing_right": "animation.scpdy.bp.scp106.throwing_right",
-				"anim.throwing_left": "animation.scpdy.bp.scp106.throwing_left"
+				"anim.throwing_left": "animation.scpdy.bp.scp106.throwing_left",
+				"anim.retreating": "animation.scpdy.bp.scp106.retreating"
 			},
 			"scripts": {
 				"animate": ["ctrl.main", "anim.script_update"]

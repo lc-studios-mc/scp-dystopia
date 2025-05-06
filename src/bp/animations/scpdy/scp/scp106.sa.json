@@ -44,6 +44,13 @@
 			"timeline": {
 				"0.8": ["/scriptevent scpdy_scp106:finish_throw_left"]
 			}
+		},
+		"animation.scpdy.bp.scp106.retreating": {
+			"animation_length": 3.5,
+			"loop": false,
+			"timeline": {
+				"3.0": ["/scriptevent scpdy_scp106:finish_retreat"]
+			}
 		}
 	}
 }
