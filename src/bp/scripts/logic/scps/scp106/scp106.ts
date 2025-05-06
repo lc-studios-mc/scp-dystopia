@@ -339,4 +339,5 @@ function onFinishEmerging(scp106: mc.Entity): void {
 function onFinishRetreatDive(scp106: mc.Entity): void {
 	setHideContext(scp106, "retreat");
 	enterHiddenState(scp106);
+	scp106.triggerEvent("lc:join_default_family");
 }

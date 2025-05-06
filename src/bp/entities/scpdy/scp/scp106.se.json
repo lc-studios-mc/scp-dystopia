@@ -257,6 +257,14 @@
 					"lc:state": 100
 				}
 			},
+			"lc:join_default_family": {
+				"remove": {
+					"component_groups": ["inanimate_family"]
+				},
+				"add": {
+					"component_groups": ["default_family"]
+				}
+			},
 			"lc:enable_free_movement": {
 				"add": {
 					"component_groups": ["free"]
