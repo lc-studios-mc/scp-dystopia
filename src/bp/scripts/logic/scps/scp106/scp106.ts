@@ -340,9 +340,11 @@ function onUpdateCombatHiding(scp106: mc.Entity, hidingTick: number): void {
 function onUpdateRetreatHiding(scp106: mc.Entity, hidingTick: number): void {
 	// Slowly heal itself
 	const healthComp = scp106.getComponent("health")!;
+	const healAmount =
+		mc.world.getDifficulty() !== mc.Difficulty.Hard ? randomInt(4, 7) : randomInt(1, 2);
 	healthComp.setCurrentValue(
 		Math.floor(
-			clamp(healthComp.currentValue + 2, healthComp.effectiveMin, healthComp.effectiveMax),
+			clamp(healthComp.currentValue + healAmount, healthComp.effectiveMin, healthComp.effectiveMax),
 		),
 	);
 
