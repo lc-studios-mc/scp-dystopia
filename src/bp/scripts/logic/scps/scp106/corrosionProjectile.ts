@@ -36,13 +36,15 @@ function explode(
 	try {
 		const damage = mc.world.getDifficulty() === mc.Difficulty.Hard ? 9 : 6;
 
-		hitEntity?.applyDamage(damage, {
-			cause: mc.EntityDamageCause.override,
-			damagingProjectile: projectile,
-			damagingEntity: source,
-		});
+		if (hitEntity && hitEntity.typeId !== SCP106_ENTITY_TYPE_ID) {
+			hitEntity.applyDamage(damage, {
+				cause: mc.EntityDamageCause.override,
+				damagingProjectile: projectile,
+				damagingEntity: source,
+			});
 
-		hitEntity?.addEffect("blindness", 140, { amplifier: 0 });
+			hitEntity.addEffect("blindness", 140, { amplifier: 0 });
+		}
 	} catch {}
 
 	const entities = projectile.dimension.getEntities({
