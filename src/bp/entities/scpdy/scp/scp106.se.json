@@ -68,8 +68,18 @@
 					{
 						"on_damage": {
 							"filters": {
-								"test": "has_damage",
-								"value": "fatal"
+								"all_of": [
+									{
+										"test": "int_property",
+										"domain": "lc:state",
+										"operator": "!=",
+										"value": 100
+									},
+									{
+										"test": "has_damage",
+										"value": "fatal"
+									}
+								]
 							},
 							"event": "lc:fatality"
 						},

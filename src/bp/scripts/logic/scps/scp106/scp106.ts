@@ -91,6 +91,21 @@ function onSpawnRetreating(scp106: mc.Entity): void {
 	healthComp.setCurrentValue(20);
 }
 
+mc.world.afterEvents.entityDie.subscribe(
+	({ deadEntity }) => {
+		try {
+			deathExplosion(deadEntity);
+		} catch {}
+	},
+	{
+		entityTypes: [SCP106_ENTITY_TYPE_ID],
+	},
+);
+
+function deathExplosion(scp106: mc.Entity): void {
+	scp106.remove();
+}
+
 /** This function should be called for each SCP-106 entity every 0.5 seconds. */
 function onUpdate(scp106: mc.Entity): void {
 	const state = getState(scp106);
