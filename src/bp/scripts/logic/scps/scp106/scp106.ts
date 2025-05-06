@@ -6,7 +6,7 @@ import {
 	getCorrosionLeft,
 	getCorrosionRight,
 	getCorrosionThrowCooldown,
-	getDiveContext,
+	getHideContext,
 	getHidingTick,
 	getLastLocation,
 	getState,
@@ -17,12 +17,12 @@ import {
 	setCorrosionLeft,
 	setCorrosionRight,
 	setCorrosionThrowCooldown,
-	setDiveContext,
+	setHideContext,
 	setHidingTick,
 	setLastLocation,
 	setState,
 	setStuckDuration,
-	type DiveContext,
+	type HideContext,
 } from "./shared";
 import { randomInt } from "@/lib/utils/mathUtils";
 
@@ -81,7 +81,7 @@ mc.world.afterEvents.dataDrivenEntityTrigger.subscribe(
 );
 
 function onSpawnNeutralized(scp106: mc.Entity): void {
-	setDiveContext(scp106, "retreat");
+	setHideContext(scp106, "retreat");
 }
 
 /** This function should be called for each SCP-106 entity every 0.5 seconds. */
@@ -154,9 +154,9 @@ function updateStuckDuration(scp106: mc.Entity): number {
 	return stuckDuration;
 }
 
-function startDive(scp106: mc.Entity, context: DiveContext): void {
+function startDive(scp106: mc.Entity, context: HideContext): void {
 	setState(scp106, SCP106_STATE.diving);
-	setDiveContext(scp106, context);
+	setHideContext(scp106, context);
 	setStuckDuration(scp106, 0);
 
 	scp106.triggerEvent("lc:disable_free_movement");
@@ -267,16 +267,16 @@ function onFinishDive(scp106: mc.Entity): void {
 function onUpdateHiddenState(scp106: mc.Entity): void {
 	scp106.addEffect("invisibility", 30, { showParticles: false });
 
-	const diveCtx = getDiveContext(scp106);
+	const hideCtx = getHideContext(scp106);
 	const hidingTick = getHidingTick(scp106);
 
 	setHidingTick(scp106, hidingTick + 1);
 
-	if (diveCtx === "combat") {
+	if (hideCtx === "combat") {
 		onUpdateCombatHiding(scp106, hidingTick);
 	}
 
-	if (diveCtx === "retreat") {
+	if (hideCtx === "retreat") {
 		// TODO: retreat hidden state
 	}
 }

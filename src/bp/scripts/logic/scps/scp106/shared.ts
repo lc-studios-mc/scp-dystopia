@@ -1,7 +1,7 @@
 import * as mc from "@minecraft/server";
 import * as vec3 from "@lib/utils/vec3";
 
-export type DiveContext = "combat" | "retreat";
+export type HideContext = "combat" | "retreat";
 
 export const SCP106_ENTITY_TYPE_ID = "lc:scpdy_scp106";
 
@@ -104,12 +104,12 @@ export function setStuckDuration(scp106: mc.Entity, value: number): void {
 	scp106.setDynamicProperty("stuckDuration", value);
 }
 
-export function getDiveContext(scp106: mc.Entity) {
-	return scp106.getDynamicProperty("diveContext") as DiveContext | undefined;
+export function getHideContext(scp106: mc.Entity) {
+	return scp106.getDynamicProperty("hideContext") as HideContext | undefined;
 }
 
-export function setDiveContext(scp106: mc.Entity, value?: DiveContext): void {
-	scp106.setDynamicProperty("diveContext", value);
+export function setHideContext(scp106: mc.Entity, value?: HideContext): void {
+	scp106.setDynamicProperty("hideContext", value);
 }
 
 export function getHidingTick(scp106: mc.Entity): number {
