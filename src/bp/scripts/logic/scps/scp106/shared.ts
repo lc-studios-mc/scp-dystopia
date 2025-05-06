@@ -13,7 +13,7 @@ export const SCP106_STATE = {
 	emergingFast: 40,
 	throwingRight: 50,
 	throwingLeft: 60,
-	retreating: 70,
+	retreating: 100,
 } as const;
 
 export function calculateCombatEmergeLocation(scp106: mc.Entity): mc.Vector3 {
