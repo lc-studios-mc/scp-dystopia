@@ -24,7 +24,7 @@ import {
 	setStuckDuration,
 	type HideContext,
 } from "./shared";
-import { randomInt } from "@/lib/utils/mathUtils";
+import { clamp, randomInt } from "@/lib/utils/mathUtils";
 
 mc.system.afterEvents.scriptEventReceive.subscribe(
 	(event) => {
@@ -303,7 +303,7 @@ function onUpdateHiddenState(scp106: mc.Entity): void {
 	}
 
 	if (hideCtx === "retreat") {
-		// TODO: retreat hidden state
+		onUpdateRetreatHiding(scp106, hidingTick);
 	}
 }
 
@@ -331,6 +331,18 @@ function onUpdateCombatHiding(scp106: mc.Entity, hidingTick: number): void {
 	}
 }
 
+function onUpdateRetreatHiding(scp106: mc.Entity, hidingTick: number): void {
+	// Slowly heal itself
+	const healthComp = scp106.getComponent("health")!;
+	healthComp.setCurrentValue(
+		Math.floor(
+			clamp(healthComp.currentValue + 6, healthComp.effectiveMin, healthComp.effectiveMax),
+		),
+	);
+
+	if (healthComp.currentValue < 300) return;
+}
+
 function stopHiding(scp106: mc.Entity): void {
 	scp106.removeEffect("invisibility");
 	scp106.triggerEvent("lc:show");
@@ -356,5 +368,5 @@ function onFinishRetreatDive(scp106: mc.Entity): void {
 	setHideContext(scp106, "retreat");
 	enterHiddenState(scp106);
 	scp106.triggerEvent("lc:join_default_family");
-	scp106.tryTeleport({ x: scp106.location.x, y: -1, z: scp106.location.z });
+	scp106.tryTeleport({ x: scp106.location.x, y: -0.6, z: scp106.location.z });
 }
