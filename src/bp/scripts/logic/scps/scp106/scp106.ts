@@ -342,11 +342,7 @@ function onUpdateRetreatHiding(scp106: mc.Entity, hidingTick: number): void {
 	const healthComp = scp106.getComponent("health")!;
 	healthComp.setCurrentValue(
 		Math.floor(
-			clamp(
-				healthComp.currentValue + randomInt(3, 6),
-				healthComp.effectiveMin,
-				healthComp.effectiveMax,
-			),
+			clamp(healthComp.currentValue + 2, healthComp.effectiveMin, healthComp.effectiveMax),
 		),
 	);
 
@@ -376,12 +372,10 @@ function onUpdateRetreatHiding(scp106: mc.Entity, hidingTick: number): void {
 
 		const newTarget = nearbyPossibleTargets[randomInt(0, nearbyPossibleTargets.length - 1)];
 
-		if (!newTarget) return;
-
 		emergeLoc = calculateCombatEmergeLocation(scp106, newTarget);
 		scp106.setDynamicProperty("emergeLocation", emergeLoc);
 
-		scp106.tryTeleport({ x: emergeLoc.x, y: emergeLoc.y - 0.9, z: emergeLoc.z });
+		scp106.tryTeleport({ x: emergeLoc.x, y: emergeLoc.y - 0.6, z: emergeLoc.z });
 
 		return;
 	}
