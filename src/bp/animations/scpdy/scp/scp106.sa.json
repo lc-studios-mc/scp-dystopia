@@ -35,6 +35,7 @@
 			"animation_length": 0.9,
 			"loop": false,
 			"timeline": {
+				"0.1": ["/playsound scpdy.misc.woosh @a[r=8] ~ ~1 ~"],
 				"0.8": ["/scriptevent scpdy_scp106:finish_throw_right"]
 			}
 		},
@@ -42,6 +43,7 @@
 			"animation_length": 0.9,
 			"loop": false,
 			"timeline": {
+				"0.1": ["/playsound scpdy.misc.woosh @a[r=8] ~ ~1 ~"],
 				"0.8": ["/scriptevent scpdy_scp106:finish_throw_left"]
 			}
 		},
@@ -49,6 +51,7 @@
 			"animation_length": 3.5,
 			"loop": false,
 			"timeline": {
+				"0.0": ["/playsound scpdy.scp106.retreat @a[r=30] ~ ~ ~ 1.8 1.0"],
 				"3.0": ["/scriptevent scpdy_scp106:finish_retreat"]
 			}
 		}
