@@ -54,7 +54,7 @@
 					"v.emerging_fast = v.state == 40;",
 					"v.throwing_right = v.state == 50;",
 					"v.throwing_left = v.state == 60;",
-					"v.retreating = v.state == 70;",
+					"v.retreating = v.state == 100;",
 					"v.corrosion_right = !v.hidden && q.property('lc:corrosion_right');",
 					"v.corrosion_left = !v.hidden && q.property('lc:corrosion_left');",
 
