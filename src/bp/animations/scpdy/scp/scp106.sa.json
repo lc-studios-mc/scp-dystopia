@@ -12,6 +12,7 @@
 			"animation_length": 1.5,
 			"loop": false,
 			"timeline": {
+				"0.4": ["/particle lc:scpdy_scp106_dive_emitter ~ ~ ~"],
 				"1.1": ["/scriptevent scpdy_scp106:finish_dive"]
 			}
 		},
