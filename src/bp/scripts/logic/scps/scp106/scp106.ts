@@ -340,6 +340,7 @@ function onUpdateCombatHiding(scp106: mc.Entity, hidingTick: number): void {
 		switch (mc.world.getDifficulty()) {
 			default:
 				setState(scp106, SCP106_STATE.emergingSlow);
+				break;
 			case mc.Difficulty.Normal:
 				if (Math.random() > 0.5) {
 					setState(scp106, SCP106_STATE.emergingFast);
