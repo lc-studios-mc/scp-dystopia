@@ -12,7 +12,7 @@
 			"animation_length": 1.5,
 			"loop": false,
 			"timeline": {
-				"0.4": ["/particle lc:scpdy_scp106_dive_emitter ~ ~ ~"],
+				"0.8": ["/particle lc:scpdy_scp106_dive_emitter ~ ~ ~"],
 				"1.1": ["/scriptevent scpdy_scp106:finish_dive"]
 			}
 		},
@@ -29,7 +29,7 @@
 			"loop": false,
 			"timeline": {
 				"0.0": ["/playsound scpdy.scp106.emerge_fast @a[r=15] ~ ~ ~ 1.4 1.0"],
-				"0.15": ["/particle lc:scpdy_scp106_emerge_fast_emitter ~ ~ ~"],
+				"0.1": ["/particle lc:scpdy_scp106_emerge_fast_emitter ~ ~ ~"],
 				"0.75": ["/scriptevent scpdy_scp106:finish_emerge_fast"]
 			}
 		},
