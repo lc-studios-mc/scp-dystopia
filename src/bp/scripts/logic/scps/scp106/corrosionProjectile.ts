@@ -5,7 +5,9 @@ const CORROSION_PROJECTILE_ENTITY_TYPE_ID = "lc:scpdy_corrosion_projectile";
 
 mc.world.afterEvents.dataDrivenEntityTrigger.subscribe(
 	({ entity }) => {
-		explode(entity, entity.location);
+		try {
+			explode(entity, entity.location);
+		} catch {}
 	},
 	{
 		entityTypes: [CORROSION_PROJECTILE_ENTITY_TYPE_ID],
@@ -16,13 +18,17 @@ mc.world.afterEvents.dataDrivenEntityTrigger.subscribe(
 mc.world.afterEvents.projectileHitEntity.subscribe((event) => {
 	if (event.projectile.typeId !== CORROSION_PROJECTILE_ENTITY_TYPE_ID) return;
 	if (!event.projectile.isValid) return;
-	explode(event.projectile, event.location, event.getEntityHit().entity, event.source);
+	try {
+		explode(event.projectile, event.location, event.getEntityHit().entity, event.source);
+	} catch {}
 });
 
 mc.world.afterEvents.projectileHitBlock.subscribe((event) => {
 	if (event.projectile.typeId !== CORROSION_PROJECTILE_ENTITY_TYPE_ID) return;
 	if (!event.projectile.isValid) return;
-	explode(event.projectile, event.location);
+	try {
+		explode(event.projectile, event.location);
+	} catch {}
 });
 
 function explode(
