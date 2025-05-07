@@ -103,6 +103,11 @@ mc.world.afterEvents.entityDie.subscribe(
 );
 
 function deathExplosion(scp106: mc.Entity): void {
+	scp106.dimension.spawnParticle(
+		"lc:scpdy_corrosion_burst_emitter",
+		vec3.sub(scp106.getHeadLocation(), vec3.UP),
+	);
+
 	scp106.remove();
 }
 
