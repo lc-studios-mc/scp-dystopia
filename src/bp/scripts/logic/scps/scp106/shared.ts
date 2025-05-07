@@ -23,9 +23,8 @@ export function calculateCombatEmergeLocation(
 	const target = targetArg ?? scp106.target;
 
 	if (!target) {
-		const block = scp106.dimension.getBlockBelow({
+		const block = scp106.dimension.getTopmostBlock({
 			x: scp106.location.x,
-			y: 320,
 			z: scp106.location.z,
 		});
 
