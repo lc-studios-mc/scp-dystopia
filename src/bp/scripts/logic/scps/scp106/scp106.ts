@@ -323,7 +323,21 @@ function onUpdateCombatHiding(scp106: mc.Entity, hidingTick: number): void {
 
 	if (hidingTick === 3) {
 		stopHiding(scp106);
-		setState(scp106, SCP106_STATE.emergingFast);
+
+		switch (mc.world.getDifficulty()) {
+			default:
+				setState(scp106, SCP106_STATE.emergingSlow);
+			case mc.Difficulty.Normal:
+				if (Math.random() > 0.5) {
+					setState(scp106, SCP106_STATE.emergingFast);
+				} else {
+					setState(scp106, SCP106_STATE.emergingSlow);
+				}
+				break;
+			case mc.Difficulty.Hard:
+				setState(scp106, SCP106_STATE.emergingFast);
+				break;
+		}
 
 		scp106.tryTeleport(emergeLoc);
 
