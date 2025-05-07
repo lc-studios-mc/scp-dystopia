@@ -675,6 +675,12 @@
 			"min_distance": null,
 			"sounds": ["sounds/scpdy/scp/scp106/attack"]
 		},
+		"scpdy.scp106.dive": {
+			"category": "hostile",
+			"max_distance": 10.0,
+			"min_distance": null,
+			"sounds": ["sounds/scpdy/scp/scp106/dive"]
+		},
 		"scpdy.scp106.abduction": {
 			"category": "hostile",
 			"max_distance": 12.0,
