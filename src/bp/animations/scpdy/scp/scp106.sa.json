@@ -55,6 +55,7 @@
 			"loop": false,
 			"timeline": {
 				"0.0": ["/playsound scpdy.scp106.retreat @a[r=30] ~ ~ ~ 1.8 1.0"],
+				"0.05": ["/particle lc:scpdy_corrosion_burst_emitter ~ ~0.8 ~"],
 				"0.1": ["/particle lc:scpdy_scp106_retreat_emitter ~ ~ ~"],
 				"3.0": ["/scriptevent scpdy_scp106:finish_retreat"]
 			}
