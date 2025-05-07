@@ -4,6 +4,7 @@ import * as vec3 from "@lib/utils/vec3";
 export type HideContext = "combat" | "retreat";
 
 export const SCP106_ENTITY_TYPE_ID = "lc:scpdy_scp106";
+export const SCP106_TRAIL_ENTITY_TYPE_ID = "lc:scpdy_scp106_trail";
 
 export const SCP106_STATE = {
 	default: 0,

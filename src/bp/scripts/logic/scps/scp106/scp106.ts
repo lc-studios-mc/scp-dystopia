@@ -13,6 +13,7 @@ import {
 	getStuckDuration,
 	SCP106_ENTITY_TYPE_ID,
 	SCP106_STATE,
+	SCP106_TRAIL_ENTITY_TYPE_ID,
 	setCorrosionAcquisitionCooldown,
 	setCorrosionLeft,
 	setCorrosionRight,
@@ -140,6 +141,13 @@ function onUpdate(scp106: mc.Entity): void {
 
 	if (state === SCP106_STATE.default) {
 		onUpdateDefaultState(scp106);
+	}
+
+	// Spawn trail entity
+	if (scp106.isOnGround) {
+		mc.system.run(() => {
+			scp106.dimension.spawnEntity(SCP106_TRAIL_ENTITY_TYPE_ID, scp106.location);
+		});
 	}
 }
 
