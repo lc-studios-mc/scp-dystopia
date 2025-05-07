@@ -28,8 +28,8 @@
 			"animation_length": 1.0,
 			"loop": false,
 			"timeline": {
-				"0.0": ["/playsound scpdy.scp106.emerge_fast @a[r=15] ~ ~ ~ 1.4 1.0"],
-				"0.1": ["/particle lc:scpdy_scp106_emerge_fast_emitter ~ ~ ~"],
+				"0.1": ["/playsound scpdy.scp106.emerge_fast @a[r=15] ~ ~ ~ 1.4 1.0"],
+				"0.33": ["/particle lc:scpdy_scp106_emerge_fast_emitter ~ ~ ~"],
 				"0.75": ["/scriptevent scpdy_scp106:finish_emerge_fast"]
 			}
 		},
