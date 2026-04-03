@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> This project is discontinued since December 2025.
+
 # SCP: Dystopia Add-on
 
 A Minecraft Bedrock add-on for SCP Foundation-themed creations.
